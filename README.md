@@ -6,3 +6,4 @@ Buutti Trainee Academy Reference Project 2024
 
 Susanne Hallberg
 Arttu Haverinen
+Miika Moilanen
