@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Define the users model
+model users {
+  id          Int      @id @default(autoincrement())
+  username    String   @unique
+  password    String
+  role        String?
+  createdAt   DateTime @default(now())
+  profileText String?
+  profileImage String?
+  sections    Int      @default(0)
+  topics      Int      @default(0)
+  posts       Int      @default(0)
+  follows     Int      @default(0)
+}
+
+// 1. Initialize a new Prisma project in the current directory:
+//    prisma init
+
+// 2. Generate the Prisma Client based on your schema:
+//    prisma generate
+
+// 3. Manage database schema migrations:
+//    - Create and apply a new migration to your development database:
+//      prisma migrate dev
+//    - Deploy pending migrations to your database:
+//      prisma migrate deploy
+//    - Reset your development database by reverting all migrations:
+//      prisma migrate reset
+
+// 4. Open Prisma Studio, a visual editor for your database:
+//    prisma studio
+
+// 5. Pull the database schema and data into your Prisma schema file:
+//    prisma db pull
+
+// 6. Push the Prisma schema to the database, applying any changes:
+//    prisma db push
+
+// 7. Format your Prisma schema file for consistent styling:
+//    prisma format
+
+// 8. Display the status of your migrations:
+//    prisma migrate status
