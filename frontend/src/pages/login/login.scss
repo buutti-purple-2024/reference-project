@@ -1,0 +1,62 @@
+.login {
+    /* height: 100vh;
+    width: 100%;
+    background-color: rgb(232, 232, 231);
+   
+    align-items: center;
+    justify-content: center; */
+
+    .card {
+        width: 80%;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(218, 220, 216);
+        border-radius: 10px;
+        min-height: 100px;
+        margin-right: 20px;
+        margin-left: 20px;
+        
+        h2 {
+            font-size: 40px;
+            line-height: 10px;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            justify-content: center;
+            align-items: center;
+        
+
+            input {
+                border: none;
+                border-bottom: 1px solid lightgrey;
+                padding: 10px 10px;
+                width: 80%;
+            }
+
+            button {
+                width: 50%;
+                padding: 10px;
+                border: none;
+                background-color: rgb(127, 127, 125);
+                color: white;
+                font-weight: bold;
+                cursor: pointer;
+                margin-bottom: 20px;
+                
+            }
+        }
+        button {
+            width: 50%;
+            padding: 10px;
+            border: none;
+            background-color: rgb(127, 127, 125);
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            
+        }
+    }
+}
