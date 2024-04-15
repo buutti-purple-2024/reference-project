@@ -76,7 +76,6 @@ main()
 		process.exit(1);
 	});
 
-
 // ROUTES
 
 app.get("/users", async (req, res) => {
@@ -110,7 +109,7 @@ app.post("/register", async (req, res) => {
 				password: hashedPassword,
 				role: "user",
 				profileText: "profile text",
-				profileImage: "url to profile image"
+				profileImage: "url to profile image",
 			},
 		});
 		console.log(`Created a new user: ${req.body.username} `);
@@ -119,7 +118,6 @@ app.post("/register", async (req, res) => {
 		res.status(500).send();
 	}
 });
-
 
 app.post("/login", async (req, res) => {
 	// auth user
@@ -144,4 +142,4 @@ app.post("/login", async (req, res) => {
 
 app.listen(PORT, () => {
 	console.log(`server running on port ${8000}`);
-})
+});
