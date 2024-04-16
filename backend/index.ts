@@ -1,6 +1,10 @@
 import { PrismaClient } from "@prisma/client";
 import express from "express";
+import { NextFunction, Request, Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
+dotenv.config();
 const app = express();
 app.use(express.json());
 
@@ -78,7 +82,18 @@ main()
 
 // ROUTES
 
-app.get("/users", async (req, res) => {
+const authenticationMiddleware = (req:Request,res:Response,next:NextFunction) => {
+	const authenticationHeader = req.headers["authorization"];
+	if (authenticationHeader == null) return res.status(401).send();
+	const token = authenticationHeader.split(" ")[1];
+	if (process.env.ACCESS_TOKEN_SECRET) jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
+		if (err) return res.status(403).send();
+		//req.user = user;
+		next();
+	});
+};
+
+app.get("/users", authenticationMiddleware, async (req, res) => {
 	const users = await prisma.users.findMany({});
 	res.send(users);
 });
@@ -120,7 +135,6 @@ app.post("/register", async (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-	// auth user
 	const user = await prisma.users.findUnique({
 		where: {
 			username: req.body.username,
@@ -131,13 +145,85 @@ app.post("/login", async (req, res) => {
 	}
 	try {
 		if (await bcrypt.compare(req.body.password, user.password)) {
-			res.send("Login succesful");
+			const user = {name: req.body.username};
+			if (process.env.ACCESS_TOKEN_SECRET) {
+				//const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+				const accessToken = generateAccessToken(user);
+				const refreshToken = await generateRefreshToken(user);
+				res.json({accessToken: accessToken, refreshToken: refreshToken});
+			}
+			else {
+				console.log("Access token is not defined");
+			}
 		} else {
 			res.send("Incorrect password");
 		}
 	} catch (error) {
 		res.json(error);
 	}
+});
+
+const generateAccessToken = (user : {name : string} ) => {
+	if(process.env.ACCESS_TOKEN_SECRET) return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"});
+};
+
+const generateRefreshToken = async (user : {name: string}) => {
+	if (!process.env.REFRESH_TOKEN_SECRET) {console.log("missing REFRESH_TOKEN_SECRET"); return;}
+	const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
+	//const prismaUser = await prisma.users.findUnique({where: {username: user}});
+
+	const tokenExpires = new Date(new Date());
+	tokenExpires.setHours(tokenExpires.getHours() + 1);
+	tokenExpires.toISOString();
+	
+
+	try {
+		const prismaUser = await prisma.users.update({
+			where: {
+				username : user.name
+			},
+			data: {
+				token : refreshToken,
+				tokenExpire : tokenExpires
+			}
+		});
+		return prismaUser.token;
+	} catch (error) {
+		console.log(error);
+	}
+
+	
+};
+
+app.post("/token", async (req,res) => {
+	const refreshToken = req.body.token;
+	if (refreshToken == null) {
+		return res.sendStatus(401);
+	}
+	
+	try {
+		const prismaUser = await prisma.users.findUnique({
+			where: {
+				username : req.body.username
+			}
+		});
+		if (prismaUser?.tokenExpire) {
+			if (new Date() < prismaUser.tokenExpire) {
+				const user = {name: req.body.username};
+				const accessToken = generateAccessToken(user);
+				res.json({accessToken: accessToken});
+			}
+			else {
+				return res.status(400).send("Your token has expired, please login to get a new token");
+
+			}
+
+		}
+
+	} catch (error) {
+		console.log(error);
+	}
+
 });
 
 app.listen(PORT, () => {

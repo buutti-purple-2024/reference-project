@@ -19,6 +19,8 @@ model users {
   username    String   @unique
   password    String
   role        String?
+  token       String?
+  tokenExpire DateTime?
   createdAt   DateTime @default(now())
   profileText String?
   profileImage String?
