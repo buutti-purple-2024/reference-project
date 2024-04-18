@@ -8,6 +8,7 @@
     position: sticky;
     top: 0;
     background-color: rgb(21, 13, 13);
+    width: 100%;
 
     .left{
         display: flex;
@@ -30,7 +31,7 @@
 
             input{
                 border: none;
-                width: 600px;
+               /*  width: 100%; */
 
             }
         }

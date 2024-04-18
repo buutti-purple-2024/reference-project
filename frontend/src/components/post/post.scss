@@ -5,11 +5,13 @@
 
     .container {
       padding: 20px;
+     
 
       .user {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        
 
         .userInfo {
           display: flex;
@@ -28,6 +30,7 @@
 
             .name {
               font-weight: 500;
+              
             }
 
             .date {

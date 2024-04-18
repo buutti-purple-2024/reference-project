@@ -1,9 +1,11 @@
 
-import "./login.scss"
+import "./login.scss";
+import { Link } from "react-router-dom";
 
 const Login = () => {
     return (
         <div className="login">
+           
             <h1>Welcome to Purple, the ad free social media app!</h1>
                 <h2>Log in</h2>
                     <form>
@@ -12,7 +14,11 @@ const Login = () => {
                         <button>Log in</button>
                     </form>
                 <hr/>
-            <button>Create new account</button>     
+                <p>Don't have an account?</p>
+                <Link to="/register">
+                <button>Create new account</button> 
+                </Link> 
+               
         </div>
     )
 }
