@@ -1,25 +1,27 @@
-.login {
-    /* height: 100vh;
-    width: 100%;
-    background-color: rgb(232, 232, 231);
-   
-    align-items: center;
-    justify-content: center; */
 
-    .card {
-        width: 80%;
-        align-items: center;
-        justify-content: center;
-        background-color: rgb(218, 220, 216);
-        border-radius: 10px;
-        min-height: 100px;
-        margin-right: 20px;
-        margin-left: 20px;
-        
-        h2 {
-            font-size: 40px;
-            line-height: 10px;
+
+.login {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    justify-content: center;
+    background-color: rgb(218, 220, 216);
+    border-radius: 10px;
+
+        h1{
+            padding-left: 30px;
+            font-size: 50px;
+            align-items: center;
         }
+        
+        h2{
+            font-size: 40px;
+        }
+        
+        
 
         form{
             display: flex;
@@ -58,5 +60,5 @@
             cursor: pointer;
             
         }
-    }
+    
 }

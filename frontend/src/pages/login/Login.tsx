@@ -4,19 +4,17 @@ import "./login.scss"
 const Login = () => {
     return (
         <div className="login">
-            <h2>Welcome to Purple, 
-                the ad free social media app!</h2>
-            <div className="card">
-                    <h2>Log in</h2>
+            <h1>Welcome to Purple, the ad free social media app!</h1>
+                <h2>Log in</h2>
                     <form>
                         <input type="text" placeholder="Email" />
                         <input type="text" placeholder="Password" />
                         <button>Log in</button>
                     </form>
-                    <button>Create new account</button>
-             </div> 
+                <hr/>
+            <button>Create new account</button>     
         </div>
     )
 }
 
-export default Login
+export default Login;
