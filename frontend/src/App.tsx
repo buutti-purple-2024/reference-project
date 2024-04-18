@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { ReactNode } from "react";
+import { BrowserRouter as Router, Routes, Route, Outlet, useNavigate } from "react-router-dom";
+import LeftBar from "./components/left bar/LeftBar";
+import NavBar from "./components/navbar/NavBar";
+import Home from "./pages/home/Home";
+import Login from "./pages/login/Login";
+import Profile from "./pages/profile/Profile";
+import Register from "./pages/register/Register";
+import "./style.scss"
 
 function App() {
-  const [count, setCount] = useState(0)
+  const currentUser = true;
+
+  const Layout = ({ children }: { children?: ReactNode }) => {
+    return (
+      <div className="theme-light">
+        <NavBar />
+        <div style={{ display: "flex" }}>
+          <LeftBar />
+          <div style={{ flex: 6 }}>
+            {children}
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+    const navigate = useNavigate();
+    if (!currentUser) {
+      navigate("/login");
+      return null;
+    }
+    return children;
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/" element={<Home />} />
+          <Route path="profile/:id" element={<Profile />} />
+          <Route path="*" element={<Outlet />} />
+          <Route path="*" element={<div>Not Found</div>} />
+        </Route>
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
