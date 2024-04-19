@@ -14,11 +14,12 @@ function App() {
   const Layout = ({ children }: { children?: ReactNode }) => {
     return (
       <div className="theme-light">
-        <NavBar />
+       <NavBar />
         <div style={{ display: "flex" }}>
           <LeftBar />
           <div style={{ flex: 6 }}>
-            {children}
+            <Outlet />
+            { children}
           </div>
         </div>
       </div>
