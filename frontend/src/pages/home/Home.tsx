@@ -6,6 +6,7 @@ const Home = () => {
     return (
         <div className="home">
             <CreatePost />
+            <h2>Recent posts</h2>
             <Posts />
         </div>
     )

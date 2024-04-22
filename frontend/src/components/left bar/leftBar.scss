@@ -5,7 +5,9 @@
     height: calc(100vh - 70px);
     overflow: scroll;
     background-color: rgb(239, 235, 232);
-
+    max-width: 200px;
+    min-width: 150px;
+    
     &::-webkit-scrollbar{
         display: none;
     }

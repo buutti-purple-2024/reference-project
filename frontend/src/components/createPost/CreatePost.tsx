@@ -3,15 +3,24 @@ import "./createPost.scss";
 const CreatePost = () => {
     return (
         <div className="createpost">
+            <div className="card">
                 <h2>Create a Post</h2>
                 <form>
-                    <input type="text" title="Title" placeholder="Enter post title" />
-                    <input type="text" title="Content" placeholder="Share your thoughts" />
-                    <button>Add a picture</button>    
+                    <div>
+                        <input type="text" title="Title" placeholder="Enter post title" />
+                    </div>
+                    <div>
+                        <input type="text" title="Content" placeholder="Share your thoughts" />
+                        <button>Add a picture</button>                    
+                    </div>
+                    <div>
+                        <button type="reset">Cancel</button>     
+                        <button type="submit">Post</button>
+                    </div>
                 </form>
-                <button type="reset">Cancel</button>     
-                <button type="submit">Post</button>
+
             <hr/>
+            </div>
         </div>
     )
 }

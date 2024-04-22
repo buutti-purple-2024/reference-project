@@ -10,13 +10,13 @@ const Login = () => {
                 <h2>Log in</h2>
                     <form>
                         <input type="text" placeholder="Email" />
-                        <input type="text" placeholder="Password" />
+                        <input type="password" placeholder="Password" />
                         <button>Log in</button>
                     </form>
                 <hr/>
                 <p>Don't have an account?</p>
                 <Link to="/register">
-                <button>Create new account</button> 
+                <button>Create a new account</button> 
                 </Link> 
                
         </div>
