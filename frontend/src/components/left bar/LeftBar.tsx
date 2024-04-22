@@ -14,7 +14,7 @@ const LeftBar = () => {
             <div className="container">
                 <div className="menu">
                     <div className="item">
-                    <Link to="/home">
+                    <Link to="/">
                         <Icon path={mdiHomeOutline} size={1} />
                         <span>Home</span>
                     </Link>
