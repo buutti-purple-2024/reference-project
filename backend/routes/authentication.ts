@@ -102,7 +102,7 @@ router.post("/register", async (req, res) => {
 		const salt = await bcrypt.genSalt();
 		const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-		const userExists = await prisma.users.findFirst({
+		const userExists = await prisma.user.findFirst({
 			where: {
 				username: req.body.username,
 			},
@@ -112,7 +112,7 @@ router.post("/register", async (req, res) => {
 			return res.status(400).send("This username already exists");
 		}
 
-		const prismaUser = await prisma.users.create({
+		const prismaUser = await prisma.user.create({
 			data: {
 				username: req.body.username,
 				password: hashedPassword,
@@ -129,7 +129,7 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-	const user = await prisma.users.findUnique({
+	const user = await prisma.user.findUnique({
 		where: {
 			username: req.body.username,
 		},
@@ -172,7 +172,7 @@ const generateRefreshToken = async (user : {name: string}) => {
 	
 
 	try {
-		const prismaUser = await prisma.users.update({
+		const prismaUser = await prisma.user.update({
 			where: {
 				username : user.name
 			},
@@ -196,7 +196,7 @@ router.post("/token", async (req,res) => {
 	}
 	
 	try {
-		const prismaUser = await prisma.users.findUnique({
+		const prismaUser = await prisma.user.findUnique({
 			where: {
 				username : req.body.username
 			}
