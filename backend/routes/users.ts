@@ -93,12 +93,12 @@ import {authenticationMiddleware} from "../middleware/authenticationMiddleware";
  */
 
 router.get("/",  async (req: Request, res: Response) => {
-	const users = await prisma.users.findMany({});
+	const users = await prisma.user.findMany({});
 	res.send(users);
 });
 
 router.get("/authenticatedtest",  authenticationMiddleware, async (req: Request, res: Response) => {
-	const users = await prisma.users.findMany({});
+	const users = await prisma.user.findMany({});
 	res.send(users);
 });
 

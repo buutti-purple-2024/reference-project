@@ -58,13 +58,11 @@ async function main() {
 	const username = "TestUser";
 	const password = "password";
 	const role = "user";
-	const sections = 0;
-	const topics = 0;
 	const posts = 2;
 	const follows = 6;
 
 	// Check if a user with the given username already exists
-	const existingUser = await prisma.users.findFirst({
+	const existingUser = await prisma.user.findFirst({
 		where: {
 			username: username,
 		},
@@ -84,13 +82,11 @@ async function main() {
 	}
 
 	// Create a new user only if no user with the given username exists
-	await prisma.users.create({
+	await prisma.user.create({
 		data: {
 			username: username,
 			password: password,
 			role: role,
-			sections: sections,
-			topics: topics,
 			posts: posts,
 			follows: follows,
 		},
@@ -107,7 +103,7 @@ async function main() {
 
 // Function to fetch all users and their data
 async function fetchAllUsers() {
-	return await prisma.users.findMany();
+	return await prisma.user.findMany();
 }
 
 main()
