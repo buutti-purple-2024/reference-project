@@ -1,15 +1,41 @@
-.createpost{
-    
+.container{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
-    width: 100%;
-        
-        .card{
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-        }
+    align-content: space-between 20px;
+    margin-top: 20px;
+    background-color: rgb(224, 224, 224);
+    padding: 20px;
+    border-radius: 20px;
 }
+
+
+//Title
+.container > *:nth-child(2){
+    flex: 1 1 100%;
+    margin-bottom: 5px;
+}
+
+//Content
+.container > *:nth-child(3){
+    flex: 1 1 90%;
+    margin-bottom: 5px;
+}
+
+//Pic-Button
+.container > *:nth-child(4){
+    flex: 1 1 5%;
+    margin-bottom: 5px;
+}
+
+//submit
+.container > *:nth-child(5){
+    flex: 1 1 40%;
+}
+
+//cancel
+.container > *:nth-child(6){
+    flex: 1 1 40%;
+}
+    
