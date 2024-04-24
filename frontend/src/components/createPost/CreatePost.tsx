@@ -3,13 +3,7 @@ import { useState, ChangeEvent, FormEvent } from "react";
 
 export default function CreatePost() {
     return (
-        <div className="createpost">
-            <div className="card">
-                <h2>Create a Post</h2>
-                    <FormInput/>
-                <hr/>
-            </div>
-        </div>
+        <FormInput/>
     )
 }
 
@@ -43,28 +37,29 @@ function FormInput() {
     }
 
     return (
-        <form onSubmit={(e) => handleSubmit(e)}>
-            <div>
-                <input value={post.title}
+    <form onSubmit={(e) => handleSubmit(e)} >
+        <div className="container">
+                <h2>Create a Post</h2>
+                <input 
+                    value={post.title}
                     onChange={(e) => handleTitle(e)} // e näyttää, että tyyppi on "ChangeEvent<HTMLInputElement>" >> kopio ja laita tyyppi handle-funktioon & importtiin
                     type="text" 
                     title="Title" 
-                    placeholder="Enter post title" />
-            </div>
-            <div>
-                <input value={post.content}
+                    placeholder="Enter post title" 
+                />
+                <input
+                    value={post.content}
                     onChange={(e) => handleContent(e)}
                     type="text" 
                     title="Content" 
-                    placeholder="Share your thoughts" />
-                <button>Add a picture</button>                    
-            </div>
-            <div>
+                    placeholder="Share your thoughts" 
+                />
+                <button>pic</button>
                 <button type="submit">Submit</button>
                 <button type="reset">Cancel</button>     
-            </div>
-            <p>{submit?.title}</p>
-            <p>{submit?.content}</p>
-        </form>
+        </div>
+        <p>{submit?.title}</p>
+        <p>{submit?.content}</p>
+    </form>
     )
 }
