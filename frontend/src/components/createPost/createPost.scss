@@ -8,34 +8,47 @@
     background-color: rgb(224, 224, 224);
     padding: 20px;
     border-radius: 20px;
+    
 }
 
+label{
+    font-size: small;} 
+
+//Title-title?
+.container > *:nth-child(2){
+    flex: 1 1 100%;
+}
 
 //Title
-.container > *:nth-child(2){
+.container > *:nth-child(3){
     flex: 1 1 100%;
     margin-bottom: 5px;
 }
 
-//Content
-.container > *:nth-child(3){
-    flex: 1 1 90%;
-    margin-bottom: 5px;
-}
-
-//Pic-Button
+//Content-title?
 .container > *:nth-child(4){
-    flex: 1 1 5%;
+    flex: 1 1 100%;
+}
+
+//Content
+.container > *:nth-child(5){
+    flex: 1 1 100%;
     margin-bottom: 5px;
 }
 
+//Choose file
+.container > *:nth-child(6){
+    flex: 1 1 100%;
+    margin-bottom: 10px;
+}
+    
 //submit
-.container > *:nth-child(5){
+.container > *:nth-child(7){
     flex: 1 1 40%;
 }
 
 //cancel
-.container > *:nth-child(6){
+.container > *:nth-child(8){
     flex: 1 1 40%;
 }
     
