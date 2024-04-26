@@ -7,7 +7,7 @@ import { mdiMessageOutline } from '@mdi/js';
 import { mdiDragVertical } from '@mdi/js';
 import Icon from '@mdi/react';
 import Comments from "../comments/Comments";
-import VotingButtons from "./votingTest";
+import VotingButtons from "../votingButtons/votingButtons";
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
