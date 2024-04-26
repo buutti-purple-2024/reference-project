@@ -1,4 +1,10 @@
 import { useState } from "react";
+import { mdiArrowUpBoldOutline } from '@mdi/js';
+import { mdiArrowUpBold } from '@mdi/js';
+import { mdiArrowDownBoldOutline } from '@mdi/js';
+import { mdiArrowDownBold } from '@mdi/js';
+import Icon from "@mdi/react";
+import "./votingButtons.scss"
 
 export default function VotingButtons() {
     const [upVoted, setUpVoted] = useState(false);
@@ -22,17 +28,26 @@ export default function VotingButtons() {
     }
   
     return (
-      <div>
-        <button onClick={(e) => toggleUpVote(e)}>
-        {upVoted ? "upvoted<3" : "--up vote--"}
+      <div className="votes">
+
+        <button onClick={(e) => toggleUpVote(e)}
+          disabled={downVoted}>
+          {upVoted 
+            ? <Icon path={mdiArrowUpBold} size={1.2} /> 
+            : <Icon path={mdiArrowUpBoldOutline} size={1.2} />}
         </button>
         
-        <button onClick={(e) => toggleDownVote(e)}>
-        {downVoted ? "downvoted:<" : "-down vote-"}
+        <button onClick={(e) => toggleDownVote(e)}
+          disabled={upVoted}>
+          {downVoted
+            ? <Icon path={mdiArrowDownBold} size={1.2} />
+            : <Icon path={mdiArrowDownBoldOutline} size={1.2} />}
         </button>
 
         <div>votes: {voteSum}</div>
+        
       </div>
     );
 
 }
+
