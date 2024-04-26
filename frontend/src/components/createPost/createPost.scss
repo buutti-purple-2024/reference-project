@@ -1,4 +1,4 @@
-.container{
+.form-container{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -15,40 +15,40 @@ label{
     font-size: small;} 
 
 //Title-title?
-.container > *:nth-child(2){
+.form-container > *:nth-child(2){
     flex: 1 1 100%;
 }
 
 //Title
-.container > *:nth-child(3){
+.form-container > *:nth-child(3){
     flex: 1 1 100%;
     margin-bottom: 5px;
 }
 
 //Content-title?
-.container > *:nth-child(4){
+.form-container > *:nth-child(4){
     flex: 1 1 100%;
 }
 
 //Content
-.container > *:nth-child(5){
+.form-container > *:nth-child(5){
     flex: 1 1 100%;
     margin-bottom: 5px;
 }
 
 //Choose file
-.container > *:nth-child(6){
+.form-container > *:nth-child(6){
     flex: 1 1 100%;
     margin-bottom: 10px;
 }
     
 //submit
-.container > *:nth-child(7){
+.form-container > *:nth-child(7){
     flex: 1 1 40%;
 }
 
 //cancel
-.container > *:nth-child(8){
+.form-container > *:nth-child(8){
     flex: 1 1 40%;
 }
     

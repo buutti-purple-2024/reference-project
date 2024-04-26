@@ -44,7 +44,7 @@ function FormInput() {
 
     return (
     <form onSubmit={(e) => handleSubmit(e)} >
-        <div className="container">
+        <div className="form-container">
                 <h2>Create a Post</h2>
 
                 <label htmlFor="title">Title</label>
