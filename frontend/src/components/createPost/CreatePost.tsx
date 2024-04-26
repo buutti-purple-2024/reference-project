@@ -35,28 +35,44 @@ function FormInput() {
         setSubmit(post);
         setPost(initialState);
     }
+    
+    function handleReset(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
+        e.preventDefault();
+        setSubmit(initialState);
+        setPost(initialState);
+    }
 
     return (
     <form onSubmit={(e) => handleSubmit(e)} >
         <div className="container">
                 <h2>Create a Post</h2>
+
+                <label htmlFor="title">Title</label>
                 <input 
                     value={post.title}
                     onChange={(e) => handleTitle(e)} // e näyttää, että tyyppi on "ChangeEvent<HTMLInputElement>" >> kopio ja laita tyyppi handle-funktioon & importtiin
+                    name="title"
+                    id="title"
                     type="text" 
-                    title="Title" 
                     placeholder="Enter post title" 
                 />
+                <label htmlFor="content">Content</label>
                 <input
                     value={post.content}
                     onChange={(e) => handleContent(e)}
+                    name="content"
+                    id="content"
                     type="text" 
-                    title="Content" 
                     placeholder="Share your thoughts" 
                 />
-                <button>pic</button>
+                <input //kuvan lisääminen koodattava myöhemmin
+                    type="file"
+                    name="chooseFile"
+                    id="chooseFile"
+                    accept="image/png, image/jpeg"
+                />
                 <button type="submit">Submit</button>
-                <button type="reset">Cancel</button>     
+                <button type="reset" onClick={e=>handleReset(e)}>Reset</button>     
         </div>
         <p>{submit?.title}</p>
         <p>{submit?.content}</p>
