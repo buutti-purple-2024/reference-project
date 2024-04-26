@@ -39,7 +39,7 @@ model User {
 }
 
 model Post {
-  post_id    Int      @id
+  post_id    Int      @id @default(autoincrement())
   user_id    Int
   title      String
   content    String
@@ -52,7 +52,7 @@ model Post {
 }
 
 model Comment {
-  comment_id Int      @id
+  comment_id Int      @id @default(autoincrement())
   user_id    Int
   post_id    Int
   content    String
@@ -63,7 +63,7 @@ model Comment {
 }
 
 model Chat {
-  chat_id    Int      @id
+  chat_id    Int      @id @default(autoincrement())
   user1_id   Int
   user2_id   Int
   created_at DateTime @default(now())
@@ -73,7 +73,7 @@ model Chat {
 }
 
 model Follow {
-  follow_id        Int      @id
+  follow_id        Int      @id @default(autoincrement())
   follower_id      Int
   followed_user_id Int
   created_at       DateTime @default(now())
