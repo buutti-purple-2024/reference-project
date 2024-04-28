@@ -36,7 +36,7 @@ export default function VotingButtons() {
             ? <Icon path={mdiArrowUpBold} size={1.2} /> 
             : <Icon path={mdiArrowUpBoldOutline} size={1.2} />}
         </button>
-        
+        {voteSum}
         <button onClick={(e) => toggleDownVote(e)}
           disabled={upVoted}>
           {downVoted
@@ -44,7 +44,7 @@ export default function VotingButtons() {
             : <Icon path={mdiArrowDownBoldOutline} size={1.2} />}
         </button>
 
-        <div>votes: {voteSum}</div>
+        {/* <div> {voteSum}</div> */}
         
       </div>
     );
