@@ -31,7 +31,6 @@ const Comments: React.FC<CommentItem> = () => {
         <div className="comments">{
             comments.map(comment=>(
                 <div className="comment">
-                    <hr/>
                 <img src={comment.profilePicture} alt="" />
                     <div className="info">
                         <span>{comment.desc}</span>
