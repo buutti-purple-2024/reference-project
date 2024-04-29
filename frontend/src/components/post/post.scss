@@ -21,7 +21,7 @@
           
 
           img {
-            width: 50px;
+            width: 40px;
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
@@ -54,27 +54,23 @@
           margin-top: 10px;
         }
       }
-
       .info {
         display: flex;
         align-items: center;
         gap: 20px;
 
-        .item {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-          cursor: pointer;
-          font-size: 14px;
-        }
-        .item-arrow {
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          cursor: pointer;
-          font-size: 14px;
-        }
+      .comment {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        cursor: pointer;
+        font-size: 14px;
       }
     }
-  
+  }
+  .comments-container {
+    width: 100%;
+    background-color: rgb(198, 195, 182);
+    padding: 5px;
+  }
 }

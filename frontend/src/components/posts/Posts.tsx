@@ -21,7 +21,7 @@ const Posts = () => {
             userId: 1,
             profilePic: "https://images.pexels.com/photos/12160702/pexels-photo-12160702.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             img: "https://images.pexels.com/photos/10106884/pexels-photo-10106884.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-            desc: "Some text here... this is John's post"
+            desc: "Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here "
         },
         {
             id: 2,
@@ -29,7 +29,15 @@ const Posts = () => {
             userId: 2,
             profilePic: "https://images.pexels.com/photos/21391541/pexels-photo-21391541/free-photo-of-parakeet-on-winter-morning.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             img: "https://images.pexels.com/photos/20975683/pexels-photo-20975683/free-photo-of-a-black-and-white-photo-of-a-horse-jumping-over-an-obstacle.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-            desc: "Some text here"
+            desc: "Some text here Some text here Some text here Some text here "
+        },
+        {
+            id: 3,
+            name: "Mary M",
+            userId: 2,
+            profilePic: "https://images.pexels.com/photos/19932535/pexels-photo-19932535/free-photo-of-bride-in-wedding-dress-with-hand-raised.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            img: "https://images.pexels.com/photos/17965550/pexels-photo-17965550/free-photo-of-adorable-kitten-on-tree.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+            desc: "Some text here Some text here Some text here Some text here "
         },
     ];
 

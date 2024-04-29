@@ -1,12 +1,10 @@
 import "./post.scss";
-//import { mdiBorderAllVariant } from '@mdi/js';
 import { mdiDotsHorizontal } from '@mdi/js';
 import { mdiMessageOutline } from '@mdi/js';
 import { mdiDragVertical } from '@mdi/js';
 import Icon from '@mdi/react';
 import Comments from "../comments/Comments";
 import VotingButtons from "../votingButtons/votingButtons";
-
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -23,8 +21,14 @@ interface PostItem {
   }
 
 const Post: React.FC<PostItem> = ({post}) => {
+  
+  
+    const [ commentOpen, setCommentOpen ] = useState(false);
 
-    const [ commentOpen, setCommentOpen ] = useState(false)
+    const toggleCommentSection = () => {
+      setCommentOpen(!commentOpen);
+    };
+
 
     return (
       <div className="post">
@@ -45,7 +49,6 @@ const Post: React.FC<PostItem> = ({post}) => {
                 </div>
                 
                 <span className="date" justify-content="none">1 min ago</span>
-                {/* <Icon path={mdiBorderAllVariant} size={1} /> */}
                 <Icon path={mdiDotsHorizontal} size={1} />
             </div>
 
@@ -54,14 +57,16 @@ const Post: React.FC<PostItem> = ({post}) => {
                 <p>{post.desc}</p>
             </div>
 
-            <div className="info" onClick={()=>setCommentOpen(!commentOpen)}>
-              <Icon path={mdiMessageOutline} size={1} /> 10 comments
-            </div>
-            
-            <Comments />
+            <div className="info"> 
             <VotingButtons/>
+            
+            <div className="comment" onClick={toggleCommentSection}>
+                  <Icon path={mdiMessageOutline} size={1} /> {commentOpen ? "Hide" : "Show"} comments
+              </div>
+            </div>
           </div>
-      </div>
+          {commentOpen && <div className="comments-container"><Comments /></div>}
+        </div>
     );
 };
 
