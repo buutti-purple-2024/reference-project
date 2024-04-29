@@ -31,13 +31,13 @@ const Comments: React.FC<CommentItem> = () => {
         <div className="comments">{
             comments.map(comment=>(
                 <div className="comment">
-                <img src={comment.profilePicture} alt="" />
+                    <hr/>
+                    <img src={comment.profilePicture} alt="" />
                     <div className="info">
                         <span>{comment.desc}</span>
                     </div>
                     <span className="date">1 hour ago</span>
                 </div>
-                
             ))
 }</div>
     )

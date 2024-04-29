@@ -21,7 +21,7 @@ const Posts = () => {
             userId: 1,
             profilePic: "https://images.pexels.com/photos/12160702/pexels-photo-12160702.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             img: "https://images.pexels.com/photos/10106884/pexels-photo-10106884.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-            desc: "Some text here"
+            desc: "Some text here... this is John's post"
         },
         {
             id: 2,
