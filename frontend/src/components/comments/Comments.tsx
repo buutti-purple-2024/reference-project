@@ -16,13 +16,13 @@ const Comments: React.FC<CommentItem> = () => {
     const comments = [
         {
             id: 1,
-            desc: "Some comment here",
+            desc: "Some comment here Some comment here Some comment here Some comment here",
             userId: 1,
             profilePicture: "https://images.pexels.com/photos/20882950/pexels-photo-20882950/free-photo-of-young-woman-holding-a-plant.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
         },
         {
             id: 2,
-            desc: "Some another comment here",
+            desc: "Some another comment here Some another comment here Some another comment here Some another comment here Some another comment here",
             userId: 2,
             profilePicture: "https://images.pexels.com/photos/17340544/pexels-photo-17340544/free-photo-of-a-man-giving-a-hand-to-a-woman-in-a-boat.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
         },
@@ -39,7 +39,8 @@ const Comments: React.FC<CommentItem> = () => {
                 </div>
                 
             ))
-}</div>
+        }
+    </div>
     )
 }
 
