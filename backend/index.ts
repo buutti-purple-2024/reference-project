@@ -6,6 +6,7 @@ import swaggerJsDoc from "swagger-jsdoc";
 import cors from "cors";
 
 import { router as usersRouter } from "./routes/users";
+import { router as postsRouter } from "./routes/posts"
 import { router as authenticationRouter } from "./routes/authentication";
 import bcrypt from "bcrypt";
 
@@ -52,6 +53,7 @@ const swaggerSpec = swaggerJsDoc(options);
 app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.use("/users", usersRouter);
+app.use("/posts", postsRouter)
 app.use("/auth", authenticationRouter);
 
 async function main() {
