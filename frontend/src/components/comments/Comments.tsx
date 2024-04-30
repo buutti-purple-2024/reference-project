@@ -37,7 +37,6 @@ const Comments: React.FC<CommentItem> = () => {
                     </div>
                     <span className="date">1 hour ago</span>
                 </div>
-                
             ))
         }
     </div>

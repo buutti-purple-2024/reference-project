@@ -24,9 +24,9 @@ const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profil
 
 
     return (
-        <div className="post">
-            <div className="container">
-            <div className="user">          
+      <div className="post">
+          <div className="container">
+            <div className="user">
                 <div className="userInfo">
                   {profileImage && <img src={profileImage} alt="" />}
                     <div className="details">
@@ -36,12 +36,12 @@ const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profil
                             {/* <span className="name">{title}</span> */}
                             <Icon path={mdiDragVertical} size={1} />
                         </Link>
-                        
                     </div>
                 </div>
+
                 <span className="date" justify-content="none">{post.created_at}</span>
                 <Icon path={mdiDotsHorizontal} size={1} />
-                
+            
             </div>
             <div className="content">
                 <img src={post.post_img} alt=""></img>
