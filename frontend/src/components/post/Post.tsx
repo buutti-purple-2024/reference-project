@@ -7,22 +7,15 @@ import Comments from "../comments/Comments";
 import VotingButtons from "../votingButtons/votingButtons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
+import PostData from "../types/Post";
+//import type UserData from "../types/User";
+ 
 
 
-interface PostItem {
-    post: {
-      id: number;
-      name: string;
-      userId: number;
-      profilePic: string;
-      img: string;
-      desc: string;
-    };
-  }
-
-const Post: React.FC<PostItem> = ({post}) => {
+const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profileImage }) => {
   
-  
+    //const [post, setPost] = useState<PostData>(initialPost);
+
     const [ commentOpen, setCommentOpen ] = useState(false);
 
     const toggleCommentSection = () => {
@@ -33,28 +26,26 @@ const Post: React.FC<PostItem> = ({post}) => {
     return (
       <div className="post">
           <div className="container">
-
             <div className="user">
-
                 <div className="userInfo">
-                    <img src={post.profilePic} alt="" />
+                  {profileImage && <img src={profileImage} alt="" />}
                     <div className="details">
                         <Link 
-                            to={`/profile/${post.userId}`} 
+                            to={`/profile/${post.user_id}`} 
                             style={{textDecoration:"none", color:"inherit"}}>
-                            <span className="name">{post.name}</span>
+                            {/* <span className="name">{title}</span> */}
                             <Icon path={mdiDragVertical} size={1} />
                         </Link>
                     </div>
                 </div>
-                
-                <span className="date" justify-content="none">1 min ago</span>
-                <Icon path={mdiDotsHorizontal} size={1} />
-            </div>
 
+                <span className="date" justify-content="none">{post.created_at}</span>
+                <Icon path={mdiDotsHorizontal} size={1} />
+            
+            </div>
             <div className="content">
-                <img src={post.img} alt=""></img>
-                <p>{post.desc}</p>
+                <img src={post.post_img} alt=""></img>
+                <p>{post.content}</p>
             </div>
 
             <div className="info"> 

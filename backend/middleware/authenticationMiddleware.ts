@@ -6,9 +6,14 @@ export const authenticationMiddleware = (req:Request,res:Response,next:NextFunct
 	const authenticationHeader = req.headers["authorization"];
 	if (authenticationHeader == null) return res.status(401).send();
 	const token = authenticationHeader.split(" ")[1];
-	if (process.env.ACCESS_TOKEN_SECRET) jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err) => {
-		if (err) return res.status(403).send();
-		//req.user = user;
-		next();
-	});
+	if (process.env.ACCESS_TOKEN_SECRET) {
+		try {
+			const decoded = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+			console.log(decoded);
+			next();
+		} catch (error) {
+			//console.log(error);
+			res.status(403).send();
+		}
+	}
 };
