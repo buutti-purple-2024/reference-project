@@ -39,5 +39,10 @@
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
     "tsx": "^4.7.2"
+  },
+  "eslintConfig": {
+    "rules": {
+      "linebreak-style": ["error", "windows"]
+    }
   }
 }
