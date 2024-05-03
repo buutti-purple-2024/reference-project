@@ -7,6 +7,7 @@ import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import "./style.scss"
+import ProfileUpdate from "./components/profileUpdate/ProfileUpdate";
 
 function App() {
   const currentUser = true;
@@ -48,6 +49,7 @@ function App() {
         >
           <Route path="/" element={<Home />} />
           <Route path="profile/:id" element={<Profile />} />
+          <Route path="/profileUpdate" element={<ProfileUpdate />} />
           <Route path="*" element={<Outlet />} />
           <Route path="*" element={<div>Not Found</div>} />
         </Route>

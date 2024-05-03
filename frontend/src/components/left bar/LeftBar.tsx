@@ -29,6 +29,12 @@ const LeftBar = () => {
                         <Icon path={mdiAccountMultipleOutline} size={1} />
                         <span>Friends</span>
                     </div>
+                    <div className="item">
+                    <Link to="/profileUpdate">
+                        <Icon path={mdiAccountOutline} size={1}/>
+                        <span>Get/Update profiles</span>
+                    </Link>
+                    </div>
                 </div>
                 <hr/>
                 <div className="menu">
