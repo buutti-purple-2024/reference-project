@@ -58,46 +58,17 @@ app.use("/auth", authenticationRouter);
 
 async function main() {
 	// Variables for testing
-	const username = "TestUser";
-	const password = "password";
-	const role = "user";
+	const username = "";
 	const posts = 2;
 	const follows = 6;
 
 	// Check if a user with the given username already exists
-	const existingUser = await prisma.user.findFirst({
-		where: {
-			username: username,
-		},
-	});
 	const existingAdminUser = await prisma.user.findFirst({
 		where: {
 			username: "adminuser",
 		},
 	});
 
-	if (existingUser) {
-		console.log(`
-    User with username '${username}' already exists.
-    `);
-
-		// Fetch all users and their data
-
-		// Exit the function or handle the scenario accordingly
-	} else {
-		await prisma.user.create({
-			data: {
-				username: username,
-				password: password,
-				role: role,
-				posts: posts,
-				follows: follows,
-			},
-		});
-		console.log(`
-		User with username '${username}' created successfully.
-		`);
-	}
 	if (existingAdminUser) {
 		console.log(`
     User with username '${username}' already exists.
@@ -123,12 +94,6 @@ async function main() {
 		User with username 'admin' created successfully.
 		`);
 	}
-
-
-
-
-
-
 
 	// Fetch all users and their data
 	const allUsers = await fetchAllUsers();
