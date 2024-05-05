@@ -6,6 +6,8 @@ import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
 import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
+import Friends from "./pages/friends/Friends";
+import Chat from "./pages/chat/Chat";
 import "./style.scss"
 
 function App() {
@@ -48,8 +50,10 @@ function App() {
         >
           <Route path="/" element={<Home />} />
           <Route path="profile/:id" element={<Profile />} />
+          <Route path="/friends" element={<Friends />} />
           <Route path="*" element={<Outlet />} />
           <Route path="*" element={<div>Not Found</div>} />
+          <Route path="/chat" element={<Chat />} />
         </Route>
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
