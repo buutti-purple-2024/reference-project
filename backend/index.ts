@@ -6,7 +6,9 @@ import swaggerJsDoc from "swagger-jsdoc";
 import cors from "cors";
 
 import { router as usersRouter } from "./routes/users";
+import { router as postsRouter } from "./routes/posts"
 import { router as authenticationRouter } from "./routes/authentication";
+import bcrypt from "bcrypt";
 
 dotenv.config();
 const app = express();
@@ -51,50 +53,47 @@ const swaggerSpec = swaggerJsDoc(options);
 app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.use("/users", usersRouter);
+app.use("/posts", postsRouter)
 app.use("/auth", authenticationRouter);
 
 async function main() {
 	// Variables for testing
-	const username = "TestUser";
-	const password = "password";
-	const role = "user";
+	const username = "";
 	const posts = 2;
 	const follows = 6;
 
 	// Check if a user with the given username already exists
-	const existingUser = await prisma.user.findFirst({
+	const existingAdminUser = await prisma.user.findFirst({
 		where: {
-			username: username,
+			username: "adminuser",
 		},
 	});
 
-	if (existingUser) {
+	if (existingAdminUser) {
 		console.log(`
     User with username '${username}' already exists.
     `);
 
 		// Fetch all users and their data
-		const allUsers = await fetchAllUsers();
-		console.log("All users:", allUsers);
 
 		// Exit the function or handle the scenario accordingly
-		return;
+	} else {
+		const salt = await bcrypt.genSalt();
+		const hashedPassword = await bcrypt.hash("admin", salt);
+
+		await prisma.user.create({
+			data: {
+				username: "adminuser",
+				password: hashedPassword,
+				role: "admin",
+				posts: posts,
+				follows: follows,
+			},
+		});
+		console.log(`
+		User with username 'admin' created successfully.
+		`);
 	}
-
-	// Create a new user only if no user with the given username exists
-	await prisma.user.create({
-		data: {
-			username: username,
-			password: password,
-			role: role,
-			posts: posts,
-			follows: follows,
-		},
-	});
-
-	console.log(`
-  User with username '${username}' created successfully.
-  `);
 
 	// Fetch all users and their data
 	const allUsers = await fetchAllUsers();

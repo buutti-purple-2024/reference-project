@@ -17,7 +17,6 @@ const Comments: React.FC<{ comments: CommentData[], profileImage: string }> = ({
                     </div>
                     <span className="date">{comment.created_at}</span>
                 </div>
-                
             ))
         }
     </div>

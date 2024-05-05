@@ -34,15 +34,20 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.2",
+    "express-validator": "^7.0.1",
     "jsonwebtoken": "^9.0.2",
     "prisma": "^5.13.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
+    "ts-node": "^10.9.2",
     "tsx": "^4.7.2"
   },
   "eslintConfig": {
     "rules": {
-      "linebreak-style": ["error", "windows"]
+      "linebreak-style": [
+        "error",
+        "windows"
+      ]
     }
   }
 }

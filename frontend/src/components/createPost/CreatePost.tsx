@@ -22,7 +22,7 @@ function FormInput() {
         setPost({...post, title: e.target.value});
     }
     
-    function handleContent(e: ChangeEvent<HTMLInputElement>){
+    function handleContent(e: ChangeEvent<HTMLTextAreaElement>){
         e.preventDefault();
         setPost({...post, content: e.target.value});
     }
@@ -54,13 +54,13 @@ function FormInput() {
                     placeholder="Enter post title" 
                 />
                 <label htmlFor="content">Content</label>
-                <input
+                <textarea
                     value={post.content}
                     onChange={(e) => handleContent(e)}
                     name="content"
                     id="content"
-                    type="text" 
-                    placeholder="Share your thoughts" 
+                    placeholder="Share your thoughts"
+                    rows={4}
                 />
                 <input //kuvan lisääminen koodattava myöhemmin
                     type="file"
