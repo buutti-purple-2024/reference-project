@@ -8,25 +8,13 @@ import VotingButtons from "../votingButtons/votingButtons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import PostData from "../types/Post";
+import fakeComments from "../../tempData/fakeComments";
+//import fakeUsers from "../../tempData/fakeUsers";
+//import UserData from "../types/User";
 
-const fakeComments = [
-  {
-      comment_id: 1,
-      user_id: 1,
-      post_id: 1,
-      created_at: new Date().toISOString(),
-      content: "Some comment here Some comment here Some comment here Some comment here",
-  },
-  {
-      comment_id: 2,
-      user_id: 2,
-      post_id: 2,
-      created_at: new Date().toISOString(),
-      content: "Some another comment here Some another comment here Some another comment here Some another comment here Some another comment here",
-  },
-];
 
-const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profileImage }) => {
+
+const Post: React.FC<{ post: PostData, profileImage: string, username: string }> = ({ post, profileImage, username }) => {
   
     //const [post, setPost] = useState<PostData>(initialPost);
 
@@ -72,7 +60,7 @@ const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profil
           </div>
           {commentOpen && (
           <div className="comments-container">
-          <Comments comments={fakeComments} profileImage={profileImage || ''} />
+          <Comments comments={fakeComments} username={username} profileImage={profileImage || ''} />
       </div>
         )}
     </div>
