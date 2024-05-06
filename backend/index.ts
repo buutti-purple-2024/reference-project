@@ -8,12 +8,15 @@ import cors from "cors";
 import { router as usersRouter } from "./routes/users";
 import { router as postsRouter } from "./routes/posts"
 import { router as authenticationRouter } from "./routes/authentication";
+import { router as imageRouter } from "./routes/images";
+
 import bcrypt from "bcrypt";
 
 dotenv.config();
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use(express.static("uploads"));
 
 const PORT = 3001;
 const prisma = new PrismaClient();
@@ -55,6 +58,7 @@ app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter)
 app.use("/auth", authenticationRouter);
+app.use("/images", imageRouter);
 
 async function main() {
 	// Variables for testing
