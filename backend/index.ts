@@ -7,6 +7,7 @@ import cors from "cors";
 
 import { router as usersRouter } from "./routes/users";
 import { router as postsRouter } from "./routes/posts"
+import { router as commentsRouter } from './routes/comments'
 import { router as authenticationRouter } from "./routes/authentication";
 import { router as imageRouter } from "./routes/images";
 
@@ -56,7 +57,8 @@ const swaggerSpec = swaggerJsDoc(options);
 app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.use("/users", usersRouter);
-app.use("/posts", postsRouter)
+app.use("/posts", postsRouter);
+app.use("/comments", commentsRouter);
 app.use("/auth", authenticationRouter);
 app.use("/images", imageRouter);
 
