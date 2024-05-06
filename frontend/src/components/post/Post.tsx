@@ -8,6 +8,10 @@ import VotingButtons from "../votingButtons/votingButtons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import PostData from "../types/Post";
+import fakeComments from "../../tempData/fakeComments";
+//import fakeUsers from "../../tempData/fakeUsers";
+//import UserData from "../types/User";
+
 
 const fakeComments = [
   {
@@ -26,7 +30,8 @@ const fakeComments = [
   },
 ];
 
-const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profileImage }) => {
+
+const Post: React.FC<{ post: PostData, profileImage: string, username: string }> = ({ post, profileImage, username }) => {
   
     //const [post, setPost] = useState<PostData>(initialPost);
 
@@ -72,7 +77,8 @@ const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profil
           </div>
           {commentOpen && (
           <div className="comments-container">
-          <Comments comments={fakeComments} profileImage={profileImage || ''} />
+          <Comments comments={fakeComments} username={username} profileImage={profileImage || ''} />
+
       </div>
         )}
     </div>

@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Outlet, useNavigate } from "react-router-dom";
 import LeftBar from "./components/left bar/LeftBar";
 import NavBar from "./components/navbar/NavBar";
@@ -8,10 +8,27 @@ import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import Friends from "./pages/friends/Friends";
 import Chat from "./pages/chat/Chat";
+import axios from "axios";
+
 import "./style.scss"
 
 function App() {
-  const currentUser = true;
+  //const currentUser = true;
+  const [currentUser, setCurrentUser] = useState(null); // State to store the current user
+
+  useEffect(() => {
+    // Function to fetch user data
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get('/api/user'); // Replace '/api/user' with your actual endpoint
+        setCurrentUser(response.data); // Set the current user state with the fetched user data
+      } catch (error) {
+        console.error('Error fetching user:', error);
+      }
+    };
+
+    fetchUser(); // Call the fetchUser function when the component mounts
+  }, []);
 
   const Layout = ({ children }: { children?: ReactNode }) => {
     return (
