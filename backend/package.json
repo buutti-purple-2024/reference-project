@@ -41,6 +41,15 @@
     "prisma": "^5.13.0",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
+    "ts-node": "^10.9.2",
     "tsx": "^4.7.2"
+  },
+  "eslintConfig": {
+    "rules": {
+      "linebreak-style": [
+        "error",
+        "windows"
+      ]
+    }
   }
 }

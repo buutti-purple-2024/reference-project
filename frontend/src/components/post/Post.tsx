@@ -8,11 +8,30 @@ import VotingButtons from "../votingButtons/votingButtons";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import PostData from "../types/Post";
-//import type UserData from "../types/User";
- 
+import fakeComments from "../../tempData/fakeComments";
+//import fakeUsers from "../../tempData/fakeUsers";
+//import UserData from "../types/User";
 
 
-const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profileImage }) => {
+const fakeComments = [
+  {
+      comment_id: 1,
+      user_id: 1,
+      post_id: 1,
+      created_at: new Date().toISOString(),
+      content: "Some comment here Some comment here Some comment here Some comment here",
+  },
+  {
+      comment_id: 2,
+      user_id: 2,
+      post_id: 2,
+      created_at: new Date().toISOString(),
+      content: "Some another comment here Some another comment here Some another comment here Some another comment here Some another comment here",
+  },
+];
+
+
+const Post: React.FC<{ post: PostData, profileImage: string, username: string }> = ({ post, profileImage, username }) => {
   
     //const [post, setPost] = useState<PostData>(initialPost);
 
@@ -24,9 +43,9 @@ const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profil
 
 
     return (
-        <div className="post">
-            <div className="container">
-            <div className="user">          
+      <div className="post">
+          <div className="container">
+            <div className="user">
                 <div className="userInfo">
                   {profileImage && <img src={profileImage} alt="" />}
                     <div className="details">
@@ -36,12 +55,12 @@ const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profil
                             {/* <span className="name">{title}</span> */}
                             <Icon path={mdiDragVertical} size={1} />
                         </Link>
-                        
                     </div>
                 </div>
+
                 <span className="date" justify-content="none">{post.created_at}</span>
                 <Icon path={mdiDotsHorizontal} size={1} />
-                
+            
             </div>
             <div className="content">
                 <img src={post.post_img} alt=""></img>
@@ -56,9 +75,14 @@ const Post: React.FC<{ post: PostData, profileImage: string }> = ({ post, profil
               </div>
             </div>
           </div>
-          {commentOpen && <div className="comments-container"><Comments /></div>}
-        </div>
-    );
+          {commentOpen && (
+          <div className="comments-container">
+          <Comments comments={fakeComments} username={username} profileImage={profileImage || ''} />
+
+      </div>
+        )}
+    </div>
+  );
 };
 
 export default Post;

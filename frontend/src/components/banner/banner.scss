@@ -11,10 +11,8 @@
   
 .username {
     position: absolute;
-    top: 97%; 
+    top: 100%; 
     left: 25%; 
-    
-   
     font-size: 35px;
     color: black;
 }
@@ -27,6 +25,13 @@
     height: 120px;
     border-radius: 50%;
     border: 2px solid white; 
+}
+.profiletext {
+    position: absolute;
+    top: 97%; 
+    left: 30%; 
+    font-size: 15px;
+    color: black;
 }
   
   
