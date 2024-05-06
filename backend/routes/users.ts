@@ -4,9 +4,23 @@ import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import {  validationResult } from "express-validator";
 const prisma = new PrismaClient();
+import multer from "multer";
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "uploads/");
+	},
+	filename: function (req, file, cb) {
+		cb(null, "upload_at_" + Date.now() + path.extname(file.originalname))
+	}
+});
+
+const upload = multer({ storage: storage });
+
 
 import { authenticationMiddleware } from "../middleware/authenticationMiddleware";
 import { adminCheckMiddleware } from "../middleware/adminCheckMiddleware";
+import path from "path";
 
 router.use(express.json());
 
@@ -215,7 +229,8 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 
 
-router.put("/:id", async (req: Request, res: Response) => {
+router.put("/:id", upload.single("file"), async (req: Request, res: Response) => {
+	
 	if (validationResult(req)) {
 		try {
 			const updatedUser = await prisma.user.update({
@@ -230,7 +245,7 @@ router.put("/:id", async (req: Request, res: Response) => {
 					//tokenExpire: req.body.tokenExpire,
 					//createdAt: req.body.username,
 					profileText: req.body.profileText,
-					profileImage: req.body.profileImage,
+					profileImage: req.file?.filename,
 					//posts: req.body.posts,
 					//follows: req.body.follows,
 					//post: req.body.post,
@@ -247,6 +262,7 @@ router.put("/:id", async (req: Request, res: Response) => {
 			res.status(404).send("User not found");
 		}
 	}
+	
 });
 
 router.delete("/:id", async (req: Request, res: Response) => {

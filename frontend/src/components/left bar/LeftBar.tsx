@@ -31,6 +31,12 @@ const LeftBar = () => {
                         <span>Friends</span>
                     </Link>
                     </div>
+                    <div className="item">
+                    <Link to="/profileUpdate">
+                        <Icon path={mdiAccountOutline} size={1}/>
+                        <span>Get/Update profiles</span>
+                    </Link>
+                    </div>
                 </div>
                 <hr/>
                 <div className="menu">
