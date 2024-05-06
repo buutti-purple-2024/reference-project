@@ -2,15 +2,17 @@ import { useEffect, useState } from "react";
 import "./profileUpdate.scss";
 
 interface userProfile {
+  id: number,
+  username: string,
   profileText: string,
   profileImage: string
 }
 
 const ProfileUpdate = () => {
-  const [users, setUsers] = useState(null); 
-  const [userId, setUserId] = useState(null);
-  const [userProfileText, setUserProfileText] = useState(null);
-  const [userFile, setUserFile] = useState(null);
+  const [users, setUsers] =  useState<null | userProfile[]>(null); 
+  const [userId, setUserId] = useState<null | string>(null);
+  const [userProfileText, setUserProfileText] = useState<null | string>(null);
+  const [userFile, setUserFile] = useState<null | Blob>(null);
 
   useEffect(() => {
     getUsers()
@@ -22,16 +24,17 @@ const ProfileUpdate = () => {
     setUsers(data);
   }
 
-  const handleUserUpdate = (e, id: string) => {
+  const handleUserUpdate = async (e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault()
-    let formdata = new FormData()
+    const formdata = new FormData()
     userProfileText ? formdata.append("profileText", userProfileText) : null
     userFile ? formdata.append("file", userFile): null;
 
-    fetch(`http://localhost:3001/users/${Number(userId)}`, {
+    await fetch(`http://localhost:3001/users/${Number(userId)}`, {
       method: 'PUT',
       body: formdata,
-    }) 
+    })
+    getUsers(); 
   }
 /*
   const getUserProfileImage = async (id: string) => {
@@ -48,14 +51,14 @@ const ProfileUpdate = () => {
       return(
       users.map( user => {
         return (
-        <div style={{display: "flex", marginBottom: "20px"}}>
-          <img height={200} width={200} src={`http://localhost:3001/${user.profileImage}`} alt="" />
+        <div className="div-map-users">
+          <img src={`http://localhost:3001/${user.profileImage}`} alt="" />
           <div>
             <span>Username: {user.username}</span>  
             <br />   
-            <span>id: {user.id}</span>
+            <span>Id: {user.id}</span>
             <br />
-            <span>Profiletext: {user.profileText}</span>
+            <span>Profile text: {user.profileText}</span>
           </div>
         </div>
         )
@@ -71,12 +74,12 @@ const ProfileUpdate = () => {
     <div>  
       <div className="div-update-user">
         <h3 style={{width: "100%"}}>Update user</h3>
-        <form onSubmit={() => handleUserUpdate} action="">
-          Select id: <input onChange={(e) => setUserId(e.target.value)} type="text" /> 
-          <br />
-          New profiletext <input onChange={(e) => setUserProfileText(e.target.value)} type="text" />
-          <br /> 
-          New profileImage: <input onChange={(e) => setUserFile(e.target.files[0])} type="file" />
+        <form className="form-profile-update" onSubmit={() => handleUserUpdate} action="">
+          Select id:
+          <input onChange={(e) => setUserId(e.target.value)} type="text" /> 
+          New profiletext
+          <input onChange={(e) => setUserProfileText(e.target.value)} type="text" />
+          New profile image: <input onChange={(e) => {e.target.files && setUserFile(e.target.files[0])}} type="file" />
           <button onClick={(e) => handleUserUpdate(e)} >Submit</button>
         </form>
       </div>

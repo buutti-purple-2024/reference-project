@@ -1,12 +1,15 @@
 .div-update-user {
   display: flex;
   flex-direction: column;
+  margin: 10px;
 }
 
 .div-get-user {
   display: flex;
   flex-direction: column;
   width: 100%;
+  margin: 10px;
+
 
 }
 
@@ -18,3 +21,30 @@ h3 {
   width: 100%;
 }
 
+.div-mapped-users > img {
+  margin: 100px;
+  padding: 100px;
+}
+
+.div-map-users {
+  display: flex;
+  margin-bottom: 20px;
+}
+.div-map-users > img {
+  margin-right: 10px;
+  height: 200px;
+  width: 200px;
+  border-radius: 5px;
+  
+
+}
+
+.form-profile-update {
+  display: flex;
+  flex-direction: column;
+  width: 25%;
+}
+
+.form-profile-update > * {
+  margin-bottom: 10px;
+}
