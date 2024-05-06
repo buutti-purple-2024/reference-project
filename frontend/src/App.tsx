@@ -9,6 +9,7 @@ import Register from "./pages/register/Register";
 import Friends from "./pages/friends/Friends";
 import Chat from "./pages/chat/Chat";
 import axios from "axios";
+
 import "./style.scss"
 
 function App() {

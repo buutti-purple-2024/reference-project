@@ -1,5 +1,6 @@
 import "./comments.scss";
 import CommentData from "../types/Comment";
+
 //import fakeUsers from "../../tempData/fakeUsers";
 
 const Comments: React.FC<{ comments: CommentData[], profileImage: string, username: string }> = ({comments, profileImage, username}) => {
@@ -10,7 +11,9 @@ const Comments: React.FC<{ comments: CommentData[], profileImage: string, userna
             comments.map(comment=>(
                 <div className="comment" key={comment.comment_id}>
                 <img src={profileImage} alt="" />
+
                 <span>{username}</span>
+
                     <div className="info">
                         <span>{comment.content}</span>
                     </div>

@@ -11,7 +11,9 @@ interface Props {
     users: UserData[]; 
 }
 
+
 const Posts: React.FC<Props> = ({posts, users}) => {
+
 
     return (
     <div className="posts">

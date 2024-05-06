@@ -13,6 +13,23 @@ import fakeComments from "../../tempData/fakeComments";
 //import UserData from "../types/User";
 
 
+const fakeComments = [
+  {
+      comment_id: 1,
+      user_id: 1,
+      post_id: 1,
+      created_at: new Date().toISOString(),
+      content: "Some comment here Some comment here Some comment here Some comment here",
+  },
+  {
+      comment_id: 2,
+      user_id: 2,
+      post_id: 2,
+      created_at: new Date().toISOString(),
+      content: "Some another comment here Some another comment here Some another comment here Some another comment here Some another comment here",
+  },
+];
+
 
 const Post: React.FC<{ post: PostData, profileImage: string, username: string }> = ({ post, profileImage, username }) => {
   
@@ -61,6 +78,7 @@ const Post: React.FC<{ post: PostData, profileImage: string, username: string }>
           {commentOpen && (
           <div className="comments-container">
           <Comments comments={fakeComments} username={username} profileImage={profileImage || ''} />
+
       </div>
         )}
     </div>
