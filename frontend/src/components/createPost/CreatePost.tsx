@@ -1,6 +1,6 @@
 import "./createPost.scss";
 import { useState, ChangeEvent, FormEvent } from "react";
-import PostData from "../types/Post";
+import PostType from "../../types/PostType";
 
 export default function CreatePost() {
     return (
@@ -13,9 +13,9 @@ const initialState = {post_id: 0, user_id: 1, title: "", content: "", created_at
 
 function FormInput() {
     
-    const [post, setPost] = useState<PostData>(initialState)
+    const [post, setPost] = useState<PostType>(initialState)
     
-    const [submit, setSubmit] = useState<PostData>();
+    const [submit, setSubmit] = useState<PostType>();
 
     function handleTitle(e: ChangeEvent<HTMLInputElement>){
         e.preventDefault();

@@ -1,7 +1,7 @@
-import CommentData from "../components/types/Comment";
+import CommentType from "../types/CommentType";
 
 // temp data
-const fakeComments: CommentData[] = [
+const fakeComments: CommentType[] = [
     {
         comment_id: 1,
         user_id: 2,

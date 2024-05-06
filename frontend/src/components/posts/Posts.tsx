@@ -1,19 +1,15 @@
 import "./posts.scss";
 import Post from "../post/Post";
-import PostData from "../types/Post";
-import UserData from "../types/User";
+import PostType from "../../types/PostType";
+import UserType from "../../types/UserType";
 //import fakeUsers from "../../tempData/fakeUsers";
 
-
-
 interface Props {
-    posts: PostData[]; 
-    users: UserData[]; 
+    posts: PostType[]; 
+    users: UserType[]; 
 }
 
-
 const Posts: React.FC<Props> = ({posts, users}) => {
-
 
     return (
     <div className="posts">
@@ -24,7 +20,7 @@ const Posts: React.FC<Props> = ({posts, users}) => {
                 return <Post key={post.post_id} post={post} username={user?.username || ''} profileImage={user?.profileImage || ''} />;
             })}
     </div>
-    
+
     )
 }
 

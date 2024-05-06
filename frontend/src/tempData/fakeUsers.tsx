@@ -1,6 +1,6 @@
-import UserData from "../components/types/User"
+import UserType from "../types/UserType"
 
-const fakeUsers: UserData[] =
+const fakeUsers: UserType[] =
     [
         {
             id: 1,
