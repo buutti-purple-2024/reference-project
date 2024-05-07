@@ -1,6 +1,6 @@
 
 
-interface PostData {
+interface PostType {
     post_id: number;
     user_id: number;
     title?: string;
@@ -11,4 +11,4 @@ interface PostData {
     downvotes: number;
 }
 
-export default PostData;
+export default PostType;

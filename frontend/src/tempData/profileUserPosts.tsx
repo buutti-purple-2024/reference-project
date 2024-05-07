@@ -1,7 +1,7 @@
-import PostData from "../components/types/Post";
+import PostType from "../types/PostType";
 
 
-const profileUserPosts: PostData[] = 
+const profileUserPosts: PostType[] = 
     [
         {
             post_id: 4,

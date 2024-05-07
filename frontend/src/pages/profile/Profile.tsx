@@ -1,7 +1,7 @@
 import "./profile.scss";
 import Posts from "../../components/posts/Posts";
 import Banner from "../../components/banner/Banner";
-//import PostData from "../../components/types/Post";
+//import PostType from "../../components/types/Post";
 import profileUserPosts from "../../tempData/profileUserPosts";
 import fakeUsers from "../../tempData/fakeUsers";
 

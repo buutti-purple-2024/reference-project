@@ -1,4 +1,4 @@
-interface UserData {
+interface UserType {
     id: number;
     username: string;
     password: string;
@@ -12,4 +12,4 @@ interface UserData {
     follows: number; 
 }
 
-export default UserData;
+export default UserType;

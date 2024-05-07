@@ -1,6 +1,6 @@
-import PostData from "../components/types/Post";
+import PostType from "../types/PostType";
 //temp data
-const randomUsersPosts: PostData[] = 
+const randomUsersPosts: PostType[] = 
     [
         {
             post_id: 1,

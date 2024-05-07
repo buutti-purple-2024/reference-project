@@ -1,5 +1,5 @@
 
-interface CommentData {
+interface CommentType {
     comment_id: number;
     user_id: number;
     post_id: number;
@@ -7,4 +7,4 @@ interface CommentData {
     created_at: string; 
 }
 
-export default CommentData;
+export default CommentType;
