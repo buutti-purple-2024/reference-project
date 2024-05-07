@@ -63,6 +63,12 @@ router.use(express.json());
 router.post('/', async (req, res) => {
   try {
     const { follower_id, followed_user_id } = req.body;
+
+    // Make sure that the user cannot follow themselves
+    if (follower_id === followed_user_id) {
+      return res.status(400).json({ error: 'A user cannot follow themselves' });
+    }
+
     const newFollow = await prisma.follow.create({
       data: {
         follower_id,
@@ -73,6 +79,49 @@ router.post('/', async (req, res) => {
   } catch (error) {
     console.error('Error creating follow:', error);
     res.status(500).json({ error: 'Unable to create follow' });
+  }
+});
+
+/**
+ * @swagger
+ * /follows/{id}:
+ *   delete:
+ *     summary: Stop following a user
+ *     tags: [Follow]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID of the follow relationship to delete
+ *     responses:
+ *       200:
+ *         description: The follow relationship has been deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Follow'
+ *       404:
+ *         description: Follow relationship not found
+ *       500:
+ *         description: Internal server error
+ */
+router.delete('/:id', async (req, res) => {
+  try {
+    const followId = parseInt(req.params.id);
+    const deletedFollow = await prisma.follow.delete({
+      where: {
+        follow_id: followId,
+      },
+    });
+    if (!deletedFollow) {
+      return res.status(404).json({ error: 'Follow relationship not found' });
+    }
+    res.status(200).json(deletedFollow);
+  } catch (error) {
+    console.error('Error deleting follow:', error);
+    res.status(500).json({ error: 'Unable to delete follow' });
   }
 });
 
