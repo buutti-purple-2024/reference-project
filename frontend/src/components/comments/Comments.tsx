@@ -2,16 +2,19 @@ import "./comments.scss";
 import CommentType from "../../types/CommentType";
 import UserType from "../../types/UserType";
 
-//import fakeUsers from "../../tempData/fakeUsers";
+//"FakeUsers" and "fakeComments" are imported in Post.tsx, which sends them as props: "comments" and "users" 
 
-const Comments: React.FC<{ comments: CommentType[], users: UserType}> = ({comments, users}) => {
+interface CommentsProps {
+    comments: CommentType[];
+    users: UserType[];
+}
 
-   
+const Comments: React.FC<CommentsProps> = ({comments, users}) => {
+
     return (
         <div className="comments">{
 
-            comments.map(comment => {
-                // Find the user associated with the comment
+            comments.map(comment => { // Find the user associated with the comment
                 const user = users.find(user => user.id === comment.user_id);
                 if (!user) return null; // Handle if user is not found
                 
