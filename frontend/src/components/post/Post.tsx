@@ -13,7 +13,7 @@ import fakeUsers from "../../tempData/fakeUsers";
 //import UserType from "../types/User";
 
 
-const Post: React.FC<{ post: PostType, profileImage: string }> = ({ post, profileImage }) => {
+const Post: React.FC<{ post: PostType, username: string, profileImage: string }> = ({ post, username, profileImage }) => {
   
     //const [post, setPost] = useState<PostType>(initialPost);
 
@@ -29,8 +29,9 @@ const Post: React.FC<{ post: PostType, profileImage: string }> = ({ post, profil
           <div className="container">
             <div className="postInfo">
                 <div className="userInfo">
-                  {profileImage && <img src={profileImage} alt="" />}
-                    <div className="details">
+                    {profileImage && <img src={profileImage} alt="" />}
+                    {username}
+                    <div className="details" >
                         <Link 
                             to={`/profile/${post.user_id}`} 
                             style={{textDecoration:"none", color:"inherit"}}>
