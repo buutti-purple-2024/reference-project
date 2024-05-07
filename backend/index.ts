@@ -8,7 +8,7 @@ import cors from "cors";
 import { router as usersRouter } from "./routes/users";
 import { router as postsRouter } from "./routes/posts";
 import { router as commentsRouter } from "./routes/comments";
-import { router as followsRouter } from "./routes/follow";
+import { router as followsRouter } from "./routes/follows";
 import { router as authenticationRouter } from "./routes/authentication";
 import { router as imageRouter } from "./routes/images";
 
