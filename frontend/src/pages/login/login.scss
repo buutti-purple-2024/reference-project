@@ -18,6 +18,17 @@
             width: 50%;
             border-radius: 10px;
             min-height: 600px;
+
+        .div-error {
+            @include center-content();
+            background-color: red;
+            border: 5px solid red;
+            width: 100%;
+            border-radius: 5px;
+            padding: 5px;
+            text-wrap: wrap;
+            margin: auto
+        }
             
         h1{
             @include center-content();
