@@ -8,6 +8,7 @@ interface UserType {
     createdAt: string;
     profileText?: string;
     profileImage?: string;
+    bannerImage?: string; // add to database
     posts: number;
     follows: number; 
 }
