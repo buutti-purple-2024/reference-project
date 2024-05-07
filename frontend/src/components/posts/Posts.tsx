@@ -4,12 +4,12 @@ import PostType from "../../types/PostType";
 import UserType from "../../types/UserType";
 //import fakeUsers from "../../tempData/fakeUsers";
 
-interface Props {
+interface PostProps {
     posts: PostType[]; 
-    users: UserType[]; 
+    users: UserType[];
 }
 
-const Posts: React.FC<Props> = ({posts, users}) => {
+const Posts: React.FC<PostProps> = ({posts, users}) => {
 
     return (
     <div className="posts">
