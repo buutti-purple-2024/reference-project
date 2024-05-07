@@ -31,11 +31,31 @@ export default {
 
 Lena's update: ++++ added`
 
+## Running the backend server to connect to the database
+
+1. Change directory to ``reference-project\backend\``:
+```bash
+cd reference-project\backend\
+```
+
+2. Running the server:
+```bash
+npm run start
+
+> backend2@1.0.0 start
+> npx tsx watch --inspect ./index.ts
+
+Debugger listening on ws://127.0.0.1:9229/a401b9e6-150e-4ebe-9c52-90601522d011
+For help, see: https://nodejs.org/en/docs/inspector
+server running on port 3001
+```
+
+
 ## Resetting the development database
 
 **Caution**: the schema/tables will stay unmodified, but all the inserted data inside the tables will be reset.
 
-1. Change directory to ``reference-project\backend\prisma``:
+1. Change directory to ``reference-project\backend\``:
 ```bash
 cd reference-project\backend\
 ```
