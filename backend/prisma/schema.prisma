@@ -32,10 +32,11 @@ model User {
   chats_participant2 Chat[]    @relation("chats_user2")
 
   // Define the one-to-many relation with follows where the user is the follower
-  followsAsFollower Follow[]  @relation("follower")
+  followsAsFollower Follow[] @relation("follower")
 
   // Define the one-to-many relation with follows where the user is the followed_user
-  followsAsFollowedUser Follow[] @relation("followedUser")
+  followsAsFollowedUser Follow[]  @relation("followedUser")
+  Message               Message[]
 }
 
 model Post {
@@ -68,8 +69,20 @@ model Chat {
   user2_id   Int
   created_at DateTime @default(now())
 
-  participant1 User @relation("chats_user1", fields: [user1_id], references: [id])
-  participant2 User @relation("chats_user2", fields: [user2_id], references: [id])
+  participant1 User      @relation("chats_user1", fields: [user1_id], references: [id])
+  participant2 User      @relation("chats_user2", fields: [user2_id], references: [id])
+  chatMessages Message[]
+}
+
+model Message {
+  message_id Int      @id @default(autoincrement())
+  chat_id    Int
+  sender_id  Int
+  content    String
+  created_at DateTime @default(now())
+
+  chat   Chat @relation(fields: [chat_id], references: [chat_id])
+  sender User @relation(fields: [sender_id], references: [id])
 }
 
 model Follow {
@@ -79,8 +92,8 @@ model Follow {
   created_at       DateTime @default(now())
 
   // Define the relation back to the User model for the follower
-  follower          User      @relation("follower", fields: [follower_id], references: [id])
-  
+  follower User @relation("follower", fields: [follower_id], references: [id])
+
   // Define the relation back to the User model for the followed_user
-  followedUser      User      @relation("followedUser", fields: [followed_user_id], references: [id])
+  followedUser User @relation("followedUser", fields: [followed_user_id], references: [id])
 }
