@@ -1,4 +1,4 @@
-import "./banner.scss";
+import "./profileBanner.scss";
 
 interface BannerProps {
     
@@ -8,7 +8,7 @@ interface BannerProps {
     profileText: string;
   }
 
-const Banner: React.FC<BannerProps> = ({ username, bannerImage, profileImage, profileText }) => {
+const ProfileBanner: React.FC<BannerProps> = ({ username, bannerImage, profileImage, profileText }) => {
     return (
         <div className="banner">
             <img src={bannerImage} alt="Banner" className="banner-image" />
@@ -19,4 +19,4 @@ const Banner: React.FC<BannerProps> = ({ username, bannerImage, profileImage, pr
     );
 };
 
-export default Banner;
+export default ProfileBanner;
