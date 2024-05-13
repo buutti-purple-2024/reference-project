@@ -26,7 +26,7 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string, u
 
     return (
       <div className="post">
-          <div className="container">
+          <div className="postContainer">
             <div className="postInfo">
                 <div className="userInfo">
                     {profileImage && <img src={profileImage} alt="" />}
@@ -45,7 +45,7 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string, u
                 <Icon path={mdiDotsHorizontal} size={1} />
             </div>
 
-            <div className="content">
+            <div className="postContent">
                 <img src={post.post_img} alt=""></img>
                 <p>{post.content}</p>
             </div>
