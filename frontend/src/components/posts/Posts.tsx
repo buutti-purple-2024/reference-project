@@ -17,7 +17,15 @@ const Posts: React.FC<PostProps> = ({posts, users}) => {
                 
                 const user = users.find(user => user.id === post.user_id);
                 
-                return <Post key={post.post_id} post={post} username={user?.username || ''} profileImage={user?.profileImage || ''} />;
+                return <Post 
+                    key={post.post_id} 
+                    post={post} 
+                    username={user?.username || ''} 
+                    profileImage={user?.profileImage || ''} 
+                    upvotes={post.upvotes}
+                    downvotes={post.downvotes}
+                    />;
+                    
             })}
     </div>
 

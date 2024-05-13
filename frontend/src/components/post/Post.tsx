@@ -13,7 +13,7 @@ import fakeUsers from "../../tempData/fakeUsers";
 //import UserType from "../types/User";
 
 
-const Post: React.FC<{ post: PostType, username: string, profileImage: string }> = ({ post, username, profileImage }) => {
+const Post: React.FC<{ post: PostType, username: string, profileImage: string, upvotes: number, downvotes: number }> = ({ post, username, profileImage }) => {
   
     //const [post, setPost] = useState<PostType>(initialPost);
 
@@ -51,9 +51,8 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string }>
             </div>
 
             <div className="info"> 
-            <VotingButtons/>
-            
-            <div className="comment" onClick={toggleCommentSection}>
+              <VotingButtons upvotes={post.upvotes} downvotes={post.downvotes} />
+              <div className="comment" onClick={toggleCommentSection}>
                   <Icon path={mdiMessageOutline} size={1} /> {commentOpen ? "Hide" : "Show"} comments
               </div>
             </div>

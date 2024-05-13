@@ -6,25 +6,24 @@ import { mdiArrowDownBold } from '@mdi/js';
 import Icon from "@mdi/react";
 import "./votingButtons.scss"
 
-export default function VotingButtons() {
+const VotingButtons: React.FC<{upvotes: number, downvotes: number}> = ( {upvotes, downvotes} ) => {
     const [upVoted, setUpVoted] = useState(false);
     const [downVoted, setDownVoted] = useState(false);
     
-    const [voteSum, setVoteSum] = useState(23)
+    const [voteSum, setVoteSum] = useState(upvotes - downvotes);
     
-
     function toggleUpVote(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
         e.preventDefault();
         setUpVoted(!upVoted);
         upVoted ? setVoteSum(voteSum - 1) : setVoteSum(voteSum + 1);
-        console.log("up voted:" + upVoted);
+        //console.log("up voted:" + upVoted);
     }
 
     function toggleDownVote(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
         e.preventDefault();
         setDownVoted(!downVoted);
         downVoted ? setVoteSum(voteSum + 1) : setVoteSum(voteSum - 1);
-        console.log("down voted:" + downVoted);
+        //console.log("down voted:" + downVoted);
     }
   
     return (
@@ -51,3 +50,4 @@ export default function VotingButtons() {
 
 }
 
+export default VotingButtons;
