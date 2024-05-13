@@ -1,0 +1,30 @@
+
+hr{
+    position: absolute;
+    margin-right: 30px;
+    margin-left: 30px;
+    width: 100%;
+    color: #271c0f;
+    margin-top: 150px;
+    
+}
+
+.chat-cont {
+    position: relative;
+    width: 80%;
+    margin-top: 10%;
+    margin-left: 3%;
+    background-color: rgb(176, 176, 164);
+    
+}
+.chat-messages {
+    position: absolute;
+    margin-top: 30%;
+}
+
+img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+  }

@@ -1,0 +1,26 @@
+.chatbanner {
+    position: relative;
+    margin-top: 130px;
+    margin-bottom: 30px;
+}
+.username {
+    position: absolute;
+    margin-top: 80px;
+    top: 150%; 
+    left: 9%; 
+    font-size: 35px;
+    color: black;
+}
+.profile-image {
+    position: absolute;
+    top: 97%; 
+    left: 15%; 
+    transform: translate(-50%, -50%);
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 2px solid white; 
+}
+
+  
+  

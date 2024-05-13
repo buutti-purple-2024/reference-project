@@ -1,0 +1,55 @@
+@import "../../style.scss";
+
+.chat-messages {
+    .message {
+        display: flex;
+        gap: 10px;
+        padding: 10px;
+        margin-top: 5px;
+        margin-bottom: 10px;
+  
+    img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+   /*  .write{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin: 20px 0px; */
+
+      .content{
+        flex: 6;
+        padding: 10px;
+        border-radius: 15px;
+        border: 1px solid themed("border");
+        background-color: #d0cccc;
+        white-space: nowrap;
+        overflow: hidden; 
+        text-overflow: ellipsis;
+        max-width: 600px; 
+      }
+    
+
+        span {
+          font-weight: 500;
+          flex:5;
+          display: flex;
+          padding: 15px;
+        }
+
+      }
+
+      .data{
+        flex:1;
+        display: flex;
+        align-self: center;
+        color: rgb(91, 65, 65);
+        font-size: 12px;
+      }
+    }
+  
