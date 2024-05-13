@@ -7,10 +7,10 @@ const allUsersPosts: PostType[] =
             user_id: 2,
             title: "title1",
             post_img: "https://images.pexels.com/photos/10106884/pexels-photo-10106884.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
-            content: "Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here ",
+            content: "Testing testing... Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here ",
             created_at: new Date().toISOString(),
-            upvotes: 0,
-            downvotes: 0,
+            upvotes: 10,
+            downvotes: 2,
         },
         {
             post_id: 2,
@@ -19,8 +19,8 @@ const allUsersPosts: PostType[] =
             post_img: "https://images.pexels.com/photos/20975683/pexels-photo-20975683/free-photo-of-a-black-and-white-photo-of-a-horse-jumping-over-an-obstacle.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             content: "Some text here Some text here Some text here Some text here ",
             created_at: new Date().toISOString(),
-            upvotes: 0,
-            downvotes: 0,
+            upvotes: 7,
+            downvotes: 8,
         },
         {
             post_id: 3,
@@ -29,8 +29,8 @@ const allUsersPosts: PostType[] =
             post_img: "https://images.pexels.com/photos/17965550/pexels-photo-17965550/free-photo-of-adorable-kitten-on-tree.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             content: "Some text here Some text here Some text here Some text here ",
             created_at: new Date().toISOString(),
-            upvotes: 0,
-            downvotes: 0,
+            upvotes: 39,
+            downvotes: 5,
         },
         {
             post_id: 4,
@@ -39,7 +39,7 @@ const allUsersPosts: PostType[] =
             post_img: "https://images.pexels.com/photos/21387353/pexels-photo-21387353/free-photo-of-young-woman-reading-a-book-in-front-of-an-old-carved-door.jpeg",
             content: "Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here Some text here ",
             created_at: new Date().toISOString(),
-            upvotes: 0,
+            upvotes: 95,
             downvotes: 0,
         },
         {
@@ -49,8 +49,8 @@ const allUsersPosts: PostType[] =
             post_img: "https://images.pexels.com/photos/14280103/pexels-photo-14280103.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
             content: "Some text here Some text here Some text here Some text here ",
             created_at: new Date().toISOString(),
-            upvotes: 0,
-            downvotes: 0,
+            upvotes: 26,
+            downvotes: 2,
         },
         {
             post_id: 6,
@@ -60,7 +60,7 @@ const allUsersPosts: PostType[] =
             content: "Some text here Some text here Some text here Some text here ",
             created_at: new Date().toISOString(),
             upvotes: 0,
-            downvotes: 0,
+            downvotes: 4,
         },
     ];
 

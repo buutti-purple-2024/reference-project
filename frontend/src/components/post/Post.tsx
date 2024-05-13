@@ -13,7 +13,7 @@ import fakeUsers from "../../tempData/fakeUsers";
 //import UserType from "../types/User";
 
 
-const Post: React.FC<{ post: PostType, username: string, profileImage: string }> = ({ post, username, profileImage }) => {
+const Post: React.FC<{ post: PostType, username: string, profileImage: string, upvotes: number, downvotes: number }> = ({ post, username, profileImage }) => {
   
     //const [post, setPost] = useState<PostType>(initialPost);
 
@@ -26,7 +26,7 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string }>
 
     return (
       <div className="post">
-          <div className="container">
+          <div className="postContainer">
             <div className="postInfo">
                 <div className="userInfo">
                     {profileImage && <img src={profileImage} alt="" />}
@@ -45,15 +45,14 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string }>
                 <Icon path={mdiDotsHorizontal} size={1} />
             </div>
 
-            <div className="content">
+            <div className="postContent">
                 <img src={post.post_img} alt=""></img>
                 <p>{post.content}</p>
             </div>
 
             <div className="info"> 
-            <VotingButtons/>
-            
-            <div className="comment" onClick={toggleCommentSection}>
+              <VotingButtons upvotes={post.upvotes} downvotes={post.downvotes} />
+              <div className="comment" onClick={toggleCommentSection}>
                   <Icon path={mdiMessageOutline} size={1} /> {commentOpen ? "Hide" : "Show"} comments
               </div>
             </div>
