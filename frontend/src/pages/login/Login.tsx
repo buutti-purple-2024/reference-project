@@ -27,12 +27,12 @@ const Login = () => {
     
     const handleLoginUser = async (e : React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        console.log(username, password)
         try {
             const response = await fetch(`${baseurl}/auth/login`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"},
+                credentials: "include",
                 body: JSON.stringify({
                     "username": username,
                     "password": password
@@ -44,6 +44,21 @@ const Login = () => {
             console.log(error);
             handleErrorTimer("An error happened.")
         }
+    }
+
+    const cookiefunc = () => {
+        /*let date = new Date(Date.now())
+        date.setDate(date.getDate() + 7)
+        date.toUTCString();
+        console.log(new Date(2029, 0, 1).toUTCString())
+        document.cookie = "token=123abc; expires=" + date;
+        
+        //document.cookie = "expires="+date;
+        //document.cookie = "username=John Doe; expires=Thu, 18 Dec 2013 12:00:00 UTC; path=/";
+
+        console.log(date)
+        console.log(document.cookie)
+        */
     }
 
 
