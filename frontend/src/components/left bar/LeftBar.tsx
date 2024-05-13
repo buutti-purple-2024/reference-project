@@ -34,14 +34,14 @@ const LeftBar = () => {
                     <div className="item">
                     <Link to="/profileUpdate">
                         <Icon path={mdiAccountOutline} size={1}/>
-                        <span>Get/Update profiles</span>
+                        <span>Get/Update profiles | test</span>
                     </Link>
                     
                     </div>
                     <div className="item">
                     <Link to="/login">
                         <Icon path={mdiAccountOutline} size={1}/>
-                        <span>Login test</span>
+                        <span>Login | test</span>
                     </Link>
                     
                     </div>
