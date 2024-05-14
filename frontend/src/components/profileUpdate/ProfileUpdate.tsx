@@ -13,15 +13,49 @@ const ProfileUpdate = () => {
   const [userId, setUserId] = useState<null | string>(null);
   const [userProfileText, setUserProfileText] = useState<null | string>(null);
   const [userFile, setUserFile] = useState<null | Blob>(null);
+  const [usersAdminOnly, setUsersAdminOnly] = useState<null | userProfile>(null);
+  const [usersAuthenticatedOnly, setUsersAuthenticatedOnly] = useState<null | userProfile>(null);
 
   useEffect(() => {
     getUsers()
+    getUsersAdminRole()
+    getUsersAuthenticated()
   }, [])
 
   const getUsers = async () => {
-    const response = await fetch("http://localhost:3001/users/")
-    const data = await response.json()
-    setUsers(data);
+    try {
+      const response = await fetch("http://localhost:3001/users/", {credentials: "include"})
+      const data = await response.json()
+      if (data != "403") {
+        setUsers(data);
+        }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getUsersAuthenticated = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/users/authenticatedtest", {credentials: "include"})
+      const data = await response.json()
+      if (data != "403") {
+        setUsersAuthenticatedOnly(data);
+        }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const getUsersAdminRole = async () => {
+    try {
+      const response = await fetch("http://localhost:3001/users/admintest", {credentials: "include"})
+      const data = await response.json()
+      if (data != "403") {
+      setUsersAdminOnly(data);
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const handleUserUpdate = async (e : React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
@@ -51,7 +85,7 @@ const ProfileUpdate = () => {
       return(
       users.map( user => {
         return (
-        <div className="div-map-users">
+        <div key={user.id} className="div-map-users">
           <img src={`http://localhost:3001/${user.profileImage}`} alt="" />
           <div>
             <span>Username: {user.username}</span>  
@@ -70,6 +104,57 @@ const ProfileUpdate = () => {
     }
   }
 
+  const mapAdminRoleUsers = () => {
+    if (usersAdminOnly != null) {
+      return(
+      usersAdminOnly.map( user => {
+        return (
+        <div key={user.id} className="div-map-users">
+          <img src={`http://localhost:3001/${user.profileImage}`} alt="" />
+          <div>
+            <span>Username: {user.username}</span>  
+            <br />   
+            <span>Id: {user.id}</span>
+            <br />
+            <span>Profile text: {user.profileText}</span>
+          </div>
+        </div>
+        )
+      })
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+  const mapAuthenticatedUsers = () => {
+    //console.log(usersAuthenticatedOnly)
+    if (usersAuthenticatedOnly != null) {
+      return(
+      usersAuthenticatedOnly.map( user => {
+        return (
+        <div key={user.id} className="div-map-users">
+          <img src={`http://localhost:3001/${user.profileImage}`} alt="" />
+          <div>
+            <span>Username: {user.username}</span>  
+            <br />   
+            <span>Id: {user.id}</span>
+            <br />
+            <span>Profile text: {user.profileText}</span>
+          </div>
+        </div>
+        )
+      })
+      )
+    }
+    else {
+      return null;
+    }
+  }
+
+
+
   return (
     <div>  
       <div className="div-update-user">
@@ -87,6 +172,14 @@ const ProfileUpdate = () => {
         <h3>List of all users</h3>
         <div className="div-mapped-users">  
           {users ? mapUsers(): null}
+        </div>
+        <h3>List of all users | Visible for authenticated users only</h3>
+        <div className="div-mapped-users">  
+          {usersAuthenticatedOnly ? mapAuthenticatedUsers(): null}
+        </div>
+        <h3>List of all users | Visible for admins only</h3>
+        <div className="div-mapped-users">  
+          {usersAdminOnly ? mapAdminRoleUsers(): null}
         </div>
       </div>
     </div>

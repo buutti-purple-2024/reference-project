@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import swaggerUI from "swagger-ui-express";
 import swaggerJsDoc from "swagger-jsdoc";
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import { router as usersRouter } from "./routes/users";
 import { router as postsRouter } from "./routes/posts";
@@ -18,9 +19,12 @@ import bcrypt from "bcrypt";
 
 dotenv.config();
 const app = express();
-app.use(cors());
+app.use(express.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use(cors({credentials: true, origin: "http://localhost:5173"}));
 app.use(express.json());
 app.use(express.static("uploads"));
+
 
 const PORT = 3001;
 const prisma = new PrismaClient();

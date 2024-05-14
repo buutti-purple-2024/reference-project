@@ -144,6 +144,8 @@ router.post("/login", async (req, res) => {
 				//const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
 				const accessToken = generateAccessToken(user);
 				const refreshToken = await generateRefreshToken(user);
+				res.cookie("accesstoken", accessToken, { maxAge: 24 * 60 * 60 * 1000,  httpOnly: false});
+				res.cookie("refreshtoken", refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
 				res.json({accessToken: accessToken, refreshToken: refreshToken});
 			}
 			else {
@@ -158,7 +160,7 @@ router.post("/login", async (req, res) => {
 });
 
 const generateAccessToken = (user : {name : string} ) => {
-	if(process.env.ACCESS_TOKEN_SECRET) return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"});
+	if(process.env.ACCESS_TOKEN_SECRET) return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30s"});
 };
 
 const generateRefreshToken = async (user : {name: string}) => {

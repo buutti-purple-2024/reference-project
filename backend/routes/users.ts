@@ -193,6 +193,7 @@ router.use(express.json());
  *                 $ref: '#/components/schemas/User'
  */
 router.get("/", async (req: Request, res: Response) => {
+	//console.log(req.cookies);
 	const users = await prisma.user.findMany({});
 	res.send(users);
 });
