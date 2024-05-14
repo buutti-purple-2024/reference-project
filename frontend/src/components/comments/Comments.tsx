@@ -1,15 +1,13 @@
 import "./comments.scss";
-import CommentType from "../../types/CommentType";
-import UserType from "../../types/UserType";
+import CommentsContext from "../../contexts/CommentsContext";
+import UsersContext from "../../contexts/UsersContext";
+import { useContext } from 'react';
 
-//"FakeUsers" and "fakeComments" are imported in Post.tsx, which sends them as props: "comments" and "users" 
 
-interface CommentsProps {
-    comments: CommentType[];
-    users: UserType[];
-}
-
-const Comments: React.FC<CommentsProps> = ({comments, users}) => {
+const Comments: React.FC = () => {
+    
+    const comments  = useContext(CommentsContext);
+    const  users  = useContext(UsersContext);
 
     return (
         <div className="comments">{
