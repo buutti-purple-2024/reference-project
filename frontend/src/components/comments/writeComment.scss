@@ -1,0 +1,31 @@
+.commentForm{
+    display: flex;
+    flex-wrap: wrap;
+
+    form{
+        display: flex;
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    textarea{
+        border: none;
+        width: 100%;
+        padding: 5px;
+        padding-left: 10px;
+        border-top-left-radius: 6px;
+        border-bottom-left-radius: 6px;
+        font-family: Arial, Helvetica, sans-serif;
+        resize: vertical;
+
+    }
+
+    button{
+        border: none;
+        border-top-right-radius: 6px;
+        border-bottom-right-radius: 6px;
+        background-color: rgb(170, 170, 170);
+    }
+
+
+}
