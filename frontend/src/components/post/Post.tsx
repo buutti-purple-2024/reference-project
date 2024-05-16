@@ -10,10 +10,11 @@ import { useState } from "react";
 import PostType from "../../types/PostType";
 import fakeComments from "../../tempData/fakeComments";
 import fakeUsers from "../../tempData/fakeUsers";
+import WriteComment from "../comments/WriteComment";
 //import UserType from "../types/User";
 
 
-const Post: React.FC<{ post: PostType, username: string, profileImage: string, upvotes: number, downvotes: number }> = ({ post, username, profileImage }) => {
+const Post: React.FC<{ post: PostType, username: string, profileImage: string, upvotes: number, downvotes: number}> = ({ post, username, profileImage }) => {
   
     //const [post, setPost] = useState<PostType>(initialPost);
 
@@ -55,13 +56,20 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string, u
               <div className="comment" onClick={toggleCommentSection}>
                   <Icon path={mdiMessageOutline} size={1} /> {commentOpen ? "Hide" : "Show"} comments
               </div>
-            </div>
-          
+            </div> 
+
+          <div>
             {commentOpen && (
               <div className="comments-container">
                 <Comments comments={fakeComments} users={fakeUsers} />
               </div>
             )}
+          </div>
+          
+          <div>
+              <WriteComment/>
+          </div>
+            
           </div>
     </div>
   );
