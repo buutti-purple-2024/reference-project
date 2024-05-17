@@ -67,7 +67,11 @@ router.use(express.json());
  */
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const posts = await prisma.post.findMany({});
+    const posts = await prisma.post.findMany({
+      include: {
+        user: true
+      }
+    });
     res.send(posts);
   } catch (error) {
     console.log(error);

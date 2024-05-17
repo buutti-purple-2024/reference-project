@@ -3,6 +3,7 @@ import Posts from "../../components/posts/Posts";
 import CreatePost from "../../components/createPost/CreatePost";
 import allUsersPosts from "../../tempData/allUsersPosts";
 import fakeUsers from "../../tempData/fakeUsers";
+import PostsAxios from "../../components/posts/PostsAxios";
 
 
 const Home = () => {
@@ -11,6 +12,7 @@ const Home = () => {
             <CreatePost />
             <h2>Recent posts</h2>
             <Posts posts={allUsersPosts} users={fakeUsers}/>
+            <PostsAxios/>
         </div>
     )
 }
