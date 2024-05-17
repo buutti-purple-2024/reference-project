@@ -6,19 +6,21 @@ import Icon from '@mdi/react';
 import Comments from "../comments/Comments";
 import VotingButtons from "../votingButtons/votingButtons";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import PostType from "../../types/PostType";
-import fakeComments from "../../tempData/fakeComments";
-import fakeUsers from "../../tempData/fakeUsers";
+import UsersContext from "../../contexts/UsersContext";
+import CommentsContext from "../../contexts/CommentsContext";
+//import fakeComments from "../../tempData/fakeComments";
+//import fakeUsers from "../../tempData/fakeUsers";
 import WriteComment from "../comments/WriteComment";
 //import UserType from "../types/User";
 
 
 const Post: React.FC<{ post: PostType, username: string, profileImage: string, upvotes: number, downvotes: number}> = ({ post, username, profileImage }) => {
   
-    //const [post, setPost] = useState<PostType>(initialPost);
-
     const [ commentOpen, setCommentOpen ] = useState(false);
+    const comments = useContext(CommentsContext);
+    const users = useContext(UsersContext);
 
     const toggleCommentSection = () => {
       setCommentOpen(!commentOpen);
@@ -36,7 +38,6 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string, u
                         <Link 
                             to={`/profile/${post.user_id}`} 
                             style={{textDecoration:"none", color:"inherit"}}>
-                            {/* <span className="name">{title}</span> */}
                             <Icon path={mdiDragVertical} size={1} />
                         </Link>
                     </div>
@@ -61,7 +62,7 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string, u
           <div>
             {commentOpen && (
               <div className="comments-container">
-                <Comments comments={fakeComments} users={fakeUsers} />
+                <Comments comments={comments} users={users} />
               </div>
             )}
           </div>

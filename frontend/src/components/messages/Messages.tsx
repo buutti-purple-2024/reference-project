@@ -1,17 +1,19 @@
 import "./messages.scss";
 import WriteMessage from "./WriteMessage";
 import MessageType from "../../types/MessageType";
-//import fakeMessages from "../../tempData/fakeMessages";
-import UserType from "../../types/UserType";
-//import fakeUsers from "../../tempData/fakeUsers";
+//import UserType from "../../types/UserType";
+import MessageContext from "../../contexts/MessagesContext";
+import UsersContext from "../../contexts/UsersContext";
+import { useContext } from "react";
 
 interface MessagesProps {
-    messages: MessageType[];
     setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>;
-    users: UserType[];
 }
 
-const Messages: React.FC<MessagesProps> = ({ messages, setMessages, users }) => {
+const Messages: React.FC<MessagesProps> = ({ setMessages }) => {
+
+    const messages = useContext(MessageContext);
+    const users = useContext(UsersContext);
 
     return (
         <div className="chat-messages">
