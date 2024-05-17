@@ -66,17 +66,17 @@ router.use(express.json());
  *                 $ref: '#/components/schemas/Post'
  */
 router.get("/", async (req: Request, res: Response) => {
-  try {
-    const posts = await prisma.post.findMany({
-      include: {
-        user: true
-      }
-    });
-    res.send(posts);
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal server error");
-  }
+	try {
+		const posts = await prisma.post.findMany({
+			include: {
+				user: true
+			}
+		});
+		res.send(posts);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Internal server error");
+	}
 });
 
 /**
@@ -103,21 +103,21 @@ router.get("/", async (req: Request, res: Response) => {
  *         description: Post not found
  */
 router.get("/:id", async (req: Request, res: Response) => {
-  try {
-    const post = await prisma.post.findUnique({
-      where: {
-        post_id: Number(req.params.id)
-      }
-    });
-    if (post) {
-      res.send(post);
-    } else {
-      res.status(404).send("Post not found");
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).send("Internal server error");
-  }
+	try {
+		const post = await prisma.post.findUnique({
+			where: {
+				post_id: Number(req.params.id)
+			}
+		});
+		if (post) {
+			res.send(post);
+		} else {
+			res.status(404).send("Post not found");
+		}
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Internal server error");
+	}
 });
 
 /**
@@ -143,26 +143,26 @@ router.get("/:id", async (req: Request, res: Response) => {
  *         description: Internal server error
  */
 router.post("/", async (req, res) => {
-    // Use validationResult middleware here to check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+	// Use validationResult middleware here to check for validation errors
+	const errors = validationResult(req);
+	if (!errors.isEmpty()) {
+		return res.status(400).json({ errors: errors.array() });
+	}
   
-    try {
-      const newPost = await prisma.post.create({
-        data: {
-          title: req.body.title,
-          content: req.body.content,
-          user_id: req.body.user_id // Assuming user_id is provided in the request body
-        }
-      });
-      res.json(newPost);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send("Internal server error");
-    }
-  });
+	try {
+		const newPost = await prisma.post.create({
+			data: {
+				title: req.body.title,
+				content: req.body.content,
+				user_id: req.body.user_id // Assuming user_id is provided in the request body
+			}
+		});
+		res.json(newPost);
+	} catch (error) {
+		console.log(error);
+		res.status(500).send("Internal server error");
+	}
+});
   
 
 /**
@@ -195,22 +195,22 @@ router.post("/", async (req, res) => {
  *         description: Post not found
  */
 router.put("/:id", async (req: Request, res: Response) => {
-  if (validationResult(req)) {
-    try {
-      const updatedPost = await prisma.post.update({
-        where: {
-          post_id: Number(req.params.id)
-        },
-        data: req.body
-      });
-      res.json(updatedPost);
-    } catch (error) {
-      console.log(error);
-      res.status(404).send("Post not found");
-    }
-  } else {
-    res.status(400).send("Invalid request body");
-  }
+	if (validationResult(req)) {
+		try {
+			const updatedPost = await prisma.post.update({
+				where: {
+					post_id: Number(req.params.id)
+				},
+				data: req.body
+			});
+			res.json(updatedPost);
+		} catch (error) {
+			console.log(error);
+			res.status(404).send("Post not found");
+		}
+	} else {
+		res.status(400).send("Invalid request body");
+	}
 });
 
 /**
@@ -237,17 +237,17 @@ router.put("/:id", async (req: Request, res: Response) => {
  *         description: Post not found
  */
 router.delete("/:id", async (req: Request, res: Response) => {
-  try {
-    const deletedPost = await prisma.post.delete({
-      where: {
-        post_id: Number(req.params.id)
-      }
-    });
-    res.send(deletedPost);
-  } catch (error) {
-    console.log(error);
-    res.status(404).send("Post not found");
-  }
+	try {
+		const deletedPost = await prisma.post.delete({
+			where: {
+				post_id: Number(req.params.id)
+			}
+		});
+		res.send(deletedPost);
+	} catch (error) {
+		console.log(error);
+		res.status(404).send("Post not found");
+	}
 });
 
 module.exports = { router };

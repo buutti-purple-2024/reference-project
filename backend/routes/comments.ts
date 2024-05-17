@@ -1,5 +1,5 @@
-import express from 'express';
-import { PrismaClient } from '@prisma/client';
+import express from "express";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 export const router = express.Router();
@@ -64,21 +64,21 @@ router.use(express.json());
  *       500:
  *         description: Internal server error
  */
-router.post('/', async (req, res) => {
-  try {
-    const { user_id, post_id, content } = req.body;
-    const newComment = await prisma.comment.create({
-      data: {
-        user_id,
-        post_id,
-        content,
-      },
-    });
-    res.status(201).json(newComment);
-  } catch (error) {
-    console.error('Error creating comment:', error);
-    res.status(500).json({ error: 'Unable to create comment' });
-  }
+router.post("/", async (req, res) => {
+	try {
+		const { user_id, post_id, content } = req.body;
+		const newComment = await prisma.comment.create({
+			data: {
+				user_id,
+				post_id,
+				content,
+			},
+		});
+		res.status(201).json(newComment);
+	} catch (error) {
+		console.error("Error creating comment:", error);
+		res.status(500).json({ error: "Unable to create comment" });
+	}
 });
 
 /**
@@ -97,14 +97,14 @@ router.post('/', async (req, res) => {
  *               items:
  *                 $ref: '#/components/schemas/Comment'
  */
-router.get('/', async (req, res) => {
-  try {
-    const comments = await prisma.comment.findMany();
-    res.status(200).json(comments);
-  } catch (error) {
-    console.error('Error fetching comments:', error);
-    res.status(500).json({ error: 'Unable to fetch comments' });
-  }
+router.get("/", async (req, res) => {
+	try {
+		const comments = await prisma.comment.findMany();
+		res.status(200).json(comments);
+	} catch (error) {
+		console.error("Error fetching comments:", error);
+		res.status(500).json({ error: "Unable to fetch comments" });
+	}
 });
 
 /**
@@ -132,19 +132,19 @@ router.get('/', async (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.get('/user/:userId', async (req, res) => {
-  try {
-    const userId = parseInt(req.params.userId);
-    const userComments = await prisma.comment.findMany({
-      where: {
-        user_id: userId,
-      },
-    });
-    res.status(200).json(userComments);
-  } catch (error) {
-    console.error('Error fetching user comments:', error);
-    res.status(500).json({ error: 'Unable to fetch user comments' });
-  }
+router.get("/user/:userId", async (req, res) => {
+	try {
+		const userId = parseInt(req.params.userId);
+		const userComments = await prisma.comment.findMany({
+			where: {
+				user_id: userId,
+			},
+		});
+		res.status(200).json(userComments);
+	} catch (error) {
+		console.error("Error fetching user comments:", error);
+		res.status(500).json({ error: "Unable to fetch user comments" });
+	}
 });
 
 /**
@@ -172,19 +172,19 @@ router.get('/user/:userId', async (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.get('/post/:postId', async (req, res) => {
-  try {
-    const postId = parseInt(req.params.postId);
-    const postComments = await prisma.comment.findMany({
-      where: {
-        post_id: postId,
-      },
-    });
-    res.status(200).json(postComments);
-  } catch (error) {
-    console.error('Error fetching post comments:', error);
-    res.status(500).json({ error: 'Unable to fetch post comments' });
-  }
+router.get("/post/:postId", async (req, res) => {
+	try {
+		const postId = parseInt(req.params.postId);
+		const postComments = await prisma.comment.findMany({
+			where: {
+				post_id: postId,
+			},
+		});
+		res.status(200).json(postComments);
+	} catch (error) {
+		console.error("Error fetching post comments:", error);
+		res.status(500).json({ error: "Unable to fetch post comments" });
+	}
 });
 
 module.exports = { router };

@@ -1,5 +1,5 @@
-import express from 'express';
-import { PrismaClient } from '@prisma/client';
+import express from "express";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 export const router = express.Router();
@@ -60,26 +60,26 @@ router.use(express.json());
  *       500:
  *         description: Internal server error
  */
-router.post('/', async (req, res) => {
-  try {
-    const { follower_id, followed_user_id } = req.body;
+router.post("/", async (req, res) => {
+	try {
+		const { follower_id, followed_user_id } = req.body;
 
-    // Make sure that the user cannot follow themselves
-    if (follower_id === followed_user_id) {
-      return res.status(400).json({ error: 'A user cannot follow themselves' });
-    }
+		// Make sure that the user cannot follow themselves
+		if (follower_id === followed_user_id) {
+			return res.status(400).json({ error: "A user cannot follow themselves" });
+		}
 
-    const newFollow = await prisma.follow.create({
-      data: {
-        follower_id,
-        followed_user_id,
-      },
-    });
-    res.status(201).json(newFollow);
-  } catch (error) {
-    console.error('Error creating follow:', error);
-    res.status(500).json({ error: 'Unable to create follow' });
-  }
+		const newFollow = await prisma.follow.create({
+			data: {
+				follower_id,
+				followed_user_id,
+			},
+		});
+		res.status(201).json(newFollow);
+	} catch (error) {
+		console.error("Error creating follow:", error);
+		res.status(500).json({ error: "Unable to create follow" });
+	}
 });
 
 /**
@@ -107,22 +107,22 @@ router.post('/', async (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.delete('/:id', async (req, res) => {
-  try {
-    const followId = parseInt(req.params.id);
-    const deletedFollow = await prisma.follow.delete({
-      where: {
-        follow_id: followId,
-      },
-    });
-    if (!deletedFollow) {
-      return res.status(404).json({ error: 'Follow relationship not found' });
-    }
-    res.status(200).json(deletedFollow);
-  } catch (error) {
-    console.error('Error deleting follow:', error);
-    res.status(500).json({ error: 'Unable to delete follow' });
-  }
+router.delete("/:id", async (req, res) => {
+	try {
+		const followId = parseInt(req.params.id);
+		const deletedFollow = await prisma.follow.delete({
+			where: {
+				follow_id: followId,
+			},
+		});
+		if (!deletedFollow) {
+			return res.status(404).json({ error: "Follow relationship not found" });
+		}
+		res.status(200).json(deletedFollow);
+	} catch (error) {
+		console.error("Error deleting follow:", error);
+		res.status(500).json({ error: "Unable to delete follow" });
+	}
 });
 
 /**
@@ -141,14 +141,14 @@ router.delete('/:id', async (req, res) => {
  *               items:
  *                 $ref: '#/components/schemas/Follow'
  */
-router.get('/', async (req, res) => {
-  try {
-    const follows = await prisma.follow.findMany();
-    res.status(200).json(follows);
-  } catch (error) {
-    console.error('Error fetching follows:', error);
-    res.status(500).json({ error: 'Unable to fetch follows' });
-  }
+router.get("/", async (req, res) => {
+	try {
+		const follows = await prisma.follow.findMany();
+		res.status(200).json(follows);
+	} catch (error) {
+		console.error("Error fetching follows:", error);
+		res.status(500).json({ error: "Unable to fetch follows" });
+	}
 });
 
 /**
@@ -176,22 +176,22 @@ router.get('/', async (req, res) => {
  *       500:
  *         description: Internal server error
  */
-router.get('/userFollows/:userId', async (req, res) => {
-    try {
-      const userId = parseInt(req.params.userId);
-      const userFollowers = await prisma.follow.findMany({
-        where: {
-          followed_user_id: userId,
-        },
-      });
-      res.status(200).json(userFollowers);
-    } catch (error) {
-      console.error('Error fetching user followers:', error);
-      res.status(500).json({ error: 'Unable to fetch user followers' });
-    }
-  });
+router.get("/userFollows/:userId", async (req, res) => {
+	try {
+		const userId = parseInt(req.params.userId);
+		const userFollowers = await prisma.follow.findMany({
+			where: {
+				followed_user_id: userId,
+			},
+		});
+		res.status(200).json(userFollowers);
+	} catch (error) {
+		console.error("Error fetching user followers:", error);
+		res.status(500).json({ error: "Unable to fetch user followers" });
+	}
+});
   
-  /**
+/**
    * @swagger
    * /follows/userFollowing/{userId}:
    *   get:
@@ -216,19 +216,19 @@ router.get('/userFollows/:userId', async (req, res) => {
    *       500:
    *         description: Internal server error
    */
-  router.get('/userFollowing/:userId', async (req, res) => {
-    try {
-      const userId = parseInt(req.params.userId);
-      const userFollowing = await prisma.follow.findMany({
-        where: {
-          follower_id: userId,
-        },
-      });
-      res.status(200).json(userFollowing);
-    } catch (error) {
-      console.error('Error fetching user following:', error);
-      res.status(500).json({ error: 'Unable to fetch user following' });
-    }
-  });
+router.get("/userFollowing/:userId", async (req, res) => {
+	try {
+		const userId = parseInt(req.params.userId);
+		const userFollowing = await prisma.follow.findMany({
+			where: {
+				follower_id: userId,
+			},
+		});
+		res.status(200).json(userFollowing);
+	} catch (error) {
+		console.error("Error fetching user following:", error);
+		res.status(500).json({ error: "Unable to fetch user following" });
+	}
+});
 
 module.exports = { router };
