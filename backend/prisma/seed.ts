@@ -1,45 +1,45 @@
-import { PrismaClient } from '@prisma/client'
-import bcrypt from 'bcrypt'
+import { PrismaClient } from "@prisma/client"
+import bcrypt from "bcrypt"
 
 const prisma = new PrismaClient()
 
 async function main() {
   try {
     // Hashed passwords
-    const hashedPasswordAlice = await bcrypt.hash('alicePassword', 10)
-    const hashedPasswordBob = await bcrypt.hash('bobPassword', 10)
+    const hashedPasswordAlice = await bcrypt.hash("alicePassword", 10)
+    const hashedPasswordBob = await bcrypt.hash("bobPassword", 10)
 
     // Seed users
     const user1 = await prisma.user.upsert({
-      where: { username: 'alice' },
+      where: { username: "alice" },
       update: {},
       create: {
-        username: 'alice',
+        username: "alice",
         password: hashedPasswordAlice,
-        role: 'user',
+        role: "user",
         // Other user fields...
       },
     })
 
     const user2 = await prisma.user.upsert({
-      where: { username: 'bob' },
+      where: { username: "bob" },
       update: {},
       create: {
-        username: 'bob',
+        username: "bob",
         password: hashedPasswordBob,
-        role: 'user',
+        role: "user",
         // Other user fields...
       },
     })
 
-    console.log('Users created:', user1, user2)
+    console.log("Users created:", user1, user2)
 
     // Seed posts
     const post1 = await prisma.post.create({
       data: {
         user: { connect: { id: user1.id } },
-        title: 'First Post',
-        content: 'This is the content of the first post.',
+        title: "First Post",
+        content: "This is the content of the first post.",
         // Other post fields...
       },
     })
@@ -47,20 +47,20 @@ async function main() {
     const post2 = await prisma.post.create({
       data: {
         user: { connect: { id: user2.id } },
-        title: 'Second Post',
-        content: 'This is the content of the second post.',
+        title: "Second Post",
+        content: "This is the content of the second post.",
         // Other post fields...
       },
     })
 
-    console.log('Posts created:', post1, post2)
+    console.log("Posts created:", post1, post2)
 
     // Seed comments
     const comment1 = await prisma.comment.create({
       data: {
         user: { connect: { id: user1.id } },
         post: { connect: { post_id: post1.post_id } },
-        content: 'Comment on the first post by Alice.',
+        content: "Comment on the first post by Alice.",
         // Other comment fields...
       },
     })
@@ -69,12 +69,12 @@ async function main() {
       data: {
         user: { connect: { id: user2.id } },
         post: { connect: { post_id: post2.post_id } },
-        content: 'Comment on the second post by Bob.',
+        content: "Comment on the second post by Bob.",
         // Other comment fields...
       },
     })
 
-    console.log('Comments created:', comment1, comment2)
+    console.log("Comments created:", comment1, comment2)
 
     // Seed follows
     const follow = await prisma.follow.create({
@@ -85,9 +85,9 @@ async function main() {
       },
     })
 
-    console.log('Follow created:', follow)
+    console.log("Follow created:", follow)
   } catch (error) {
-    console.error('Error seeding database:', error)
+    console.error("Error seeding database:", error)
     throw error
   } finally {
     await prisma.$disconnect()
@@ -95,6 +95,6 @@ async function main() {
 }
 
 main().catch((error) => {
-  console.error('Unhandled error during seeding:', error)
+  console.error("Unhandled error during seeding:", error)
   process.exit(1)
 })
