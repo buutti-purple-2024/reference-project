@@ -1,10 +1,12 @@
 import "./comments.scss";
 import CommentsContext from "../../contexts/CommentsContext";
 import UsersContext from "../../contexts/UsersContext";
+import CommentType from "../../types/CommentType";
+import UserType from "../../types/UserType";
 import { useContext } from 'react';
 
 
-const Comments: React.FC = () => {
+const Comments: React.FC<{comments: CommentType[], users: UserType[] }> = () => {
     
     const comments  = useContext(CommentsContext);
     const  users  = useContext(UsersContext);
