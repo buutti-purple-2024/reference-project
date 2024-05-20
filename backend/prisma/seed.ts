@@ -40,6 +40,9 @@ async function main() {
 				user: { connect: { id: user1.id } },
 				title: "First Post",
 				content: "This is the content of the first post.",
+				upvotes: 10,
+				downvotes: 2,
+				image: "https://images.pexels.com/photos/21387353/pexels-photo-21387353/free-photo-of-young-woman-reading-a-book-in-front-of-an-old-carved-door.jpeg",
 				// Other post fields...
 			},
 		});
@@ -49,6 +52,9 @@ async function main() {
 				user: { connect: { id: user2.id } },
 				title: "Second Post",
 				content: "This is the content of the second post.",
+				upvotes: 1,
+				downvotes: 12,
+				image: "https://images.pexels.com/photos/14280103/pexels-photo-14280103.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
 				// Other post fields...
 			},
 		});
