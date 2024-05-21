@@ -3,23 +3,21 @@
 .post {
   display: flex;
   align-items: center;
- 
-
+  margin-bottom: 30px;
+  
     .postContainer {
-      margin-top: 30px;
+      width: 100%;
+      max-width: 800px;
       padding: 20px;
       background-color: rgb(198, 195, 182);
-      max-width: 800px;
-      flex: 1 1 100%;
       border-radius: 10px;
+      box-sizing: border-box; // Include padding in the width calculation
       
-
       .postInfo {
         display: flex;
         align-items: center;
         justify-content: space-between;
         
-
         .userInfo {
           display: flex;
           gap: 20px;
@@ -44,7 +42,7 @@
             }
 
             .date {
-              margin-right: auto;
+              //margin-right: auto;
               font-size: 14px;
             }
           }
@@ -52,18 +50,24 @@
       }
 
       .postContent {
+        display: flex;
+        flex-direction: column;
         margin: 20px 0px;
-        
 
         img {
           background-color: rgba(0, 0, 0, 0.458);
           width: 100%;
           max-height: 700px;
-          object-fit: contain;
+          object-fit: scale-down;
           margin-top: 10px;
+        } 
+        
+        p {
+          flex-grow: 1;
         }
-
+        
       }
+
       .info {
         display: flex;
         align-items: center;

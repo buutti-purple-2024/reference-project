@@ -1,7 +1,5 @@
 import "./posts.scss";
 import Post from "../post/Post";
-//import UsersContext from "../../contexts/UsersContext";
-//import UsersPostsContext from "../../contexts/UsersPostsContext";
 import { useEffect, useState } from 'react';
 import axios from "axios";
 import PostType from "../../types/PostType";
@@ -30,11 +28,11 @@ const PostsAxios: React.FC = () => {
     const mapPosts = () => {
       return(
       posts?.map(post => {
-        //const user = users.find(user => user.id === post.user_id);
+      
         return <Post 
             key={post.post_id} 
             post={post} 
-            username={post.user.username || ''} //näyttää usernamen
+            username={post.user.username || ''}
             profileImage={post.user.profileImage || ''}
             //upvotes={post.upvotes}
             //downvotes={post.downvotes}
@@ -45,7 +43,7 @@ const PostsAxios: React.FC = () => {
     return (
     <div className="posts">
       {console.log(posts)}
-      <h1>Posts fetched from backend</h1>
+      <h2>Posts fetched from backend</h2>
       {posts && mapPosts()}
     </div>
 
