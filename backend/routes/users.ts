@@ -5,6 +5,7 @@ import { PrismaClient } from "@prisma/client";
 import {  validationResult } from "express-validator";
 const prisma = new PrismaClient();
 import multer from "multer";
+import bcrypt from "bcrypt";
 
 const storage = multer.diskStorage({
 	destination: function (req, file, cb) {
@@ -199,6 +200,7 @@ router.get("/", async (req: Request, res: Response) => {
 });
 
 router.get("/authenticatedtest", authenticationMiddleware, async (req: Request, res: Response) => {
+	console.log("middleware user:", req.user)
 	const users = await prisma.user.findMany({});
 	res.send(users);
 }
@@ -230,17 +232,55 @@ router.get("/:id", async (req: Request, res: Response) => {
 
 
 
-router.put("/:id", upload.single("file"), async (req: Request, res: Response) => {
+
+router.put("/update", upload.single("file"), authenticationMiddleware, async (req: Request, res: Response) => {
+
+	const user = await prisma.user.findUnique({
+		where: {
+			username: req.user,
+		},
+	});
+	if (user == null) {
+		return res.status(400).send("Cannot find user");
+	}
+
+
 	
+	if (req.body.currentPassword) {
+		try {
+			if (await bcrypt.compare(req.body.currentPassword, user.password)) {
+				const decodedUser = {name: req.body.username};
+				
+			} else {
+				res.status(400).send("Wrong username or password");
+				return;
+			}
+		} catch (error) {
+			console.log(error)
+		}
+	}
+
+	
+
+	
+
+	let hashedPassword;
+	let salt;
+
+	if (req.body.password) {
+		salt = await bcrypt.genSalt();
+		hashedPassword = await bcrypt.hash(req.body.password, salt);
+
+	}
 	if (validationResult(req)) {
 		try {
 			const updatedUser = await prisma.user.update({
 				where: {
-					id: Number(req.params.id),
+					id: Number(user.id),
 				},
 				data: {
 					//username: req.body.username,
-					//password: req.body.password,
+					password: hashedPassword,
 					//role: req.body.role,
 					//token: req.body.token,
 					//tokenExpire: req.body.tokenExpire,
@@ -265,6 +305,43 @@ router.put("/:id", upload.single("file"), async (req: Request, res: Response) =>
 	}
 	
 });
+
+router.put("/:id", upload.single("file"), async (req: Request, res: Response) => {
+
+	if (validationResult(req)) {
+		try {
+			const updatedUser = await prisma.user.update({
+				where: {
+					id: Number(req.params.id),
+				},
+				data: {
+					//username: req.body.username,
+					//password: hashedPassword,
+					//role: req.body.role,
+					//token: req.body.token,
+					//tokenExpire: req.body.tokenExpire,
+					//createdAt: req.body.username,
+					profileText: req.body.profileText,
+					profileImage: req.file?.filename,
+					//posts: req.body.posts,
+					//follows: req.body.follows,
+					//post: req.body.post,
+					//comments: req.body.comments,
+					//chats_participant1: req.body.chats_participant1,
+					//chats_participant2: req.body.chats_participant2,
+					//followsAsFollower: req.body.followsAsFollower,
+					//followsAsFollowedUser: req.body.followsAsFollowedUser
+				},
+			});
+			res.json(updatedUser);
+		} catch (error) {
+			console.log(error);
+			res.status(404).send("User not found");
+		}
+	}
+	
+});
+
 
 router.delete("/:id", async (req: Request, res: Response) => {
 	try {
