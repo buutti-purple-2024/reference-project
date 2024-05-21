@@ -21,6 +21,7 @@ export const authenticationMiddleware = async (req:Request,res:Response,next:Nex
 			/*res.cookie("token", token, {
 				httpOnly: true
 			});*/
+			req.user = decoded.name
 			next();
 		} catch (error) {
 			if (req.cookies.refreshtoken) {
@@ -36,6 +37,7 @@ export const authenticationMiddleware = async (req:Request,res:Response,next:Nex
 						//console.log(newAccessToken)
 						res.cookie("accesstoken", newAccessToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
 						//console.log("new access token generated");
+						req.user = user.username;
 						next();
 					}
 				}	

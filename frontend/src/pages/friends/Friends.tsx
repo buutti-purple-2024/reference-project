@@ -5,7 +5,7 @@ const Friends = () => {
     return (
         <div className="friends">
             
-            <h2>My friends here</h2>
+            <h2>My friends here, add friends</h2>
            
         </div>
     )

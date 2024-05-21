@@ -80,7 +80,7 @@ function App() {
 					<Route path="*" element={<div>Not Found</div>} />
 					<Route path="/chat" element={<Chat />} />
 					<Route path="login" element={<Login />} />
-				  <Route path="register" element={<Register />} />
+				<Route path="register" element={<Register />} />
 				</Route>
 			</Routes>
 		</Router>

@@ -1,12 +1,20 @@
 import "./chat.scss";
-import fakeUsers from "../../tempData/fakeUsers";
+//import fakeUsers from "../../tempData/fakeUsers";
 //import MessageType from "../../types/MessageType";
-import fakeMessages from "../../tempData/fakeMessages";
+//import fakeMessages from "../../tempData/fakeMessages";
 import ChatBanner from "../../components/chat banner/ChatBanner";
+import MessageContext from "../../contexts/MessagesContext";
+import UsersContext from "../../contexts/UsersContext";
 import Messages from "../../components/messages/Messages";
+//import ChatLeftBar from "../../components/chat leftbar/ChatLeftBar";
+import { useContext } from "react";
+
 
 const Chat = () => {
     
+    const messages = useContext(MessageContext);
+    const users = useContext(UsersContext);
+
     
     // temp data
     const user = {
@@ -35,9 +43,11 @@ const Chat = () => {
             />
             <hr />
 
+            {/* <ChatLeftBar/> */}
+
             <div className="chat-messages">
             
-                <Messages messages={fakeMessages} setMessages={() => {}} users={fakeUsers} />
+                <Messages messages={messages} setMessages={() => {}} users={users} />
             </div>
         </div>
     
