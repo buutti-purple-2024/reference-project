@@ -15,14 +15,13 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        
-
+        background-color: red;
+      
         .userInfo {
           display: flex;
           gap: 20px;
           align-items: center;
           font-weight: bold;
-          
 
           img {
             width: 40px;
