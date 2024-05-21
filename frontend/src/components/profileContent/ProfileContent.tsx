@@ -13,10 +13,11 @@ const ProfileContent: React.FC = () => {
 
     if (!user) return null;
 
+
     return (
         <div className="profile">
             <ProfileBanner
-                username={user.username}
+                username={document.cookie.split("; ").find((row) => row.startsWith("username"))?.split("=")[1]}
                 profileText={user.profileText || ""}
                 bannerImage={user.bannerImage || ""}
                 profileImage={user.profileImage || ""}

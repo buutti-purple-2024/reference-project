@@ -11,6 +11,7 @@ interface BannerProps {
 const ProfileBanner: React.FC<BannerProps> = ({ username, bannerImage, profileImage, profileText }) => {
     return (
         <div className="banner">
+            {console.log(username)}
             <img src={bannerImage} alt="Banner" className="banner-image" />
             <img src={profileImage} alt="ProfileImage" className="profile-image" />
             <div className="username">My Profile: {username}</div>
