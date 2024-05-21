@@ -16,7 +16,7 @@ import WriteComment from "../comments/WriteComment";
 //import UserType from "../types/User";
 
 
-const Post: React.FC<{ post: PostType, username: string, profileImage: string, upvotes: number, downvotes: number}> = ({ post, username, profileImage }) => {
+const Post: React.FC<{ post: PostType, username: string, profileImage: string }> = ({ post, username, profileImage }) => {
   
     const [ commentOpen, setCommentOpen ] = useState(false);
     const comments = useContext(CommentsContext);
@@ -48,7 +48,8 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string, u
             </div>
 
             <div className="postContent">
-                <img src={post.post_img} alt=""></img>
+            <img src={post.image || ''} alt=""/>
+                <h5>{post.title}</h5>
                 <p>{post.content}</p>
             </div>
 
