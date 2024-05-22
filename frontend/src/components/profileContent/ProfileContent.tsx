@@ -19,7 +19,7 @@ const ProfileContent: React.FC = () => {
             <ProfileBanner
                 username={document.cookie.split("; ").find((row) => row.startsWith("username"))?.split("=")[1]}
                 profileText={user.profileText || ""}
-                bannerImage={user.bannerImage || ""}
+                profileBanner={user.profileBanner || ""}
                 profileImage={user.profileImage || ""}
             />
             {myposts.length > 0 

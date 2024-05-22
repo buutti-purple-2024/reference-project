@@ -10,6 +10,7 @@
     padding: 20px;
     border-radius: 10px;
     max-width: 800px;
+    box-sizing: border-box; // Include padding in the width calculation
 
     h2{
         margin: 0 0 10px;
@@ -40,7 +41,6 @@
         border: none;
         padding: 5px;
         border-radius: 6px;
-
     }
 
 

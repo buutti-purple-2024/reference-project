@@ -9,7 +9,6 @@ const Posts: React.FC = () => {
 
     const  users  = useContext(UsersContext);
     const  usersPosts  = useContext(UsersPostsContext);
-
     const posts = Object.values(usersPosts).flatMap(userPosts => userPosts);
 
 
