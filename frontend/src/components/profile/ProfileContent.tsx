@@ -18,7 +18,7 @@ const ProfileContent: React.FC = () => {
             <ProfileBanner
                 username={user.username}
                 profileText={user.profileText || ""}
-                bannerImage={user.bannerImage || ""}
+                profileBanner={user.profileBanner || ""}
                 profileImage={user.profileImage || ""}
             />
             {myposts.length > 0 

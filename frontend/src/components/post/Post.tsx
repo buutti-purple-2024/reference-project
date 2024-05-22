@@ -49,8 +49,8 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string }>
 
             <div className="postContent">
             <img src={post.image || ''} alt=""/>
-                <h5>{post.title}</h5>
-                <p>{post.content}</p>
+                <h5>{post.title}</h5> 
+                <p>{post.content}</p>   
             </div>
 
             <div className="info"> 

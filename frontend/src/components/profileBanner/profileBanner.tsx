@@ -3,15 +3,15 @@ import "./profileBanner.scss";
 interface BannerProps {
     
     username: string;
-    bannerImage: string;
+    profileBanner: string;
     profileImage: string;
     profileText: string;
   }
 
-const ProfileBanner: React.FC<BannerProps> = ({ username, bannerImage, profileImage, profileText }) => {
+const ProfileBanner: React.FC<BannerProps> = ({ username, profileBanner, profileImage, profileText }) => {
     return (
         <div className="banner">
-            <img src={bannerImage} alt="Banner" className="banner-image" />
+            <img src={profileBanner} alt="Banner" className="banner-image" />
             <img src={profileImage} alt="ProfileImage" className="profile-image" />
             <div className="username">My Profile: {username}</div>
             <div className="profiletext">{profileText}</div>
