@@ -7,13 +7,16 @@
     background-color: rgb(239, 235, 232);
     max-width: 200px;
     min-width: 150px;
+    padding: 10px;
     
     &::-webkit-scrollbar{
         display: none;
     }
 
-    .container{
-        padding: 20px;
+    span{
+        font-size: 20px;
+        font-style: 40px;
+    }
 
         hr{
             margin: 20px 0px;
@@ -22,20 +25,10 @@
             color: grey;
         }
 
-        .menu{
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-
-            span{
-                font-size: 15px;
-                font-style: 40px;
-            }
-
-            .user{
+            .chat-user{
                 display: flex;
                 flex-direction: column;
-                gap: 10px;
+                gap: 30px;
 
                 img{
                     width: 30px;
@@ -48,17 +41,6 @@
                     font-size: 12px;
                 }
 
-            }
-
-            .item{
-                display: flex;
-                align-items: center;
-                gap: 10px;
-
-                /* span{
-
-                } */
-            }
-        }
+             
     }
 }
