@@ -4,28 +4,33 @@ import { useEffect, useState } from 'react';
 import axios from "axios";
 import PostType from "../../types/PostType";
 
+interface PostWithUser extends PostType {
+  user: {
+    username: string;
+    profileImage?: string;
+  }
+}
 
 const PostsAxios: React.FC = () => {
-
-    const baseurl = "http://localhost:3001" 
-    const [posts, setPosts] = useState<PostType[] | null>(null);
+    const baseurl = "http://localhost:3001"; 
+    const [posts, setPosts] = useState<PostWithUser[] | null>();
 
     useEffect(() => {
-      getPosts()
-    }, [])
+        getPosts();
+    }, []);
 
     const getPosts = async () => {
-      try {
-        const users = await axios.get(`${baseurl}/posts`);
-        console.log(users.data);
-        setPosts(users.data);
-      } catch (error) {
-        console.error("error fertching posts:", error);
-      }
-    
-    }
+        try {
+            const posts = await axios.get(`${baseurl}/posts`);
+            console.log("Posts:", posts.data);
+            setPosts(posts.data);
+        } catch (error) {
+            console.error("error fetching posts:", error);
+        }
+    };
 
     const mapPosts = () => {
+
       return(
       posts?.map(post => {
       
