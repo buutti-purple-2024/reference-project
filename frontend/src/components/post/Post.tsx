@@ -10,13 +10,17 @@ import { useState, useContext } from "react";
 import PostType from "../../types/PostType";
 import UsersContext from "../../contexts/UsersContext";
 import CommentsContext from "../../contexts/CommentsContext";
-//import fakeComments from "../../tempData/fakeComments";
-//import fakeUsers from "../../tempData/fakeUsers";
 import WriteComment from "../comments/WriteComment";
-//import UserType from "../types/User";
 
+interface PostProps {
+  post: PostType;
+  username: string;
+  profileImage: string;
+  upvotes: number;
+  downvotes: number;
+}
 
-const Post: React.FC<{ post: PostType, username: string, profileImage: string }> = ({ post, username, profileImage }) => {
+const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes }) => {
   
     const [ commentOpen, setCommentOpen ] = useState(false);
     const comments = useContext(CommentsContext);
@@ -54,7 +58,7 @@ const Post: React.FC<{ post: PostType, username: string, profileImage: string }>
             </div>
 
             <div className="info"> 
-              <VotingButtons upvotes={post.upvotes} downvotes={post.downvotes} />
+              <VotingButtons upvotes={upvotes} downvotes={downvotes} />
               <div className="comment" onClick={toggleCommentSection}>
                   <Icon path={mdiMessageOutline} size={1} /> {commentOpen ? "Hide" : "Show"} comments
               </div>
