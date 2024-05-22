@@ -34,6 +34,8 @@ const PostsAxios: React.FC = () => {
             post={post} // prop includes e.g. image, title & content
             username={post.user.username || ''}
             profileImage={post.user.profileImage || ''}
+            upvotes={post.upvotes}
+            downvotes={post.downvotes}
             />;
       
       }))}
