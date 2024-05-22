@@ -30,27 +30,29 @@ const PostsAxios: React.FC = () => {
     };
 
     const mapPosts = () => {
-        if (!posts) return null;
-        return posts.map(post => (
-            <Post 
-                key={post.post_id} 
-                post={post} 
-                username={post.user.username || ''} 
-                profileImage={post.user.profileImage || ''}
-                upvotes={post.upvotes}
-                downvotes={post.downvotes}
-            />
-        ));
-    };
+
+      return(
+      posts?.map(post => {
+      
+        return <Post 
+            key={post.post_id} 
+            post={post} 
+            username={post.user.username || ''}
+            profileImage={post.user.profileImage || ''}
+            //upvotes={post.upvotes}
+            //downvotes={post.downvotes}
+            />;
+      
+      }))}
 
     return (
-        <div className="posts">
-          
-          <h1>Posts fetched from backend</h1>
-            {mapPosts()}
-          </div>
-         
-    );
-};
+    <div className="posts">
+      {console.log(posts)}
+      <h2>Posts fetched from backend</h2>
+      {posts && mapPosts()}
+    </div>
+
+    )
+}
 
 export default PostsAxios;

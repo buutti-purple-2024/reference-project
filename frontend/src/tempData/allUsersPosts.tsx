@@ -56,7 +56,7 @@ const allUsersPosts: PostType[] =
             post_id: 6,
             user_id: 1,
             title: "title6",
-            image: /*"https://images.pexels.com/photos/19140977/pexels-photo-19140977/free-photo-of-view-of-a-large-rocky-fjord.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"""*/"",
+            image: "",
             content: "Some text here Some text here Some text here Some text here ",
             created_at: new Date().toISOString(),
             upvotes: 0,

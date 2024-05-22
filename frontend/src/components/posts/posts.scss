@@ -1,15 +1,9 @@
 @import "../../style.scss";
 .posts{
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
 
-    .postContainer {
-        margin-top: 30px;
-        padding: 20px;
-        background-color: rgb(239, 235, 232);
-        max-width: 800px;
-        flex: 1 1 100%;
-        border-radius: 10px;
+    h2{
+        display: flex;
+        justify-content: center;
+
     }
 }
