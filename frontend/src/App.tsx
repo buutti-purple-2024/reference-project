@@ -15,13 +15,13 @@ import Register from "./pages/register/Register";
 import Friends from "./pages/friends/Friends";
 import Chat from "./pages/chat/Chat";
 import axios from "axios";
-
 import "./style.scss";
 import ProfileUpdate from "./components/profileUpdate/ProfileUpdate";
+import UserType from "./types/UserType";
 
 function App() {
 	//const currentUser = true;
-	const [currentUser, setCurrentUser] = useState(null); // State to store the current user
+	const [currentUser, setCurrentUser] = useState<UserType>(); // Update the initial state type
 
 	useEffect(() => {
 		// Function to fetch user data
@@ -40,7 +40,7 @@ function App() {
 	const Layout = ({ children }: { children?: ReactNode }) => {
 		return (
 			<div className="theme-light">
-				<NavBar />
+                {currentUser && <NavBar user={currentUser} />} {/* Render NavBar only if currentUser is defined */}
 				<div style={{ display: "flex" }}>
 					<LeftBar />
 					<div style={{ flex: 6 }}>

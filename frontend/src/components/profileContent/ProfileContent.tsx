@@ -4,6 +4,7 @@ import ProfileBanner from "../profileBanner/profileBanner";
 import allUsersPosts from "../../tempData/allUsersPosts";
 import fakeUsers from "../../tempData/fakeUsers";
 
+
 const ProfileContent: React.FC = () => {
     
     const profileId = 4; //choose the user id which will be rendered in "profile page"

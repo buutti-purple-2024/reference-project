@@ -26,7 +26,7 @@ const Messages: React.FC<MessagesProps> = ({ users, messages, setMessages }) => 
                         <img src={user.profileImage} alt={user.username} />
                         <div className="content">
                             <div className="user-details">
-                                <span className="username">{user.username}</span>
+                                <span className="u-username">{user.username}</span>
                                 <span className="date">{new Date(message.created_at).toLocaleString()}</span>
                             </div>
                             <div className="message-content">{message.content}</div>
