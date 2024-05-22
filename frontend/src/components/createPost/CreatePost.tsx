@@ -1,20 +1,21 @@
 import "./createPost.scss";
 import { useState, ChangeEvent, FormEvent } from "react";
 import PostType from "../../types/PostType";
+import axios from "axios";
+
+
+// post/posts
 
 export default function CreatePost() {
     return (
         <FormInput/>
     )
 }
-
-
-const initialState = {post_id: 0, user_id: 1, title: "", content: "", created_at: "", upvotes: 0, downvotes: 0}
+const initialState = {post_id: 7, user_id: 1, title: "", content: "", created_at: "", upvotes: 0, downvotes: 0}
 
 function FormInput() {
     
     const [post, setPost] = useState<PostType>(initialState)
-    
     const [submit, setSubmit] = useState<PostType>();
 
     function handleTitle(e: ChangeEvent<HTMLInputElement>){
@@ -30,6 +31,9 @@ function FormInput() {
     function handleSubmit(e: FormEvent<HTMLFormElement>){
         e.preventDefault();
         setSubmit(post);
+        axios.post("http://localhost:3001/posts/", {post})
+        .then(response => console.log(response))
+        .catch(err => console.log(err))
         setPost(initialState);
     }
     
