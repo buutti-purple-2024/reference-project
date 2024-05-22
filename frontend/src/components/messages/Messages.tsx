@@ -21,13 +21,18 @@ const Messages: React.FC<MessagesProps> = ({ users, messages, setMessages }) => 
                     return null; // Skip rendering if no user is found
                 }
 
+                const previousMessage = messages[index - 1];
+                const showProfileImageAndDate = !previousMessage || previousMessage.user_id !== message.user_id;
+
+
                 return (
                     <div key={index} className="message">
-                        <img src={user.profileImage} alt={user.username} />
-                        <div className="content">
+                        {showProfileImageAndDate 
+                            ? <img src={user.profileImage} alt={user.username} />
+                            : <div className="image-placeholder" />}                        <div className="content">
                             <div className="user-details">
-                                <span className="u-username">{user.username}</span>
-                                <span className="date">{new Date(message.created_at).toLocaleString()}</span>
+                                {showProfileImageAndDate  && <span className="u-username">{user.username}</span>}
+                                {showProfileImageAndDate && <span className="date">{new Date(message.created_at).toLocaleString()}</span>}
                             </div>
                             <div className="message-content">{message.content}</div>
                         </div>

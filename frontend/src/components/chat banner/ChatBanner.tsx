@@ -4,7 +4,7 @@ import "./chatBanner.scss"
 interface ChatBannerProps {
     
     username: string;
-    profileImage: string;
+    profileImage?: string;
   }
 
 const ChatBanner: React.FC<ChatBannerProps> = ({ username, profileImage }) => {
