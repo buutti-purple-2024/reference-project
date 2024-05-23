@@ -1,12 +1,16 @@
 import ChangePassword from "../../components/changePassword/ChangePassword";
+import DeleteAccount from "../../components/deleteAccount/DeleteAccount";
 import ProfileContent from "../../components/profileContent/ProfileContent";
 import "./profile.scss"
 
 const Profile = () => {
+    let userIsLoggedIn = document.cookie.split("; ").find((row) => row.startsWith("refreshtoken"))?.split("=")[1]
+
     return (
         <div className="profilePage">
             <ProfileContent />
-            <ChangePassword/>
+            { userIsLoggedIn && <ChangePassword/>}
+            { userIsLoggedIn && <DeleteAccount/>}
         </div>
     )
 }
