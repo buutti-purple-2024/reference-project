@@ -1,4 +1,4 @@
-import "./createPost.scss";
+import "./postCreate.scss";
 import { useState, ChangeEvent, FormEvent } from "react";
 import PostType from "../../types/PostType";
 import axios from "axios";
@@ -6,40 +6,48 @@ import axios from "axios";
 
 // post/posts
 
-export default function CreatePost() {
+export default function PostCreate() {
     return (
         <FormInput/>
     )
 }
-const initialState = {post_id: 7, user_id: 1, title: "", content: "", created_at: "", upvotes: 0, downvotes: 0}
+
 
 function FormInput() {
+
+    const initialState = {post_id: 0, user_id: 1, title: "", content: "", created_at: "", upvotes: 0, downvotes: 0}
+
+    const baseurl = "http://localhost:3001";
     
     const [post, setPost] = useState<PostType>(initialState)
     const [submit, setSubmit] = useState<PostType>();
 
-    function handleTitle(e: ChangeEvent<HTMLInputElement>){
+
+   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        const newSubmit = {...post, post_id: Math.random() }
+        try {
+            await axios.post(`${baseurl}/posts`, newSubmit);
+            setSubmit(newSubmit)
+            setPost(initialState)
+        } catch (error) {
+            console.error("error submitting post:", error)
+        }
+    }
+
+    function handleTitle(e: ChangeEvent<HTMLInputElement>){
+        //e.preventDefault();
         setPost({...post, title: e.target.value});
     }
     
     function handleContent(e: ChangeEvent<HTMLTextAreaElement>){
-        e.preventDefault();
+        //e.preventDefault();
         setPost({...post, content: e.target.value});
     }
 
-    function handleSubmit(e: FormEvent<HTMLFormElement>){
-        e.preventDefault();
-        setSubmit(post);
-        axios.post("http://localhost:3001/posts/", {post})
-        .then(response => console.log(response))
-        .catch(err => console.log(err))
-        setPost(initialState);
-    }
-    
     function handleReset(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
         e.preventDefault();
-        setSubmit(initialState);
+        setSubmit(undefined);
         setPost(initialState);
     }
 
@@ -75,8 +83,14 @@ function FormInput() {
                 <button type="submit">Submit</button>
                 <button type="reset" onClick={e=>handleReset(e)}>Reset</button>     
         </div>
-        <p>{submit?.title}</p>
-        <p>{submit?.content}</p>
+        {submit && (
+            <>
+                <p>{submit.title}</p>
+                <p>{submit.content}</p>
+            </>
+    )}
+
     </form>
     )
-}
+}       
+
