@@ -25,7 +25,7 @@ function FormInput() {
 
    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const newSubmit = {...post, post_id: Math.random(), created_at: Date.now()}
+        const newSubmit = {...post, post_id: Math.random() }
         try {
             await axios.post(`${baseurl}/posts`, newSubmit);
             setSubmit(newSubmit)
