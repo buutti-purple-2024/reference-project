@@ -1,17 +1,17 @@
 import "./home.scss";
 //import Posts from "../../components/posts/Posts";
-import CreatePost from "../../components/createPost/CreatePost";
 //import allUsersPosts from "../../tempData/allUsersPosts";
 //import fakeUsers from "../../tempData/fakeUsers";
-import PostsAxios from "../../components/posts/Posts";
+import Posts from "../../components/posts/Posts";
+import PostCreate from "../../components/postCreate/PostCreate";
 
 
 const Home = () => {
     return (
         <div className="home">
-            <CreatePost />
+            <PostCreate />
             <h2>Posts fetched from backend</h2>
-            <PostsAxios/>
+            <Posts/>
         </div>
     )
 }
