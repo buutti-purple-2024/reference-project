@@ -9,10 +9,17 @@
         display: flex;
         gap: 10px;
         padding: 10px;
-        margin-top: 5px;
-        margin-bottom: 10px;
+        margin-top: 20px;
+        margin-bottom: 5px;
         border-radius: 10px;
         width: 100%;
+
+        .image-placeholder {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: transparent; // You can set this to a specific color if you prefer
+        }
 
         img {
             width: 40px;

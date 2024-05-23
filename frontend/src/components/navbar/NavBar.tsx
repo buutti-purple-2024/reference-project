@@ -9,10 +9,13 @@ import { mdiForumOutline } from '@mdi/js';
 import { mdiBellBadgeOutline } from '@mdi/js';
 import UserType from "../../types/UserType";
 
+interface NavBarProps {
+    currentUser: UserType;
+}
 
 
-
-const NavBar = ({ user }: { user: UserType }) => {
+const NavBar: React.FC<NavBarProps> = ({ currentUser }) => {
+    
     return (
         <div className="navBar">
             <div className="left">
@@ -33,8 +36,8 @@ const NavBar = ({ user }: { user: UserType }) => {
                 </Link>
                 <Icon path={mdiBellBadgeOutline} size={1} color="white"/>
                 <div className="p-user">
-                    <img src={user.profileImage} alt="" height={30} width={30} />
-                    <span>{user.username}</span>
+                    <img src={currentUser.profileImage} alt="" height={30} width={30} />
+                    <span>{currentUser.username}</span>
                 <button className="button">Log out</button>
             </div>
                 
