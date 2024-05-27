@@ -6,7 +6,7 @@ import { mdiCircle } from '@mdi/js';
 import { mdiMagnify } from '@mdi/js';
 import { mdiMenu } from '@mdi/js';
 import { mdiForumOutline } from '@mdi/js';
-import { mdiBellBadgeOutline } from '@mdi/js';
+//import { mdiBellBadgeOutline } from '@mdi/js';
 import UserType from "../../types/UserType";
 
 interface NavBarProps {
@@ -15,7 +15,7 @@ interface NavBarProps {
 
 
 const NavBar: React.FC<NavBarProps> = ({ currentUser }) => {
-    
+    /* console.log(currentUser); */
     return (
         <div className="navBar">
             <div className="left">
@@ -25,7 +25,7 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser }) => {
                     <span>Purple</span>
                 </Link>
                 <div className="search">
-                    <Icon path={mdiMagnify} size={1} color="white"/>
+                    {<Icon path={mdiMagnify} size={1} color="white"/>}
                     <input type="text" placeholder="search..." />
                 </div>              
             </div>
@@ -34,7 +34,7 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser }) => {
                 <Link to="/chat">
                     <Icon path={mdiForumOutline} size={1} color="white"/>
                 </Link>
-                <Icon path={mdiBellBadgeOutline} size={1} color="white"/>
+                {/* <Icon path={mdiBellBadgeOutline} size={1} color="white"/> */}
                 <div className="p-user">
                     <img src={currentUser.profileImage} alt="" height={30} width={30} />
                     <span>{currentUser.username}</span>

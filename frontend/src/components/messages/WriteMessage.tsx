@@ -1,6 +1,6 @@
+import "./messages.scss"
 import { useState } from "react";
 import MessageType from "../../types/MessageType"; // Assuming MessageType is defined correctly
-//import fakeMessages from "../../tempData/fakeMessages";
 
 interface WriteMessageProps {
     setMessages: React.Dispatch<React.SetStateAction<MessageType[]>>;
@@ -13,12 +13,15 @@ const WriteMessage: React.FC<WriteMessageProps> = ({ setMessages }) => {
         if (newMessage.trim() !== '') {
             const randomMessageId = Math.random();
             const randomUserId = Math.random();
+            const randomChatId = Math.random();
             const currentTime = new Date().toISOString();
 
             const newMessageData: MessageType = {
                 message_id: randomMessageId,
+                chat_id: randomChatId,
                 content: newMessage,
-                user_id: randomUserId,
+                sender_id: randomUserId,
+                receiver_id: randomUserId,
                 created_at: currentTime
             };
 

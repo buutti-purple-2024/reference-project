@@ -3,6 +3,7 @@ import Icon from '@mdi/react';
 import { mdiHomeOutline } from '@mdi/js';
 import { mdiAccountOutline } from '@mdi/js';
 import { mdiAccountMultipleOutline } from '@mdi/js';
+import { mdiAccountSearch } from '@mdi/js';
 import { Link } from "react-router-dom";
 import "./leftBar.scss";
 
@@ -29,6 +30,12 @@ const LeftBar = () => {
                     <Link to="/friends">
                         <Icon path={mdiAccountMultipleOutline} size={1} />
                         <span>Friends</span>
+                    </Link>
+                    </div>
+                    <div className="item">
+                    <Link to="/users">
+                    <Icon path={mdiAccountSearch} size={1} />
+                        <span>Users</span>
                     </Link>
                     </div>
                     <div className="item">

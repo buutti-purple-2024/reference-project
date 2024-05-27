@@ -1,15 +1,14 @@
 .chatbanner {
     position: relative;
-    margin-top: 100px;
+    margin-top: 15%;
     margin-bottom: 10px;
-    background-color: red;
 }
 .username {
     position: absolute;
-    margin-top: 80px;
-    top: 150%; 
-    left: 9%; 
-    font-size: 35px;
+   /*  margin-top: 80px; */
+    top: 70%; 
+    left: 29%; 
+    font-size: 30px;
     color: black;
 }
 .profile-image {
@@ -22,4 +21,12 @@
     height: 120px;
     border-radius: 50%;
     border: 2px solid white; 
+}
+.hr{
+    
+    margin-right: 30px;
+    margin-left: 30px;
+    width: 100%;
+    color: #271c0f;
+    /* margin-top: 30%; */
 }

@@ -1,32 +1,79 @@
+// src/components/profileContent/ProfileContent.tsx
+import { useEffect, useState } from "react";
 import "./profileContent.scss";
 import Posts from "../posts/Posts";
 import ProfileBanner from "../profileBanner/profileBanner";
-import allUsersPosts from "../../tempData/allUsersPosts";
-import fakeUsers from "../../tempData/fakeUsers";
+//import fakeUsers from "../../tempData/fakeUsers";
+import UserType from "../../types/UserType";
+import PostType from "../../types/PostType";
+import axios from "axios";
+
+interface ProfileContentProps {
+  currentUser: UserType;
+}
+
+interface PostWithUser extends PostType {
+  user: {
+    username: string;
+    profileImage?: string;
+  }
+}
+
+const ProfileContent: React.FC<ProfileContentProps> = ({ currentUser }) => {
+  const [myposts, setMyPosts] = useState<PostWithUser[]>([]);
+  const baseurl = "http://localhost:3001";
+  const [users, setUsers] = useState<UserType[]>([]);
 
 
-const ProfileContent: React.FC = () => {
-    
-    const profileId = 4; //choose the user id which will be rendered in "profile page"
-    const user = fakeUsers.find(user => user.id === profileId); 
-    const myposts = allUsersPosts.filter(post => post.user_id === profileId);
-    console.log(user);
+    const getUsers = async () => {
+        try {
+            const response = await axios.get(`${baseurl}/users`);
+            const usersData = response.data as UserType[];
+            console.log("Users Data:", usersData);
+            setUsers(usersData); // Assuming setUsers is the state updater function for the users array
+        } catch (error) {
+            console.error("error fetching users:", error);
+        }
+    };
 
-    if (!user) return null;
 
-    return (
-        <div className="profile">
-            <ProfileBanner
-                username={user.username}
-                profileText={user.profileText || ""}
-                profileBanner={user.profileBanner || ""}
-                profileImage={user.profileImage || ""}
-            />
-            {myposts.length > 0 
-            ? <Posts posts={myposts} users={fakeUsers}/> 
-            : <p className="noPosts">This user hasn't posted anything yet</p>}
-        </div>
-    );
+  useEffect(() => {
+    const getPosts = async () => {
+      try {
+        const response = await axios.get(`${baseurl}/posts`);
+        const posts = response.data as PostType[];
+        const postsWithUser = posts.filter(post => post.user_id === currentUser.id).map(post => {
+            const user = users.find(u => u.id === post.user_id);
+            if (!user) {
+              throw new Error(`User with id ${post.user_id} not found`);
+            }
+            return {
+              ...post,
+              user: {
+                username: user.username,
+                profileImage: user.profileImage,
+              },
+            };
+          });
+  
+        setMyPosts(postsWithUser);
+      } catch (error) {
+        console.error("error fetching posts:", error);
+      }
+    };
+    getUsers();
+    getPosts();
+  }, [users, currentUser.id]);
+
+
+  return (
+    <div className="profile">
+      <ProfileBanner currentUser={currentUser} />
+      {myposts.length > 0 
+        ? <Posts posts={myposts} /> 
+        : <p className="noPosts">This user hasn't posted anything yet</p>}
+    </div>
+  );
 };
 
 export default ProfileContent;

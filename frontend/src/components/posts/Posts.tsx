@@ -1,7 +1,5 @@
 import "./posts.scss";
 import Post from "../post/Post";
-import { useEffect, useState } from 'react';
-import axios from "axios";
 import PostType from "../../types/PostType";
 
 interface PostWithUser extends PostType {
@@ -11,48 +9,30 @@ interface PostWithUser extends PostType {
   }
 }
 
-const Posts: React.FC = () => {
+interface PostsProps {
+  posts: PostWithUser[];
+}
 
-    const baseurl = "http://localhost:3001" 
-    const [posts, setPosts] = useState<PostWithUser[] | null>();
-
-    useEffect(() => {
-      getPosts()
-    }, [])
-
-    const getPosts = async () => {
-      try {
-          const posts = await axios.get(`${baseurl}/posts`);
-          console.log(posts.data);
-          setPosts(posts.data);
-      } catch (error) {
-          console.error("error fetching posts:", error);
-      }
-    };
+const Posts: React.FC<PostsProps> = ({ posts }) => {
 
     const mapPosts = () => {
-
-      return(
-      posts?.map(post => {
-      
-        return <Post 
+      return posts.map(post => (
+        <Post 
             key={post.post_id} 
             post={post} // prop includes e.g. image, title & content
             username={post.user.username || ''}
             profileImage={post.user.profileImage || ''}
             upvotes={post.upvotes}
             downvotes={post.downvotes}
-            />;
-      
-      }))}
+        />
+      ));
+    };
 
     return (
-    <div className="posts">
-      {console.log(posts)}
-      {posts && mapPosts()}
-    </div>
-
-    )
+      <div className="posts">
+        {posts && posts.length > 0 ? mapPosts() : <p>No posts available</p>}
+      </div>
+    );
 }
 
 export default Posts;
