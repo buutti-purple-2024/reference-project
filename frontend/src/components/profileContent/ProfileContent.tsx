@@ -48,6 +48,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ currentUser }) => {
         : <p className="noPosts">This user hasn't posted anything yet</p>}
     </div>
   );
+
 };
 
 export default ProfileContent;

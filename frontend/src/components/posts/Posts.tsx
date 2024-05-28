@@ -9,11 +9,33 @@ interface PostWithUser extends PostType {
   }
 }
 
+
 interface PostsProps {
   posts: PostWithUser[];
 }
 
 const Posts: React.FC<PostsProps> = ({ posts }) => {
+
+
+    const baseurl = "http://localhost:3001" 
+    const [posts, setPosts] = useState<PostWithUser[] | null>(null);
+
+    useEffect(() => {
+      getPosts();
+    }, []);
+
+    const getPosts = async () => {
+      try {
+          const posts = await axios.get(`${baseurl}/posts`);
+          const sortedPosts = posts.data.sort((a: PostWithUser, b: PostWithUser) => //Sorts data so that the newest post is first
+            new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+          );
+          console.log(sortedPosts);
+          setPosts(sortedPosts);
+      } catch (error) {
+          console.error("error fetching posts:", error);
+      }
+    };
 
     const mapPosts = () => {
       return posts.map(post => (
@@ -34,5 +56,6 @@ const Posts: React.FC<PostsProps> = ({ posts }) => {
       </div>
     );
 }
+
 
 export default Posts;

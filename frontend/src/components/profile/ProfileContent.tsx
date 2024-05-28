@@ -16,7 +16,8 @@ const ProfileContent: React.FC = () => {
     return (
         <div className="profile">
             <ProfileBanner
-                username={user.username}
+                //username={user.username}
+                username={"aaa"}
                 profileText={user.profileText || ""}
                 profileBanner={user.profileBanner || ""}
                 profileImage={user.profileImage || ""}
