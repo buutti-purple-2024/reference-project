@@ -1,13 +1,9 @@
-@import "../../style.scss";
-
 .chat-messages {
     position: absolute;
     width: 90%;
     padding: 10px;
     box-sizing: border-box;
-    background-color: rgb(160, 226, 226);
-    margin-top: 20%;
-
+    margin-top: 5%;
 
     .message {
         display: flex;
@@ -38,7 +34,6 @@
             flex-direction: column;
             padding: 10px;
             border-radius: 15px;
-            background-color: rgb(239, 235, 232);
             width: 100%;
         }
 
@@ -67,11 +62,20 @@
             word-wrap: break-word;
         }
     }
+
+    .outgoing {
+        background-color: #edf6e7; 
+    }
+
+    .incoming {
+        background-color: #EAEAEA; 
+    }
 }
 
 .chat-input {
-    margin-top: 50%;
+    margin-top: 10%;
     padding: 3px;
     height: 50px;
-    background-color: rgb(84, 177, 146);
+    border-radius: 10px;
+    background-color: rgb(221, 224, 223);
 }

@@ -16,6 +16,9 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ selectedUser, currentUser
     const [users, setUsers] = useState<UserType[]>([]);
 	const baseurl = "http://localhost:3001"; 
 
+    console.log('ChatComponent props:', { selectedUser, currentUser, chats });
+
+
     // Filter chats based on selectedUser
     useEffect(() => {
         if (selectedUser) {
@@ -46,10 +49,17 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ selectedUser, currentUser
             {currentUser && selectedUser && selectedChat && (
                 <>
                     <div className="banner">
-                        <ChatBanner username={selectedUser.username} profileImage={selectedUser.profileImage} />
+                        <ChatBanner 
+                            username={selectedUser.username} 
+                            profileImage={selectedUser.profileImage} />
                     </div>
                     <div className="messages">
-                        <Messages currentUser={currentUser} chats={chats} selectedUser={selectedUser} users={users} selectedChat={selectedChat} />
+                        <Messages 
+                            currentUser={currentUser} 
+                            chats={chats} 
+                            selectedUser={selectedUser} 
+                            users={users} 
+                            selectedChat={selectedChat} />
                     </div>
                 </>
             )}

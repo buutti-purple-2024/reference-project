@@ -2,6 +2,7 @@ import "./chat.scss";
 import ChatComponent from "../../components/chatComponent/ChatComponent";
 import UserType from "../../types/UserType";
 import ChatType from "../../types/ChatType";
+import fakeChats from "../../tempData/fakeChats";
 
 
 interface ChatProps {
@@ -11,7 +12,7 @@ interface ChatProps {
 	chats: ChatType[];
 }
 
-const Chat: React.FC<ChatProps> = ({ currentUser, selectedUser, chats }) => {
+const Chat: React.FC<ChatProps> = ({ currentUser, selectedUser }) => {
 
 
 	return (
@@ -20,10 +21,9 @@ const Chat: React.FC<ChatProps> = ({ currentUser, selectedUser, chats }) => {
 			<ChatComponent 
 				currentUser={currentUser} 
 				selectedUser={selectedUser} 
-				chats={chats}
+				chats={fakeChats}
 			/>
             )}
-            chat from chat here
 		</div>
 	);
 };

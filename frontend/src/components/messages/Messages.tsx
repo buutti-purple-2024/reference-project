@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 import MessageType from "../../types/MessageType";
 import UserType from "../../types/UserType";
 import ChatType from "../../types/ChatType";
 import WriteMessage from "./WriteMessage";
+import fakeChats from "../../tempData/fakeChats";
+import fakeMessages from "../../tempData/fakeMessages";
+
 
 interface MessagesProps {
     users: UserType[];
@@ -13,8 +16,8 @@ interface MessagesProps {
     selectedChat: ChatType;
 }
 
-const Messages: React.FC<MessagesProps> = ({ currentUser, users, chats, selectedUser }) => {
-    const baseurl = "http://localhost:3001";
+const Messages: React.FC<MessagesProps> = ({ currentUser, users, /* chats, */ selectedUser }) => {
+    //const baseurl = "http://localhost:3001";
     const [messages, setMessages] = useState<MessageType[]>([]);
     const [chatId, setChatId] = useState<number | null>(null);
 
@@ -22,7 +25,7 @@ const Messages: React.FC<MessagesProps> = ({ currentUser, users, chats, selected
     useEffect(() => {
         if (selectedUser) {
             // Find the chat corresponding to the selectedUser
-            const chat = chats.find(chat => 
+            const chat = fakeChats.find(chat => 
                 (chat.user1_id === currentUser.id && chat.user2_id === selectedUser.id) ||
                 (chat.user1_id === selectedUser.id && chat.user2_id === currentUser.id)
             );
@@ -30,9 +33,9 @@ const Messages: React.FC<MessagesProps> = ({ currentUser, users, chats, selected
                 setChatId(chat.chat_id);
             }
         }
-    }, [selectedUser, currentUser, chats]);
+    }, [selectedUser, currentUser]);
 
-    useEffect(() => {
+    /* useEffect(() => {
         const fetchMessages = async () => {
             try {
                 if (chatId) {
@@ -46,16 +49,23 @@ const Messages: React.FC<MessagesProps> = ({ currentUser, users, chats, selected
         };
 
         fetchMessages();
+    }, [chatId]); */
+
+    useEffect(() => {
+        if (chatId !== null) {
+            const chatMessages = fakeMessages.filter(message => message.chat_id === chatId);
+            setMessages(chatMessages);
+        }
     }, [chatId]);
 
     return (
         <div className="chat-messages">
             {messages.map((message, index) => {
-                const sender = users.find(user => user.id === message.sender_id || user.id === currentUser.id);
+                const sender = users.find(user => user.id === message.sender_id);
+                const isCurrentUserSender = message.sender_id === currentUser.id;
 
-                if (!sender || !currentUser) {
+                if (!sender) {
                     console.log(`No user found for message with user_id: ${message.sender_id}`);
-                    // Continue rendering without sender data
                     return (
                         <div key={index} className="message">
                             <div className="content">
@@ -73,7 +83,7 @@ const Messages: React.FC<MessagesProps> = ({ currentUser, users, chats, selected
                 const showProfileImageAndDate = !previousMessage || previousMessage.sender_id !== message.sender_id;
 
                 return (
-                    <div key={index} className="message">
+                    <div key={index} className={`message ${isCurrentUserSender ? 'outgoing' : 'incoming'}`}>
                         {showProfileImageAndDate 
                             ? <img src={sender.profileImage} alt={sender.username} />
                             : <div className="image-placeholder" />}                        
