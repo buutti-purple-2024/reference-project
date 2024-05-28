@@ -9,7 +9,7 @@ const ProfileContent: React.FC = () => {
     const profileId = 3; //choose the user id which will be rendered in "profile page"
     const user = fakeUsers.find(user => user.id === profileId); 
     const myposts = allUsersPosts.filter(post => post.user_id === profileId);
-    console.log(user);
+    
 
     if (!user) return null;
 

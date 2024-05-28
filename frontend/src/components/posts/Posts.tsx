@@ -1,7 +1,5 @@
 import "./posts.scss";
 import Post from "../post/Post";
-import { useEffect, useState } from 'react';
-import axios from "axios";
 import PostType from "../../types/PostType";
 
 interface PostWithUser extends PostType {
@@ -11,7 +9,13 @@ interface PostWithUser extends PostType {
   }
 }
 
-const Posts: React.FC = () => {
+
+interface PostsProps {
+  posts: PostWithUser[];
+}
+
+const Posts: React.FC<PostsProps> = ({ posts }) => {
+
 
     const baseurl = "http://localhost:3001" 
     const [posts, setPosts] = useState<PostWithUser[] | null>(null);
@@ -34,31 +38,24 @@ const Posts: React.FC = () => {
     };
 
     const mapPosts = () => {
-
-      return(
-      posts?.map(post => {
-      
-        return <Post 
+      return posts.map(post => (
+        <Post 
             key={post.post_id} 
             post={post} // prop includes e.g. image, title & content
             username={post.user.username || ''}
             profileImage={post.user.profileImage || ''}
             upvotes={post.upvotes}
             downvotes={post.downvotes}
-            />;
-      })
-    );
-  };
-    
-  {console.log(posts)}
-    
-  return (
-  <div className="posts">
-    
-    {posts && mapPosts()}
-  </div>
+        />
+      ));
+    };
 
-  );
-};
+    return (
+      <div className="posts">
+        {posts && posts.length > 0 ? mapPosts() : <p>No posts available</p>}
+      </div>
+    );
+}
+
 
 export default Posts;

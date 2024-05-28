@@ -14,50 +14,58 @@ import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import Friends from "./pages/friends/Friends";
 import Chat from "./pages/chat/Chat";
+import ProfileUpdate from "./components/profileUpdate/ProfileUpdate";
 import axios from "axios";
 import "./style.scss";
-import ProfileUpdate from "./components/profileUpdate/ProfileUpdate";
 import UserType from "./types/UserType";
-import ChatLeftBar from "./components/chat leftbar/ChatLeftBar";
-import MessageType from "./types/MessageType";
-import ChatComp from "./components/chatComp/ChatComp";
-import fakeUsers from "./tempData/fakeUsers";
+import ChatLeftBar from "./components/chatLeftBar/ChatLeftBar";
+import Users from "./pages/users/Users";
+import ChatType from "./types/ChatType";
 
 
 function App() {
 	const [currentUser, setCurrentUser] = useState<UserType | null>(null); // Initialize as null
-	//const [users, setUsers] = useState<UserType[]>([]); // Initialize as an empty array
-	const [messages, setMessages] = useState<MessageType[]>([]);
-	const users = fakeUsers
+	const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
+	const [chatId, setChatId] = useState<string | null>(null);
+	const [users, setUsers] = useState<UserType[]>([]);
+	const [chats, setChats] = useState<ChatType[]>([]);
 
+	const handleUserSelect = (user: UserType) => {
+        setSelectedUser(user);
+    };
+
+
+	const baseurl = "http://localhost:3001";
 
 	useEffect(() => {
-		const fetchUser = async () => {
+		const fetchCurrentUser = async () => {
 			try {
-				const response = await axios.get("/api/user/1"); // Replace '/api/user' with your actual endpoint
-				setCurrentUser(response.data); // Set the current user state with the fetched user data
+				const response = await axios.get(`${baseurl}/users/3`);
+				setCurrentUser(response.data);
 			} catch (error) {
-				console.error("Error fetching user:", error);
+				console.error("Error fetching current user:", error);
 			}
 		};
 
-		/* const fetchUsers = async () => {
-			try {
-				const response = await axios.get('/api/user'); 
-				const userData = response.data;
-				if (Array.isArray(userData)) {
-					setUsers(userData); // Set users state with the fetched user data
-				} else {
-					console.error("Invalid user data format:", userData);
-				}
-			} catch (error) {
-				console.error("Error fetching users:", error);
-			}
-		}; */
-
-		fetchUser(); // Call the fetchUser function when the component mounts
-		//fetchUsers(); // Call the fetchUsers function when the component mounts
+		fetchCurrentUser();
 	}, []);
+
+	useEffect(() => {
+		const fetchChat = async () => {
+			if (currentUser && selectedUser) {
+				try {
+					const response = await axios.get(`${baseurl}/chats`, {
+						params: { user1: currentUser.id, user2: selectedUser.id },
+					});
+					setChatId(response.data.chatId);
+				} catch (error) {
+					console.error("Error fetching chat:", error);
+				}
+			}
+		};
+
+		fetchChat();
+	}, [currentUser, selectedUser]);
 
 	const Layout = ({ children }: { children?: ReactNode }) => {
 		return (
@@ -77,23 +85,27 @@ function App() {
 	const ChatLayout = ({ children }: { children?: ReactNode }) => {
 		return (
 			<div className="theme-light">
-				{currentUser && <NavBar currentUser={currentUser} />} {/* Render NavBar only if currentUser is defined */}
+				{currentUser && <NavBar currentUser={currentUser} />} 
 				<div style={{ display: "flex" }}>
-					<ChatLeftBar users={users} currentUser={currentUser!} /> 
+					{currentUser && (<ChatLeftBar  
+						currentUser={currentUser} 
+						onUserSelect={handleUserSelect} 
+						/>
+					)}
 					<div style={{ flex: 6 }}>
 						<Outlet />
 						{currentUser && (
-						<ChatComp 
+						<Chat 
 							currentUser={currentUser} 
-							messages={messages} 
+							selectedUser={selectedUser}
+							chats={chats}
 							users={users} 
-							setMessages={setMessages}
-						/>
+						/> 
 						)}
 						{children}
 					</div>
 				</div>
-			</div>
+			</div> 
 		);
 	};
 
@@ -103,7 +115,7 @@ function App() {
 			if (!currentUser) {
 				navigate("/login");
 			}
-		}, /* [currentUser, navigate] */);
+		}, [/* currentUser, */ navigate]);
 	
 		return currentUser ? children : null;
 	};
@@ -113,8 +125,9 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Layout />}>
 					<Route path="/" element={<Home />} />
-					<Route path="profile/:id" element={<Profile />} />
+					<Route path="profile/:id" element={<Profile currentUser={currentUser} />} />
 					<Route path="friends" element={<Friends />} />
+					<Route path="users" element={<Users />} />
 					<Route path="profileUpdate" element={<ProfileUpdate />} />
 					<Route path="*" element={<div>Not Found</div>} />
 				</Route>
@@ -124,7 +137,7 @@ function App() {
 						<ChatLayout />
 					</ProtectedRoute>
 				}>
-					<Route path=":id" element={<Chat />} />
+					{/* <Route path=":id" element={<Chat  />} /> */}
 				</Route>
 				
 				<Route path="login" element={<Login />} />
