@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 import Icon from '@mdi/react';
 import { mdiCircle } from '@mdi/js';
 import { mdiMagnify } from '@mdi/js';
-import { mdiMenu } from '@mdi/js';
 import { mdiForumOutline } from '@mdi/js';
 //import { mdiBellBadgeOutline } from '@mdi/js';
 import UserType from "../../types/UserType";
+import DropdownMenu from "../dropdownMenu/DropdownMenu";
 
 interface NavBarProps {
     currentUser: UserType;
@@ -19,7 +19,7 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser }) => {
     return (
         <div className="navBar">
             <div className="left">
-                <Icon path={mdiMenu} size={1} color="white"/>
+                <DropdownMenu/>
                 <Icon path={mdiCircle} size={1} color="purple" />
                 <Link to="/" style={{textDecoration: "none"}}>
                     <span>Purple</span>

@@ -66,7 +66,7 @@ const Home = () => {
   return (
     <div className="home">
       <PostCreate />
-      <h2>Posts fetched from backend</h2>
+      <h2>Feed</h2>
       <Posts posts={posts} />
     </div>
   );

@@ -14,14 +14,13 @@ import Profile from "./pages/profile/Profile";
 import Register from "./pages/register/Register";
 import Friends from "./pages/friends/Friends";
 import Chat from "./pages/chat/Chat";
+import ProfileUpdate from "./components/profileUpdate/ProfileUpdate";
 import axios from "axios";
 import "./style.scss";
-import ProfileUpdate from "./components/profileUpdate/ProfileUpdate";
 import UserType from "./types/UserType";
 import ChatLeftBar from "./components/chatLeftBar/ChatLeftBar";
 import Users from "./pages/users/Users";
 import ChatType from "./types/ChatType";
-
 
 
 function App() {
@@ -30,8 +29,6 @@ function App() {
 	const [chatId, setChatId] = useState<string | null>(null);
 	const [users, setUsers] = useState<UserType[]>([]);
 	const [chats, setChats] = useState<ChatType[]>([]);
-
-	//const user: UserType = fakeUsers.find(user => user.id === 4);
 
 	const handleUserSelect = (user: UserType) => {
         setSelectedUser(user);
@@ -43,7 +40,7 @@ function App() {
 	useEffect(() => {
 		const fetchCurrentUser = async () => {
 			try {
-				const response = await axios.get(`${baseurl}/users/4`);
+				const response = await axios.get(`${baseurl}/users/3`);
 				setCurrentUser(response.data);
 			} catch (error) {
 				console.error("Error fetching current user:", error);
@@ -52,24 +49,6 @@ function App() {
 
 		fetchCurrentUser();
 	}, []);
-	/* useEffect(() => {
-		const fetchUser = async () => {
-			try {
-				const response = await axios.get(`${baseurl}/users/4`);
-				setCurrentUser(response.data); 
-				const chatResponse = await axios.get(`${baseurl}/messages/chatId`, 
-				{
-					params: { user1: response.data.id, user2: selectedUser?.id }
-				});
-				setChatId(chatResponse.data.chatId);
-			} catch (error) {
-				console.error("Error fetching user:", error);
-			}
-		};
-
-		fetchUser(); 
-
-	}, [selectedUser]); */
 
 	useEffect(() => {
 		const fetchChat = async () => {

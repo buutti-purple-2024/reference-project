@@ -1,9 +1,9 @@
-// src/components/profileContent/ProfileContent.tsx
+
+
 import { useEffect, useState } from "react";
 import "./profileContent.scss";
 import Posts from "../posts/Posts";
 import ProfileBanner from "../profileBanner/profileBanner";
-//import fakeUsers from "../../tempData/fakeUsers";
 import UserType from "../../types/UserType";
 import PostType from "../../types/PostType";
 import axios from "axios";
@@ -22,49 +22,23 @@ interface PostWithUser extends PostType {
 const ProfileContent: React.FC<ProfileContentProps> = ({ currentUser }) => {
   const [myposts, setMyPosts] = useState<PostWithUser[]>([]);
   const baseurl = "http://localhost:3001";
-  const [users, setUsers] = useState<UserType[]>([]);
-
-
-    const getUsers = async () => {
-        try {
-            const response = await axios.get(`${baseurl}/users`);
-            const usersData = response.data as UserType[];
-            console.log("Users Data:", usersData);
-            setUsers(usersData); // Assuming setUsers is the state updater function for the users array
-        } catch (error) {
-            console.error("error fetching users:", error);
-        }
-    };
 
 
   useEffect(() => {
-    const getPosts = async () => {
-      try {
-        const response = await axios.get(`${baseurl}/posts`);
-        const posts = response.data as PostType[];
-        const postsWithUser = posts.filter(post => post.user_id === currentUser.id).map(post => {
-            const user = users.find(u => u.id === post.user_id);
-            if (!user) {
-              throw new Error(`User with id ${post.user_id} not found`);
-            }
-            return {
-              ...post,
-              user: {
-                username: user.username,
-                profileImage: user.profileImage,
-              },
-            };
-          });
-  
-        setMyPosts(postsWithUser);
-      } catch (error) {
+  const getPosts = async () => {
+    try {
+      const response = await axios.get(`${baseurl}/posts`);
+      const posts = response.data as PostWithUser[];
+        const filteredPosts = posts.filter(post => post.user_id === currentUser.id);
+
+      setMyPosts(filteredPosts);
+        } catch (error) {
         console.error("error fetching posts:", error);
       }
     };
-    getUsers();
-    getPosts();
-  }, [users, currentUser.id]);
 
+  getPosts();
+  }, [currentUser.id]);
 
   return (
     <div className="profile">
