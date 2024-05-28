@@ -1,10 +1,8 @@
 import "./postCreate.scss";
-import { useState, ChangeEvent, FormEvent } from "react";
+import { useState, ChangeEvent, FormEvent, useRef } from "react";
+//import { useRef } from "react";
 import PostType from "../../types/PostType";
 import axios from "axios";
-
-
-// post/posts
 
 export default function PostCreate() {
     return (
@@ -12,43 +10,62 @@ export default function PostCreate() {
     )
 }
 
-
 function FormInput() {
 
-    const initialState = {post_id: 0, user_id: 1, title: "", content: "", created_at: "", upvotes: 0, downvotes: 0}
+    const initialState: PostType = {
+        post_id: 0,
+        user_id: 1, 
+        title: "", 
+        content: "",
+        image: null,
+        created_at: "", 
+        upvotes: 0, 
+        downvotes: 0
+    }
 
     const baseurl = "http://localhost:3001";
     
-    const [post, setPost] = useState<PostType>(initialState)
-    const [submit, setSubmit] = useState<PostType>();
+    const [post, setPost] = useState(initialState);
+    //const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+            e.preventDefault();
 
-   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        const newSubmit = {...post, post_id: Math.random() }
-        try {
-            await axios.post(`${baseurl}/posts`, newSubmit);
-            setSubmit(newSubmit)
-            setPost(initialState)
-        } catch (error) {
-            console.error("error submitting post:", error)
+            try {
+                await axios.post(`${baseurl}/posts`, post);
+                setPost(initialState)
+                /*if (fileInputRef.current) {
+                    fileInputRef.current.value = ""; // Clear the file input
+                }*/
+                console.log(post)
+            } catch (error) {
+                console.error("error submitting post:", error)
+            }
         }
-    }
 
     function handleTitle(e: ChangeEvent<HTMLInputElement>){
-        //e.preventDefault();
         setPost({...post, title: e.target.value});
     }
     
     function handleContent(e: ChangeEvent<HTMLTextAreaElement>){
-        //e.preventDefault();
         setPost({...post, content: e.target.value});
+    }
+
+    //IMAGE
+    function handleImage(e: ChangeEvent<HTMLInputElement>) {
+        if (e.target.files) {
+            setPost({...post, image: e.target.files[0]});
+            console.log("image path: " + e.target.value);
+        }
     }
 
     function handleReset(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
         e.preventDefault();
-        setSubmit(undefined);
         setPost(initialState);
+        /*if (fileInputRef.current) {
+            fileInputRef.current.value = ""; // Clear the file input. Check: https://www.geeksforgeeks.org/how-to-reset-a-file-input-in-react-js/
+        }
+        */
     }
 
     return (
@@ -74,23 +91,17 @@ function FormInput() {
                     placeholder="Share your thoughts"
                     rows={4}
                 />
-                <input //kuvan lisääminen koodattava myöhemmin
+                <input // IMAGE
                     type="file"
-                    name="chooseFile"
-                    id="chooseFile"
+                    onChange={handleImage}
+                    name="image"
+                    id="image"
                     accept="image/png, image/jpeg"
                 />
                 <button type="submit">Submit</button>
                 <button type="reset" onClick={e=>handleReset(e)}>Reset</button>     
         </div>
-        {submit && (
-            <>
-                <p>{submit.title}</p>
-                <p>{submit.content}</p>
-            </>
-    )}
-
+   
     </form>
-    )
-}       
-
+    );
+}  
