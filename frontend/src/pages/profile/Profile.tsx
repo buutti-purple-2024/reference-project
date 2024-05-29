@@ -20,6 +20,7 @@ const Profile: React.FC<ProfileProps> = ({currentUser}) => {
             <ChangePassword/>
             { userIsLoggedIn && <ChangePassword/>}
             { userIsLoggedIn && <DeleteAccount/>} 
+            </div>
 
     )
 }

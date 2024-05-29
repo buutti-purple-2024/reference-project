@@ -1,6 +1,8 @@
 import "./posts.scss";
 import Post from "../post/Post";
 import PostType from "../../types/PostType";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 interface PostWithUser extends PostType {
   user: {
@@ -14,7 +16,7 @@ interface PostsProps {
   posts: PostWithUser[];
 }
 
-const Posts: React.FC<PostsProps> = ({ posts }) => {
+const Posts: React.FC<PostsProps> = ( ) => {
 
 
     const baseurl = "http://localhost:3001" 
