@@ -194,7 +194,59 @@ async function main() {
 			},
 		});
 
+
 		console.log("Follow created:", follow);
+
+		const chat = await prisma.chat.create({
+			data: {
+				user1_id: 1,
+				user2_id: 2,
+			},
+		});
+
+		const chat2 = await prisma.chat.create({
+			data: {
+				user1_id: 1,
+				user2_id: 3,
+			},
+		});
+
+		const chat3 = await prisma.chat.create({
+			data: {
+				user1_id: 1,
+				user2_id: 4,
+			},
+		});
+
+		console.log("Chats created:", chat, chat2, chat3);
+
+		const message = await prisma.message.create({
+			data: {
+				chat_id: 1,
+				sender_id: 1,
+				content: "From adminuser to Alice",
+			},
+		});
+
+		const message2 = await prisma.message.create({
+			data: {
+				chat_id: 2,
+				sender_id: 1,
+				content: "From adminuser to Bob",
+			},
+		});
+
+		const message3 = await prisma.message.create({
+			data: {
+				chat_id: 3,
+				sender_id: 1,
+				content: "From adminuser to Jane",
+			},
+		});
+
+		console.log("Messages created:", message, message2, message3);
+
+
 	} catch (error) {
 		console.error("Error seeding database:", error);
 		throw error;
