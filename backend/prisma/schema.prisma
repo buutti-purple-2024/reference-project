@@ -32,10 +32,7 @@ model User {
   chats_participant1 Chat[]    @relation("chats_user1")
   chats_participant2 Chat[]    @relation("chats_user2")
 
-  // Define the one-to-many relation with follows where the user is the follower
-  followsAsFollower Follow[] @relation("follower")
-
-  // Define the one-to-many relation with follows where the user is the followed_user
+  followsAsFollower     Follow[]  @relation("follower")
   followsAsFollowedUser Follow[]  @relation("followedUser")
   Message               Message[]
 }
@@ -43,6 +40,7 @@ model User {
 model Post {
   post_id    Int      @id @default(autoincrement())
   user_id    Int
+  topic_id   Int
   title      String
   content    String
   image      String?
@@ -51,6 +49,7 @@ model Post {
   downvotes  Int      @default(0)
 
   user     User      @relation(fields: [user_id], references: [id], name: "user_posts")
+  topic    Topic     @relation(fields: [topic_id], references: [topic_id])
   comments Comment[] @relation("post_comments")
 }
 
@@ -93,9 +92,14 @@ model Follow {
   followed_user_id Int
   created_at       DateTime @default(now())
 
-  // Define the relation back to the User model for the follower
-  follower User @relation("follower", fields: [follower_id], references: [id])
-
-  // Define the relation back to the User model for the followed_user
+  follower     User @relation("follower", fields: [follower_id], references: [id])
   followedUser User @relation("followedUser", fields: [followed_user_id], references: [id])
+}
+
+model Topic {
+  topic_id   Int      @id @default(autoincrement())
+  name       String   @unique
+  created_at DateTime @default(now())
+
+  posts Post[]
 }
