@@ -58,7 +58,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
             </div>
 
             <div className="info"> 
-              <VotingButtons upvotes={upvotes} downvotes={downvotes} />
+              <VotingButtons upvotes={upvotes} downvotes={downvotes} post_id={post.post_id} />
               <div className="comment" onClick={toggleCommentSection}>
                   <Icon path={mdiMessageOutline} size={1} /> {commentOpen ? "Hide" : "Show"} comments
               </div>
