@@ -1,7 +1,9 @@
+
+import "./myProfile.scss"
 import ChangePassword from "../../components/changePassword/ChangePassword";
-import ProfileContent from "../../components/profileContent/ProfileContent";
 import UserType from "../../types/UserType";
-import "./profile.scss"
+import CurrentUserProfile from "../../components/profile/CurrentUserProfile";
+
 
 interface ProfileProps {
     currentUser: UserType | null;
@@ -12,10 +14,12 @@ const Profile: React.FC<ProfileProps> = ({currentUser}) => {
         return <div>No user logged in</div>;
   }
     return (
-        <div className="profilePage">
-            <ProfileContent currentUser={currentUser}/>
-            <ChangePassword/>
+        <div className="myProfilePage">
+            <h1>{currentUser.username}'s Profile</h1>
+            <CurrentUserProfile currentUser={currentUser}/>
+            <ChangePassword />
         </div>
+        
     )
 }
 

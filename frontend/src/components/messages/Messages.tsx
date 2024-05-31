@@ -70,7 +70,8 @@ const Messages: React.FC<MessagesProps> = ({ currentUser, users, /* chats, */ se
                         <div key={index} className="message">
                             <div className="content">
                                 <div className="user-details">
-                                    <span className="u-username">Unknown User</span>
+                                    <img src={currentUser.profileImage} alt={currentUser.username} />
+                                    <span className="u-username">{currentUser.username}</span>
                                     <span className="date">{new Date(message.created_at).toLocaleString()}</span>
                                 </div>
                                 <div className="message-content">{message.content}</div>
@@ -97,7 +98,7 @@ const Messages: React.FC<MessagesProps> = ({ currentUser, users, /* chats, */ se
                     </div>
                 );
             })}
-            <WriteMessage setMessages={setMessages} />
+            <WriteMessage currentUser={currentUser} setMessages={setMessages} chatId={chatId} messages={messages}/>
         </div>
     );
 };
