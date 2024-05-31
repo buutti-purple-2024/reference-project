@@ -6,10 +6,25 @@ import { mdiAccountMultipleOutline } from '@mdi/js';
 import { mdiAccountSearch } from '@mdi/js';
 import { Link } from "react-router-dom";
 import "./leftBar.scss";
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 
 
 const LeftBar = () => {
+
+    const baseurl = "http://localhost:3001"
+    const [topics, setTopics] = useState([])
+
+    useEffect(() => {
+        const fetchTopics = async () => {
+            const response = await axios.get(`${baseurl}/topics`)
+            console.log(response)
+            setTopics(response.data)
+    
+        }
+    }, [])
+
     return (
         <div className="leftBar">
             <div className="container">
