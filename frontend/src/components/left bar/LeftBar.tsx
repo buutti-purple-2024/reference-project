@@ -17,13 +17,18 @@ const LeftBar = () => {
     const [topics, setTopics] = useState([])
 
     useEffect(() => {
+        console.log("leftbar")
         const fetchTopics = async () => {
             const response = await axios.get(`${baseurl}/topics`)
             console.log(response)
             setTopics(response.data)
-    
         }
+        fetchTopics()
     }, [])
+
+    const mapTopics = () => {
+        //topics.map()
+    }
 
     return (
         <div className="leftBar">
@@ -70,8 +75,10 @@ const LeftBar = () => {
                 </div>
                 <hr/>
                 <div className="menu">
-                    <span>TOPICS</span>
-                    <div className="item">Gaming</div>
+                    <Link to="/topic">
+                    <Icon path={mdiAccountSearch} size={1} />
+                        <span>TOPICS</span>
+                    </Link>                    <div className="item">Gaming</div>
                     <div className="item">Nature</div>
                     <div className="item">TV</div>
 

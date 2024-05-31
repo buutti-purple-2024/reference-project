@@ -21,6 +21,8 @@ import UserType from "./types/UserType";
 import ChatLeftBar from "./components/chatLeftBar/ChatLeftBar";
 import Users from "./pages/users/Users";
 import ChatType from "./types/ChatType";
+import Topic from "./pages/topic/Topic";
+import Community from "./pages/community/Community";
 
 
 function App() {
@@ -130,6 +132,8 @@ function App() {
 					<Route path="users" element={<Users />} />
 					<Route path="profileUpdate" element={<ProfileUpdate />} />
 					<Route path="*" element={<div>Not Found</div>} />
+					<Route path="topic" element={< Topic />} />
+					<Route path="community/*" element={<Community/>} />
 				</Route>
 
 				<Route path="/chat/*" element={

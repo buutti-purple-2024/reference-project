@@ -53,12 +53,36 @@ router.use(express.json());
  *                 $ref: '#/components/schemas/Topic'
  */
 router.get("/", async (req: Request, res: Response) => {
-	try {
-		const topics = await prisma.topic.findMany();
-		res.send(topics);
-	} catch (error) {
-		console.log(error);
-		res.status(500).send("Internal server error");
+
+	if (!req.query.title) {
+		try {
+			const topics = await prisma.topic.findMany({
+				include: {
+					users: true,
+					posts: true,
+				},
+			});
+			res.send(topics);
+		} catch (error) {
+			console.log(error);
+			res.status(500).send("Internal server error");
+		}
+	}
+	else {
+		try {
+			const topics = await prisma.topic.findMany({
+				where: {
+					title : req.query.title as string},
+				include: {
+					users: true,
+					posts: true,
+				},
+			});
+			res.send(topics);
+		} catch (error) {
+			console.log(error);
+			res.status(500).send("Internal server error");
+		}
 	}
 });
 
