@@ -35,6 +35,8 @@ model User {
   followsAsFollower     Follow[]  @relation("follower")
   followsAsFollowedUser Follow[]  @relation("followedUser")
   Message               Message[]
+  topic Topic [] @relation("user_topics")
+
 }
 
 model Post {
@@ -49,7 +51,7 @@ model Post {
   downvotes  Int      @default(0)
 
   user     User      @relation(fields: [user_id], references: [id], name: "user_posts")
-  topic    Topic     @relation(fields: [topic_id], references: [topic_id])
+  topic    Topic     @relation(fields: [topic_id], references: [topic_id], name: "topic_posts")
   comments Comment[] @relation("post_comments")
 }
 
@@ -98,8 +100,12 @@ model Follow {
 
 model Topic {
   topic_id   Int      @id @default(autoincrement())
-  name       String   @unique
+  title       String   @unique
   created_at DateTime @default(now())
-
-  posts Post[]
+  image String?
+  description String?
+  user_id Int
+  post_id Int
+  users User @relation(fields: [user_id], references: [id], name: "user_topics")
+  posts Post[] @relation("topic_posts")
 }

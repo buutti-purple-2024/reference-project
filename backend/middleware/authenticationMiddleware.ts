@@ -21,6 +21,7 @@ export const authenticationMiddleware = async (req:Request,res:Response,next:Nex
 			/*res.cookie("token", token, {
 				httpOnly: true
 			});*/
+			console.log(decoded)
 			req.user = decoded.name
 			next();
 		} catch (error) {
