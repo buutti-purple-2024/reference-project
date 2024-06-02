@@ -1,37 +1,46 @@
 import "./comments.scss";
 import CommentsContext from "../../contexts/CommentsContext";
-import UsersContext from "../../contexts/UsersContext";
-import CommentType from "../../types/CommentType";
+//import UsersContext from "../../contexts/UsersContext";
+//import CommentType from "../../types/CommentType";
 import UserType from "../../types/UserType";
 import { useContext } from 'react';
 
+interface CommentsProps {
+  postId: number;
+  users: UserType[];
+}
 
-const Comments: React.FC<{comments: CommentType[], users: UserType[] }> = () => {
-    
-    const comments  = useContext(CommentsContext);
-    const  users  = useContext(UsersContext);
+const Comments: React.FC<CommentsProps> = ({ postId, users }) => {
+  const commentsContext = useContext(CommentsContext);
+  
+  if (!commentsContext) {
+    return <div>Loading...</div>;
+  }
 
-    return (
-        <div className="comments">{
+  const { comments } = commentsContext;
 
-            comments.map(comment => { // Find the user associated with the comment
-                const user = users.find(user => user.id === comment.user_id);
-                if (!user) return null; // Handle if user is not found
-                
-                return (
-                    <div className="comment" key={comment.comment_id}>
-                        <img src={user.profileImage} alt="" />
-                        <span>{user.username}</span>
-                        <div className="info">
-                            <span>{comment.content}</span>
-                        </div>
-                        <span className="date">{comment.created_at}</span>
-                     </div>
-                 );
-            })
-        }
+  // Filter comments based on the postId
+  const postComments = comments.filter(comment => comment.post_id === postId);
+
+  return (
+    <div className="comments">
+      {postComments.map(comment => { // Find the user associated with the comment
+        const user = users.find(user => user.id === comment.user_id);
+        if (!user) return null; // Handle if user is not found
+
+        return (
+          <div className="comment" key={comment.comment_id}>
+            <img src={user.profileImage} alt="" />
+            <span>{user.username}</span>
+            <div className="info">
+              <span>{comment.content}</span>
+            </div>
+            <span className="date">{comment.created_at}</span>
+          </div>
+        );
+      })}
     </div>
-    )
+  );
 };
 
 export default Comments;

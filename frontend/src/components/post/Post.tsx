@@ -9,8 +9,9 @@ import { Link } from "react-router-dom";
 import { useState, useContext } from "react";
 import PostType from "../../types/PostType";
 import UsersContext from "../../contexts/UsersContext";
-import CommentsContext from "../../contexts/CommentsContext";
+import {CommentsProvider} from "../../contexts/CommentsContext";
 import WriteComment from "../comments/WriteComment";
+
 
 interface PostProps {
   post: PostType;
@@ -18,12 +19,13 @@ interface PostProps {
   profileImage: string;
   upvotes: number;
   downvotes: number;
+  post_id: number;
 }
 
 const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes }) => {
   
     const [ commentOpen, setCommentOpen ] = useState(false);
-    const comments = useContext(CommentsContext);
+   // const {comments} = useContext(CommentsContext);
     const users = useContext(UsersContext);
 
     const toggleCommentSection = () => {
@@ -67,7 +69,9 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
           <div>
             {commentOpen && (
               <div className="comments-container">
-                <Comments comments={comments} users={users} />
+                <CommentsProvider postId={post.post_id}>
+                  <Comments postId={post.post_id} users={users} />
+                </CommentsProvider>
               </div>
             )}
           </div>
