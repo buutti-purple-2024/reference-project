@@ -134,6 +134,8 @@ function App() {
 					<Route path="*" element={<div>Not Found</div>} />
 					<Route path="topic" element={< Topic />} />
 					<Route path="community/*" element={<Community/>} />
+					<Route path="login" element={<Login />} />
+					<Route path="register" element={<Register />} />
 				</Route>
 
 				<Route path="/chat/*" element={
@@ -144,8 +146,6 @@ function App() {
 					{/* <Route path=":id" element={<Chat  />} /> */}
 				</Route>
 				
-				<Route path="login" element={<Login />} />
-				<Route path="register" element={<Register />} />
 			</Routes>
 		</Router>
 	);

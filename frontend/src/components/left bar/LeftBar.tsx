@@ -83,6 +83,17 @@ const LeftBar = () => {
                     <div className="item">TV</div>
 
                 </div>
+                <hr />
+                <div className="menu">
+                <Link to="/login">
+                    <Icon path={mdiAccountOutline} size={1} />
+                        <span>Login</span>
+                </Link>  
+                <Link to="/register">
+                    <Icon path={mdiAccountOutline} size={1} />
+                        <span>Register</span>
+                </Link>                        
+                </div>
             </div>
         </div>
     )
