@@ -1,4 +1,5 @@
 import ChangePassword from "../../components/changePassword/ChangePassword";
+import CreateTopic from "../../components/createTopic/CreateTopic";
 import DeleteAccount from "../../components/deleteAccount/DeleteAccount";
 import ProfileContent from "../../components/profileContent/ProfileContent";
 import UserType from "../../types/UserType";
@@ -17,7 +18,7 @@ const Profile: React.FC<ProfileProps> = ({currentUser}) => {
     return (
         <div className="profilePage">
             <ProfileContent currentUser={currentUser}/>
-            <ChangePassword/>
+            <CreateTopic/>
             { userIsLoggedIn && <ChangePassword/>}
             { userIsLoggedIn && <DeleteAccount/>} 
             </div>

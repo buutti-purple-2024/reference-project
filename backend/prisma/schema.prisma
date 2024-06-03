@@ -105,7 +105,7 @@ model Topic {
   image String?
   description String?
   user_id Int
-  post_id Int
+  post_id Int?
   users User @relation(fields: [user_id], references: [id], name: "user_topics")
   posts Post[] @relation("topic_posts")
 }
