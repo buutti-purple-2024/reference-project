@@ -42,13 +42,13 @@ const Posts: React.FC<PostsProps> = ( ) => {
     const mapPosts = () => {
       return posts.map(post => (
         <Post 
-            key={post.post_id} 
-            post={post} // prop includes e.g. image, title & content
-            username={post.user.username || ''}
-            profileImage={post.user.profileImage || ''}
-            upvotes={post.upvotes}
-            downvotes={post.downvotes}
-        />
+          key={post.post_id}
+          post={post} // prop includes e.g. image, title & content
+          username={post.user.username || ''}
+          profileImage={post.user.profileImage || ''}
+          upvotes={post.upvotes}
+          downvotes={post.downvotes} 
+          post_id={post.post_id}        />
       ));
     };
 
