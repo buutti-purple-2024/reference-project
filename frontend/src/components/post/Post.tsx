@@ -77,7 +77,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
           </div>
           
           <div>
-              <WriteComment/>
+              <WriteComment postId={post.post_id}/>
           </div>
             
           </div>

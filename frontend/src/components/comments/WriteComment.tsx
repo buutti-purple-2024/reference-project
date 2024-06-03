@@ -1,30 +1,49 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import CommentType from "../../types/CommentType";
 import "./writeComment.scss";
+import axios from "axios";
 
-const initialState: CommentType = { 
-        comment_id: 0,
-        user_id: 0,
-        post_id: Math.random(),
-        created_at: new Date().toISOString(),
+interface WriteCommentProps {
+    postId: number;
+}
+
+export default function WriteComment({postId}: WriteCommentProps) {
+    
+    const initialState: CommentType = { 
+        comment_id: 1,
+        user_id: 1,
+        post_id: postId,
+        created_at: "",
         content: "",
     }
 
-    export default function WriteComment() {
-
+    const baseurl = "http://localhost:3001";
+    
     const [comment, setComment] = useState<CommentType>(initialState);
-    const [submit, setSubmit] = useState<CommentType>(initialState);
+    //const [submit, setSubmit] = useState<CommentType>(initialState);
 
     function handleComment(e: ChangeEvent<HTMLTextAreaElement>) {
         e.preventDefault();
         setComment({...comment, content: e.target.value})
     }
    
-    function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setSubmit(comment);
-        setComment(initialState);
-        console.log(submit.content)
+        
+        try {
+            await axios.post(`${baseurl}/comments`, comment, {withCredentials: true});
+            setComment(initialState)
+            /*if (fileInputRef.current) {
+                fileInputRef.current.value = ""; // Clear the file input
+            }*/
+            console.log(comment)
+        } catch (error) {
+            console.error("error submitting comment:", error)
+        }
+        
+        //setSubmit(comment);
+        //setComment(initialState);
+        //console.log(submit.content)
     }
     return(
         <div className="commentForm">
