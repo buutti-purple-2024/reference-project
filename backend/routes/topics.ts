@@ -2,6 +2,7 @@ import express from "express";
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { validationResult } from "express-validator";
+import { authenticationMiddleware } from "../middleware/authenticationMiddleware";
 
 export const router = express.Router();
 const prisma = new PrismaClient();
@@ -15,17 +16,17 @@ router.use(express.json());
  *     Topic:
  *       type: object
  *       required:
- *         - name
+ *         - title
  *       properties:
  *         topic_id:
  *           type: number
- *         name:
+ *         title:
  *           type: string
  *         created_at:
  *           type: string
  *       example:
  *         topic_id: 1
- *         name: General Discussion
+ *         title: General Discussion
  *         created_at: 2024-04-10T12:00:00Z
  */
 
@@ -147,7 +148,8 @@ router.get("/:id", async (req: Request, res: Response) => {
  *       500:
  *         description: Internal server error
  */
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", authenticationMiddleware, async (req: Request, res: Response) => {
+	console.log(req.id, req.user)
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.status(400).json({ errors: errors.array() });
@@ -156,7 +158,10 @@ router.post("/", async (req: Request, res: Response) => {
 	try {
 		const newTopic = await prisma.topic.create({
 			data: {
-				name: req.body.name,
+				title: req.body.title,     
+				user_id: req.id,
+				post_id: null,
+				description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa et nulla feugiat iaculis. Donec tellus sapien, molestie vel massa vitae, scelerisque eleifend urna",
 			},
 		});
 		res.json(newTopic);
@@ -204,7 +209,7 @@ router.put("/:id", async (req: Request, res: Response) => {
 	try {
 		const updatedTopic = await prisma.topic.update({
 			where: { topic_id: Number(req.params.id) },
-			data: { name: req.body.name },
+			data: { title: req.body.name },
 		});
 		res.json(updatedTopic);
 	} catch (error) {

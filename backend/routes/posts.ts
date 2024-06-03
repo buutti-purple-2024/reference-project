@@ -3,6 +3,7 @@ export const router = express.Router();
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
 import { validationResult } from "express-validator";
+import { authenticationMiddleware } from "../middleware/authenticationMiddleware";
 const prisma = new PrismaClient();
 
 router.use(express.json());
@@ -17,6 +18,7 @@ router.use(express.json());
  *         - title
  *         - content
  *         - user_id
+ *         - topic_id
  *       properties:
  *          post_id:
  *            type: number
@@ -25,6 +27,8 @@ router.use(express.json());
  *          content:
  *            type: string
  *          user_id:
+ *            type: number
+ *          topic_id:
  *            type: number
  *          created_at:
  *            type: string
@@ -37,6 +41,7 @@ router.use(express.json());
  *         title: My First Post
  *         content: This is the content of my first post.
  *         user_id: 1
+ *         topic_id: 1
  *         created_at: 2024-04-10T12:00:00Z
  *         upvotes: 0
  *         downvotes: 0
@@ -142,7 +147,7 @@ router.get("/:id", async (req: Request, res: Response) => {
  *       500:
  *         description: Internal server error
  */
-router.post("/", async (req, res) => {
+router.post("/", authenticationMiddleware, async (req, res) => {
 	// Use validationResult middleware here to check for validation errors
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
@@ -154,7 +159,8 @@ router.post("/", async (req, res) => {
 			data: {
 				title: req.body.title,
 				content: req.body.content,
-				user_id: req.body.user_id // Assuming user_id is provided in the request body
+				user_id: req.id,
+				topic_id: req.body.topic_id
 			}
 		});
 		res.json(newPost);
