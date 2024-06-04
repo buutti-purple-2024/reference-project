@@ -61,8 +61,7 @@ const Home = () => {
     };
 
     fetchPosts();
-  }, [users]); // Fetch posts after users are available
-
+  }, [users]);
   return (
     <div className="home">
       <PostCreate />

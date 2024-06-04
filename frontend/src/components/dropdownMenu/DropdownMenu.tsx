@@ -5,6 +5,7 @@ import { mdiMenu } from '@mdi/js';
 import { useNavigate } from "react-router-dom";
 import { mdiAccountOutline } from '@mdi/js';
 import { mdiLogin } from '@mdi/js';
+import { mdiAccountSearch } from '@mdi/js';
 
 
 
@@ -40,6 +41,11 @@ const DropdownMenu = () => {
                     <Icon path={mdiLogin} size={1} />
                     Login | test
                 </li>
+                <li className="dropdown-item" onClick={() => handleNavigation(('/users'))}>
+                <Icon path={mdiAccountSearch} size={1} />
+                    Users Search
+                </li>
+                
             </ul>
             )}
         </div>

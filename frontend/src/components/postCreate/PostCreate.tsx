@@ -32,7 +32,7 @@ function FormInput() {
             e.preventDefault();
 
             try {
-                await axios.post(`${baseurl}/posts`, post);
+                await axios.post(`${baseurl}/posts`, post, {withCredentials: true});
                 setPost(initialState)
                 /*if (fileInputRef.current) {
                     fileInputRef.current.value = ""; // Clear the file input
