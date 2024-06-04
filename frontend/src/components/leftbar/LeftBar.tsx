@@ -1,7 +1,7 @@
 
 import Icon from '@mdi/react';
 import { mdiHomeOutline } from '@mdi/js';
-import { mdiAccountOutline } from '@mdi/js';
+import { mdiAccountOutline, mdiAccountSearch } from '@mdi/js';
 import { mdiAccountMultipleOutline } from '@mdi/js';
 import { Link } from "react-router-dom";
 import "./leftBar.scss";
