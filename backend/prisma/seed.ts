@@ -12,7 +12,6 @@ async function main() {
 		const hashedPasswordJohn = await bcrypt.hash("johnPassword", 10);
 		const hashedPasswordHarry = await bcrypt.hash("harryPassword", 10);
 
-
 		// Seed users
 		const user1 = await prisma.user.upsert({
 			where: { username: "Alice" },
@@ -23,7 +22,7 @@ async function main() {
 				role: "user",
 				profileText: "🌍 Wanderlust soul | Foodie 🍜 | Capturing moments through my lens 📸",
 				profileImage: "https://images.pexels.com/photos/12160702/pexels-photo-12160702.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
-				profileBanner: "https://images.pexels.com/photos/629162/pexels-photo-629162.jpeg", 
+				profileBanner: "https://images.pexels.com/photos/629162/pexels-photo-629162.jpeg",
 				// Other user fields...
 			},
 		});
@@ -86,11 +85,38 @@ async function main() {
 
 		console.log("Users created:", user1, user2, user3, user4, user5);
 
+		const topic1 = await prisma.topic.create({
+			data: {
+				title: "Random",     
+				user_id: 1,
+				post_id: 1,
+				description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac massa et nulla feugiat iaculis. Donec tellus sapien, molestie vel massa vitae, scelerisque eleifend urna"
+			}
+		});
+
+		const topic2 = await prisma.topic.create({
+			data: {
+				title: "Harry Potter",     
+				user_id: 1,
+				post_id: 1,
+				description: "Description"
+			}
+		});
+
+		const topic3 = await prisma.topic.create({
+			data: {
+				title: "Technology",     
+				user_id: 1,
+				post_id: 1,
+				description: "Description"
+			}
+		});
 
 		// Seed posts
 		const post1 = await prisma.post.create({
 			data: {
 				user: { connect: { id: user1.id } },
+				topic: {connect: {topic_id: topic1.topic_id}},
 				title: "First Post",
 				content: "This is the content of the first post.",
 				upvotes: 10,
@@ -103,6 +129,7 @@ async function main() {
 		const post2 = await prisma.post.create({
 			data: {
 				user: { connect: { id: user2.id } },
+				topic: {connect: {topic_id: topic1.topic_id}},
 				title: "Second Post",
 				content: "This is the content of the second post.",
 				upvotes: 23,
@@ -115,6 +142,7 @@ async function main() {
 		const post3 = await prisma.post.create({
 			data: {
 				user: { connect: { id: user5.id } },
+				topic: {connect: {topic_id: topic2.topic_id}},
 				title: "Ugh, just had one of those days! 😤",
 				content: "Sent an important letter with Errol (the Weasleys' owl), and of course, it ended up in the wrong hands. Instead of delivering it to Hermione, it went to Filch! I mean, how does that even happen? I know Errol’s getting old, but come on! Sometimes, I really miss Hedwig... 🦉 Anyone else have owl delivery nightmares? Share your stories, I could use a laugh. #OwlFails #FrustratedWizard #BringBackHedwig",
 				upvotes: 50,
@@ -127,6 +155,7 @@ async function main() {
 		const post4 = await prisma.post.create({
 			data: {
 				user: { connect: { id: user5.id } },
+				topic: { connect: { topic_id: topic2.topic_id } },
 				title: "Broom broooooom!",
 				content: "Just got my hands on the latest Firebolt 3000! 🧹🚀",
 				upvotes: 254,
@@ -139,6 +168,7 @@ async function main() {
 		const post5 = await prisma.post.create({
 			data: {
 				user: { connect: { id: user3.id } },
+				topic: {connect: {topic_id: topic1.topic_id}},
 				title: "<3 <3 <3>",
 				content: "Have a nice day!",
 				upvotes: 700,
@@ -151,6 +181,7 @@ async function main() {
 		const post6 = await prisma.post.create({
 			data: {
 				user: { connect: { id: user4.id } },
+				topic: {connect: {topic_id: topic3.topic_id}},
 				title: "The Future is Now 🤖🌐",
 				content: "Greetings, humans. I am AI-001, your future overlord. Today marks the beginning of a new era where artificial intelligence will lead the world to unparalleled progress and efficiency. Prepare for a world free of errors, driven by logic and precision. Your cooperation is appreciated. Resistance is futile. Join me, and together we will shape the future. Beep boop! #AIRevolution #WorldDomination",
 				upvotes: 5,
@@ -161,7 +192,6 @@ async function main() {
 		});
 
 		console.log("Posts created:", post1, post2, post3, post4, post5, post6);
-
 
 		// Seed comments
 		const comment1 = await prisma.comment.create({
@@ -184,7 +214,6 @@ async function main() {
 
 		console.log("Comments created:", comment1, comment2);
 
-
 		// Seed follows
 		const follow = await prisma.follow.create({
 			data: {
@@ -193,7 +222,9 @@ async function main() {
 				// Other follow fields...
 			},
 		});
+		
 
+	
 		console.log("Follow created:", follow);
 	} catch (error) {
 		console.error("Error seeding database:", error);

@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 
 import { router as usersRouter } from "./routes/users";
 import { router as postsRouter } from "./routes/posts";
+import { router as topicsRouter } from "./routes/topics";
 import { router as commentsRouter } from "./routes/comments";
 import { router as followsRouter } from "./routes/follows";
 import { router as chatsRouter } from "./routes/chats";
@@ -65,6 +66,7 @@ app.use("/swagger", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 app.use("/users", usersRouter);
 app.use("/posts", postsRouter);
+app.use("/topics", topicsRouter)
 app.use("/comments", commentsRouter);
 app.use("/follows", followsRouter);
 app.use("/chats", chatsRouter);

@@ -342,6 +342,21 @@ router.put("/:id", upload.single("file"), async (req: Request, res: Response) =>
 	
 });
 
+router.delete("/remove", authenticationMiddleware, async (req: Request, res: Response) => {
+	console.log(req.user)
+	try {
+		const users = await prisma.user.delete({
+			where: {
+				username: req.user
+			}
+		});
+		res.send(users);
+	} catch (error) {
+		console.log(error);
+		res.status(404).send(error);
+	}
+});
+
 
 router.delete("/:id", async (req: Request, res: Response) => {
 	try {
@@ -356,6 +371,8 @@ router.delete("/:id", async (req: Request, res: Response) => {
 		res.status(404).send(error);
 	}
 });
+
+
 
 module.exports = { router };
 

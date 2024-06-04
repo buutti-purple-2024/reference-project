@@ -53,6 +53,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ user }) => {
     </div>
   
   );
+
 };
 
 export default ProfileContent;

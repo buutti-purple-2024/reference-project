@@ -129,23 +129,25 @@ router.post("/register", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-	const user = await prisma.user.findUnique({
+	const prismaUser = await prisma.user.findUnique({
 		where: {
 			username: req.body.username,
 		},
 	});
-	if (user == null) {
+	if (prismaUser == null) {
 		return res.status(400).send("Cannot find user");
 	}
 	try {
-		if (await bcrypt.compare(req.body.password, user.password)) {
-			const user = {name: req.body.username};
+		if (await bcrypt.compare(req.body.password, prismaUser.password)) {
+			console.log("prismauser", prismaUser)
+			const user = {name: req.body.username, id: prismaUser.id};
 			if (process.env.ACCESS_TOKEN_SECRET) {
 				//const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
 				const accessToken = generateAccessToken(user);
 				const refreshToken = await generateRefreshToken(user);
 				res.cookie("accesstoken", accessToken, { maxAge: 24 * 60 * 60 * 1000,  httpOnly: false});
 				res.cookie("refreshtoken", refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
+				res.cookie("username", req.body.username, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
 				res.json({accessToken: accessToken, refreshToken: refreshToken});
 			}
 			else {
@@ -159,11 +161,11 @@ router.post("/login", async (req, res) => {
 	}
 });
 
-const generateAccessToken = (user : {name : string} ) => {
-	if(process.env.ACCESS_TOKEN_SECRET) return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "30s"});
+const generateAccessToken = (user : {name : string, id: number} ) => {
+	if(process.env.ACCESS_TOKEN_SECRET) return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"});
 };
 
-const generateRefreshToken = async (user : {name: string}) => {
+const generateRefreshToken = async (user : {name: string, id: number}) => {
 	if (!process.env.REFRESH_TOKEN_SECRET) {console.log("missing REFRESH_TOKEN_SECRET"); return;}
 	const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
 	//const prismaUser = await prisma.users.findUnique({where: {username: user}});

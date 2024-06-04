@@ -5,14 +5,16 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import { json } from "stream/consumers";
 import * as React from "react";
-
+import { useNavigate } from "react-router-dom";
 const Login = () => {
 
     const baseurl = "http://localhost:3001"
+    const navigate = useNavigate()
     const [username, setUsername] = useState<null | string>(null)
     const [password, setPassword] = useState<null | string>(null)
     const [loginError, setLoginError] = useState<boolean>(false); 
     const [errorMessage, setErrorMessage] = useState<string>(""); 
+
 
     const handleErrorTimer = (msg: string) => {
         setLoginError(true);
@@ -40,6 +42,7 @@ const Login = () => {
             })
             const data = await response.json();
             console.log(data);
+            navigate("/")
         } catch (error) {
             console.log(error);
             handleErrorTimer("An error happened.")

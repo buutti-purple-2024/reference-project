@@ -1,42 +1,31 @@
-import "./postCreate.scss";
+import "./createTopic.scss";
 import { useState, ChangeEvent, FormEvent } from "react";
 //import { useRef } from "react";
 import PostType from "../../types/PostType";
 import axios from "axios";
 
-export default function PostCreate() {
-    return (
-        <FormInput/>
-    )
-}
 
-function FormInput() {
+const CreateTopic = () => {
 
-    const initialState: PostType = {
-        post_id: 0,
-        user_id: 1, 
+  /*
+    const initialState: TopicType = {
         title: "", 
-        content: "",
+        description: "",
         image: null,
-        created_at: "", 
-        upvotes: 0, 
-        downvotes: 0
     }
+    */
 
     const baseurl = "http://localhost:3001";
     
-    const [post, setPost] = useState(initialState);
+    const [post, setPost] = useState({title: "", description: "", image: null});
     //const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
             e.preventDefault();
 
             try {
-                await axios.post(`${baseurl}/posts`, post, {withCredentials: true});
-                setPost(initialState)
-                /*if (fileInputRef.current) {
-                    fileInputRef.current.value = ""; // Clear the file input
-                }*/
+                await axios.post(`${baseurl}/topics`, post, {withCredentials: true});
+                //setPost(initialState)
                 console.log(post)
             } catch (error) {
                 console.error("error submitting post:", error)
@@ -47,21 +36,26 @@ function FormInput() {
         setPost({...post, title: e.target.value});
     }
     
-    function handleContent(e: ChangeEvent<HTMLTextAreaElement>){
-        setPost({...post, content: e.target.value});
+    function handleDescription(e: ChangeEvent<HTMLTextAreaElement>){
+        setPost({...post, description: e.target.value});
     }
 
     //IMAGE
+    
     function handleImage(e: ChangeEvent<HTMLInputElement>) {
+      return
+      /*
         if (e.target.files) {
             setPost({...post, image: e.target.files[0]});
             console.log("image path: " + e.target.value);
         }
+        */
     }
+    
 
     function handleReset(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
         e.preventDefault();
-        setPost(initialState);
+        //setPost(initialState);
         /*if (fileInputRef.current) {
             fileInputRef.current.value = ""; // Clear the file input. Check: https://www.geeksforgeeks.org/how-to-reset-a-file-input-in-react-js/
         }
@@ -71,7 +65,7 @@ function FormInput() {
     return (
     <form onSubmit={(e) => handleSubmit(e)} >
         <div className="form-container">
-                <h2>Create a Post</h2>
+                <h2>Create a Community</h2>
 
                 <label htmlFor="title">Title</label>
                 <input 
@@ -80,17 +74,18 @@ function FormInput() {
                     name="title"
                     id="title"
                     type="text" 
-                    placeholder="Enter post title" 
+                    placeholder="Enter community name" 
                 />
-                <label htmlFor="content">Content</label>
+                <label htmlFor="content">Description</label>
                 <textarea
-                    value={post.content}
-                    onChange={(e) => handleContent(e)}
+                    value={post.description}
+                    onChange={(e) => handleDescription(e)}
                     name="content"
                     id="content"
-                    placeholder="Share your thoughts"
+                    placeholder="Description for your community"
                     rows={4}
                 />
+                
                 <input // IMAGE
                     type="file"
                     onChange={handleImage}
@@ -105,3 +100,5 @@ function FormInput() {
     </form>
     );
 }  
+
+export default CreateTopic;
