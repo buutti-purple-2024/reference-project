@@ -1,9 +1,12 @@
+
+import "./myProfile.scss"
 import ChangePassword from "../../components/changePassword/ChangePassword";
 import CreateTopic from "../../components/createTopic/CreateTopic";
 import DeleteAccount from "../../components/deleteAccount/DeleteAccount";
 import ProfileContent from "../../components/profileContent/ProfileContent";
 import UserType from "../../types/UserType";
-import "./profile.scss"
+import CurrentUserProfile from "../../components/profile/CurrentUserProfile";
+
 
 interface ProfileProps {
     currentUser: UserType | null;

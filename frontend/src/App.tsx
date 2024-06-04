@@ -6,11 +6,12 @@ import {
 	Outlet,
 	useNavigate,
 } from "react-router-dom";
-import LeftBar from "./components/left bar/LeftBar";
+import LeftBar from "./components/leftbar/LeftBar";
 import NavBar from "./components/navbar/NavBar";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
-import Profile from "./pages/profile/Profile";
+import UserProfile from "./pages/userProfile/UserProfile";
+import MyProfile from "./pages/myProfile/MyProfile";
 import Register from "./pages/register/Register";
 import Friends from "./pages/friends/Friends";
 import Chat from "./pages/chat/Chat";
@@ -26,15 +27,20 @@ import Community from "./pages/community/Community";
 
 
 function App() {
-	const [currentUser, setCurrentUser] = useState<UserType | null>(null); // Initialize as null
+	const [currentUser, setCurrentUser] = useState<UserType | null>(null); 
 	const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 	const [chatId, setChatId] = useState<string | null>(null);
 	const [users, setUsers] = useState<UserType[]>([]);
 	const [chats, setChats] = useState<ChatType[]>([]);
+	const [clickedUser, setClickedUser] = useState<UserType | null>(null);
 
 	const handleUserSelect = (user: UserType) => {
         setSelectedUser(user);
     };
+
+	const handleUserClick = (user: UserType) => {
+		setClickedUser(user);
+	};
 
 
 	const baseurl = "http://localhost:3001";
@@ -42,7 +48,7 @@ function App() {
 	useEffect(() => {
 		const fetchCurrentUser = async () => {
 			try {
-				const response = await axios.get(`${baseurl}/users/3`);
+				const response = await axios.get(`${baseurl}/users/2`);
 				setCurrentUser(response.data);
 			} catch (error) {
 				console.error("Error fetching current user:", error);
@@ -51,6 +57,19 @@ function App() {
 
 		fetchCurrentUser();
 	}, []);
+
+	/* useEffect(() => {
+		const fetchClickedUser = async () => {
+			try {
+				const response = await axios.get(`${baseurl}/users/4`);
+				setClickedUser(response.data);
+			} catch (error) {
+				console.error("Error fetching current user:", error);
+			}
+		};
+
+		fetchClickedUser();
+	}, []); */
 
 	useEffect(() => {
 		const fetchChat = async () => {
@@ -127,9 +146,12 @@ function App() {
 			<Routes>
 				<Route path="/" element={<Layout />}>
 					<Route path="/" element={<Home />} />
-					<Route path="profile/:id" element={<Profile currentUser={currentUser} />} />
-					<Route path="friends" element={<Friends />} />
-					<Route path="users" element={<Users />} />
+					<Route path="profile/my" 
+						element={<MyProfile currentUser={currentUser} />} />
+					<Route path="profile/:id" 
+						element={<UserProfile user={clickedUser} />} />
+					<Route path="friends" element={<Friends user={clickedUser}/>} />
+					<Route path="users" element={<Users onUserSelect={handleUserClick} /* user={currentUser} *//>} />
 					<Route path="profileUpdate" element={<ProfileUpdate />} />
 					<Route path="*" element={<div>Not Found</div>} />
 					<Route path="topic" element={< Topic />} />
