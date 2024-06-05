@@ -51,7 +51,9 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
     const addComment = (newComment: CommentType) => {
       setComments(prevComments => [newComment, ...prevComments]);
   };
-
+    
+    const filterComments = comments.filter(comment => comment.post_id === post.post_id);
+    const countPostComments = filterComments.length;
 
     return (
       <div className="post">
@@ -82,7 +84,9 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
             <div className="info"> 
               <VotingButtons upvotes={upvotes} downvotes={downvotes} post_id={post.post_id} />
               <div className="comment" onClick={toggleCommentSection}>
-                  <Icon path={mdiMessageOutline} size={1} /> {commentOpen ? "Hide" : "Show"} comments
+                  <Icon path={mdiMessageOutline} size={1} /> 
+                  {commentOpen ? "Hide" : "Show"} comments
+                  {` (${countPostComments})`}
               </div>
             </div> 
 
