@@ -1,107 +1,135 @@
 import "./postCreate.scss";
-import { useState, ChangeEvent, FormEvent } from "react";
-//import { useRef } from "react";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import PostType from "../../types/PostType";
 import axios from "axios";
 
-export default function PostCreate() {
-    return (
-        <FormInput/>
-    )
+interface TopicType {
+    topic_id: number;
+    title: string;
 }
 
-function FormInput() {
-
-    const initialState: PostType = {
+export default function PostCreate() {
+    const [topics, setTopics] = useState<TopicType[]>([]);
+    const [post, setPost] = useState<PostType>({
         post_id: 0,
-        user_id: 1, 
-        title: "", 
+        user_id: 1,
+        title: "",
         content: "",
         image: null,
-        created_at: "", 
-        upvotes: 0, 
-        downvotes: 0
-    }
+        created_at: "",
+        upvotes: 0,
+        downvotes: 0,
+        topic: "",
+        topic_id: 0
+    });
 
-    const baseurl = "http://localhost:3001";
-    
-    const [post, setPost] = useState(initialState);
-    //const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-
+    useEffect(() => {
+        async function fetchTopics() {
             try {
-                await axios.post(`${baseurl}/posts`, post, {withCredentials: true});
-                setPost(initialState)
-                /*if (fileInputRef.current) {
-                    fileInputRef.current.value = ""; // Clear the file input
-                }*/
-                console.log(post)
+                const response = await axios.get("http://localhost:3001/topics");
+                setTopics(response.data);
             } catch (error) {
-                console.error("error submitting post:", error)
+                console.error("Error fetching topics:", error);
             }
         }
 
-    function handleTitle(e: ChangeEvent<HTMLInputElement>){
-        setPost({...post, title: e.target.value});
-    }
-    
-    function handleContent(e: ChangeEvent<HTMLTextAreaElement>){
-        setPost({...post, content: e.target.value});
-    }
+        fetchTopics();
+    }, []);
 
-    //IMAGE
-    function handleImage(e: ChangeEvent<HTMLInputElement>) {
-        if (e.target.files) {
-            setPost({...post, image: e.target.files[0]});
-            console.log("image path: " + e.target.value);
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target;
+        if (name === "topic") {
+            const selectedTopic = topics.find(topic => topic.title === value);
+            if (selectedTopic) {
+                setPost({ ...post, topic: value, topic_id: selectedTopic.topic_id });
+            }
+        } else {
+            setPost({ ...post, [name]: value });
         }
-    }
+    };
 
-    function handleReset(e: React.MouseEvent<HTMLButtonElement, MouseEvent>){
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        setPost(initialState);
-        /*if (fileInputRef.current) {
-            fileInputRef.current.value = ""; // Clear the file input. Check: https://www.geeksforgeeks.org/how-to-reset-a-file-input-in-react-js/
+
+        const formData = new FormData();
+        formData.append("title", post.title || "");
+        formData.append("content", post.content || "");
+        formData.append("user_id", post.user_id.toString());
+        formData.append("topic_id", post.topic_id.toString());
+        if (post.image) {
+            formData.append("image", post.image);
         }
-        */
-    }
+
+        try {
+            const response = await axios.post("http://localhost:3001/posts", formData, {
+                withCredentials: true,
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            });
+            setPost({
+                ...post,
+                title: "",
+                content: "",
+                image: null
+            });
+            console.log(response.data);
+        } catch (error) {
+            console.error("Error creating post:", error);
+        }
+    };
 
     return (
-    <form onSubmit={(e) => handleSubmit(e)} >
-        <div className="form-container">
+        <form onSubmit={handleSubmit}>
+            <div className="form-container">
                 <h2>Create a Post</h2>
 
                 <label htmlFor="title">Title</label>
-                <input 
+                <input
                     value={post.title}
-                    onChange={(e) => handleTitle(e)} // e näyttää, että tyyppi on "ChangeEvent<HTMLInputElement>" >> kopio ja laita tyyppi handle-funktioon & importtiin
+                    onChange={handleChange}
                     name="title"
                     id="title"
-                    type="text" 
-                    placeholder="Enter post title" 
+                    type="text"
+                    placeholder="Enter post title"
                 />
+
                 <label htmlFor="content">Content</label>
                 <textarea
                     value={post.content}
-                    onChange={(e) => handleContent(e)}
+                    onChange={handleChange}
                     name="content"
                     id="content"
                     placeholder="Share your thoughts"
                     rows={4}
                 />
-                <input // IMAGE
+
+                <label htmlFor="topic">Topic</label>
+                <select
+                    value={post.topic}
+                    onChange={handleChange}
+                    name="topic"
+                    id="topic"
+                >
+                    <option value="">Choose a topic</option>
+                    {topics.map((topic) => (
+                        <option key={topic.topic_id} value={topic.title}>
+                            {topic.title}
+                        </option>
+                    ))}
+                </select>
+
+                <input
                     type="file"
-                    onChange={handleImage}
+                    onChange={(e) => setPost({ ...post, image: e.target.files ? e.target.files[0] : null })}
                     name="image"
                     id="image"
                     accept="image/png, image/jpeg"
                 />
+
                 <button type="submit">Submit</button>
-                <button type="reset" onClick={e=>handleReset(e)}>Reset</button>     
-        </div>
-   
-    </form>
+                <button type="reset" onClick={() => setPost({ ...post, title: "", content: "", image: null })}>Reset</button>
+            </div>
+        </form>
     );
-}  
+}
