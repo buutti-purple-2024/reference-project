@@ -93,7 +93,8 @@ router.get("/", async (req: Request, res: Response) => {
 	try {
 		const posts = await prisma.post.findMany({
 			include: {
-				user: true
+				user: true,
+				comments: true
 			}
 		});
 		res.send(posts);

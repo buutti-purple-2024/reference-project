@@ -1,22 +1,31 @@
 import UserType from "../../types/UserType";
 import "./profileBanner.scss";
 
-interface BannerProps {
-    currentUser: UserType;
+interface ProfileBannerProps {
+    user: UserType;
   }
 
-const ProfileBanner: React.FC<BannerProps> = ({currentUser}/* { username, profileBanner, profileImage, profileText } */) => {
+const ProfileBanner: React.FC<ProfileBannerProps> = ({user}) => {
+    /* console.log("ProfileBanner user:", user); */
+    if (!user) {
+        console.error("ProfileBanner received undefined user");
+        return null;
+      }
     return (
         <div className="banner">
-            <img src={currentUser.profileBanner} alt="Banner" className="banner-image" />
-            <img src={currentUser.profileImage} alt="ProfileImage" className="profile-image" />
-            <div className="nameAndProfile">
-                <div className="username">My Profile: {currentUser.username}</div>
-                <div className="profiletext">{currentUser.profileText}</div>
-            </div>
-            
-        </div>
-    );
+            {user.profileBanner && (
+        <img src={user.profileBanner} alt="Banner" className="banner-image" />
+      )}
+      {user.profileImage && (
+        <img src={user.profileImage} alt="Profile" className="profile-image" />
+      )}
+      <div className="nameAndProfile">
+        <div className="username">{user.username}</div>
+        <div className="profiletext">{user.profileText}</div>
+      </div>
+    </div>
+  );
 };
+
 
 export default ProfileBanner;
