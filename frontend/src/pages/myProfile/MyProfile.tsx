@@ -19,7 +19,7 @@ const Profile: React.FC<ProfileProps> = ({currentUser}) => {
         return <div>No user logged in</div>;
   }
     return (
-        <div className="profilePage">
+        <div className="myProfilePage">
             <CurrentUserProfile currentUser={currentUser}/>
             <CreateTopic/>
             { userIsLoggedIn && <ChangePassword/>}

@@ -5,6 +5,7 @@ import PostCreate from "../../components/postCreate/PostCreate";
 import PostType from "../../types/PostType";
 import UserType from "../../types/UserType";
 import axios from "axios";
+import CreateTopic from "../../components/createTopic/CreateTopic";
 
 interface PostWithUser extends PostType {
   user: {
@@ -66,7 +67,8 @@ const Home = () => {
     <div className="home">
       <PostCreate />
       <h2>Feed</h2>
-      <Posts posts={posts} />
+      <Posts posts={posts}/>
+      <CreateTopic/>
     </div>
   );
 };
