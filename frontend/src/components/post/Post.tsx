@@ -6,11 +6,13 @@ import Icon from '@mdi/react';
 import Comments from "../comments/Comments";
 import VotingButtons from "../votingButtons/votingButtons";
 import { Link } from "react-router-dom";
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import PostType from "../../types/PostType";
+import CommentType from "../../types/CommentType";
 import UsersContext from "../../contexts/UsersContext";
 import {CommentsProvider} from "../../contexts/CommentsContext";
 import WriteComment from "../comments/WriteComment";
+import axios from "axios";
 
 
 interface PostProps {
@@ -25,12 +27,30 @@ interface PostProps {
 const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes }) => {
   
     const [ commentOpen, setCommentOpen ] = useState(false);
+    const [ comments, setComments] = useState<CommentType[]>([]);
    // const {comments} = useContext(CommentsContext);
     const users = useContext(UsersContext);
 
     const toggleCommentSection = () => {
       setCommentOpen(!commentOpen);
     };
+
+    useEffect(() => {
+      // Fetch initial comments when the component mounts
+      const fetchComments = async () => {
+        try {
+          const response = await axios.get(`http://localhost:3001/comments?postId=${post.post_id}`, { withCredentials: true });
+          setComments(response.data);
+        } catch (error) {
+          console.error("Error fetching comments:", error);
+        }
+      };
+      fetchComments();
+    }, [post.post_id]);
+
+    const addComment = (newComment: CommentType) => {
+      setComments(prevComments => [newComment, ...prevComments]);
+  };
 
 
     return (
@@ -70,14 +90,14 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
             {commentOpen && (
               <div className="comments-container">
                 <CommentsProvider postId={post.post_id}>
-                  <Comments postId={post.post_id} users={users} />
+                  <Comments postId={post.post_id} users={users} comments={comments} />
                 </CommentsProvider>
               </div>
             )}
           </div>
           
           <div>
-              <WriteComment postId={post.post_id}/>
+              <WriteComment postId={post.post_id} addComment={addComment}/>
           </div>
             
           </div>
