@@ -83,10 +83,10 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
 
             <div className="info"> 
               <VotingButtons upvotes={upvotes} downvotes={downvotes} post_id={post.post_id} />
-              <div className="comment" onClick={toggleCommentSection}>
+              <div className="comment" onClick={countPostComments > 0 ? toggleCommentSection : undefined}
+                      style={{ cursor: countPostComments > 0 ? "pointer" : "default" }}>
                   <Icon path={mdiMessageOutline} size={1} /> 
-                  {commentOpen ? "Hide" : "Show"} comments
-                  {` (${countPostComments})`}
+                  {countPostComments > 0 ? (commentOpen ? "Hide" : "Show") + ` comments (${countPostComments})` : "No comments"}
               </div>
             </div> 
 
