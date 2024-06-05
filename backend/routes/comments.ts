@@ -1,5 +1,6 @@
 import express from "express";
 import { PrismaClient } from "@prisma/client";
+import { authenticationMiddleware } from "../middleware/authenticationMiddleware";
 
 const prisma = new PrismaClient();
 export const router = express.Router();
@@ -64,15 +65,16 @@ router.use(express.json());
  *       500:
  *         description: Internal server error
  */
-router.post("/", async (req, res) => {
+router.post("/", authenticationMiddleware, async (req, res) => {
 	try {
 		const { user_id, post_id, content } = req.body;
 		const newComment = await prisma.comment.create({
 			data: {
-				user_id,
-				post_id,
-				content,
+				user_id: req.id,
+				post_id: post_id,
+				content: content,
 			},
+
 		});
 		res.status(201).json(newComment);
 	} catch (error) {
