@@ -74,7 +74,8 @@ router.get("/", async (req: Request, res: Response) => {
 	try {
 		const posts = await prisma.post.findMany({
 			include: {
-				user: true
+				user: true,
+				comments: true
 			}
 		});
 		res.send(posts);
@@ -161,7 +162,8 @@ router.post("/", authenticationMiddleware, async (req, res) => {
 				content: req.body.content,
 				user_id: req.id,
 				topic_id: req.body.topic_id
-			}
+			},
+
 		});
 		res.json(newPost);
 	} catch (error) {
