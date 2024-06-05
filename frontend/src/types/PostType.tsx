@@ -8,6 +8,8 @@ interface PostType {
     created_at: string;
     upvotes: number;
     downvotes: number;
+    topic: string;
+    topic_id: number;
 }
 
 export default PostType;
