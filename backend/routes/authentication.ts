@@ -148,7 +148,8 @@ router.post("/login", async (req, res) => {
 				res.cookie("accesstoken", accessToken, { maxAge: 24 * 60 * 60 * 1000,  httpOnly: false});
 				res.cookie("refreshtoken", refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
 				res.cookie("username", req.body.username, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
-				res.json({accessToken: accessToken, refreshToken: refreshToken});
+				res.cookie("role", prismaUser.role, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
+				res.json({accessToken: accessToken, refreshToken: refreshToken, username: prismaUser.username, role: prismaUser.role});
 			}
 			else {
 				console.log("Access token is not defined");
