@@ -8,14 +8,47 @@ import { mdiForumOutline } from '@mdi/js';
 //import { mdiBellBadgeOutline } from '@mdi/js';
 import UserType from "../../types/UserType";
 import DropdownMenu from "../dropdownMenu/DropdownMenu";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import UserProfile from "../../pages/userProfile/UserProfile";
 
 interface NavBarProps {
     currentUser: UserType;
+    onUserSelect: (user: UserType) => void;
 }
 
 
-const NavBar: React.FC<NavBarProps> = ({ currentUser }) => {
-    /* console.log(currentUser); */
+const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect }) => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [users, setUsers] = useState<UserType[]>([]);
+    const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
+    //const navigate = useNavigate();
+
+    const baseurl = "http://localhost:3001";
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get(`${baseurl}/users`);
+                setUsers(response.data);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
+    const filteredUsers = users.filter(user =>
+        user.username.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    /* const handleUserClick = (user: UserType) => {
+        console.log("selected U:", user)
+        setSelectedUser(user);
+        navigate(`/profile/${user.id}`);
+    }; */
+
     return (
         <div className="navBar">
             <div className="left">
@@ -26,7 +59,36 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser }) => {
                 </Link>
                 <div className="search">
                     {<Icon path={mdiMagnify} size={1} color="white"/>}
-                    <input type="text" placeholder="search..." />
+                    <input type="text" 
+                           placeholder="search..." 
+                           value={searchQuery}
+                           onChange={(e) => setSearchQuery(e.target.value)}
+                       />
+                       {searchQuery && (
+                        <ul className="search-results">
+                            {filteredUsers.map((user) => (
+                                <li key={user.id} 
+                                    className="chat-user" 
+                                    onClick={() => onUserSelect(user)}
+                                    >
+                                    <Link to={`/profile/${user.id}`} className="user-link">
+                                        <div className="user-info">
+                                            <img 
+                                            src={user.profileImage} 
+                                            alt={user.username} 
+                                            width={40} 
+                                            height={40} 
+                                            />
+                                            <span>{user.username}</span>
+                                        </div>
+                                    </Link>
+                                </li>
+                            ))}
+                            {/* {filteredUsers.map(user => (
+                                <li key={user.id} onClick={() => handleUserClick(user)}> {user.username}</li>
+                            ))} */}
+                        </ul>
+                    )}
                 </div>              
             </div>
 
@@ -40,8 +102,12 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser }) => {
                     <span>{currentUser.username}</span>
                 <button className="button">Log out</button>
             </div>
-                
             </div>
+            {selectedUser ? (
+                <div className="clickedUser">
+                    <UserProfile user={selectedUser} />
+                </div>
+            ) : null}
         </div>
     )
 }

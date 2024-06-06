@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Posts from "../../components/posts/Posts";
 import PostCreate from "../../components/postCreate/PostCreate";
 import PostType from "../../types/PostType";
-import UserType from "../../types/UserType";
+//import UserType from "../../types/UserType";
 import axios from "axios";
 
 interface PostWithUser extends PostType {
@@ -16,9 +16,9 @@ interface PostWithUser extends PostType {
 const Home = () => {
   const baseurl = "http://localhost:3001";
   const [posts, setPosts] = useState<PostWithUser[]>([]);
-  const [users, setUsers] = useState<UserType[]>([]);
+  //const [users, setUsers] = useState<UserType[]>([]);
 
-  useEffect(() => {
+ /*  useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await axios.get(`${baseurl}/users`);
@@ -29,9 +29,9 @@ const Home = () => {
     };
 
     fetchUsers();
-  }, []);
+  }, []); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     const fetchPosts = async () => {
       try {
         const response = await axios.get(`${baseurl}/posts`);
@@ -61,7 +61,26 @@ const Home = () => {
     };
 
     fetchPosts();
-  }, [users]);
+  }, [users]); */
+
+
+  useEffect(() => {
+    getPosts();
+  }, []);
+
+  const getPosts = async () => {
+    try {
+        const posts = await axios.get(`${baseurl}/posts`);
+        const sortedPosts = posts.data.sort((a: PostWithUser, b: PostWithUser) => //Sorts data so that the newest post is first
+          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+        );
+        console.log(sortedPosts);
+        setPosts(sortedPosts);
+    } catch (error) {
+        console.error("error fetching posts:", error);
+    }
+  };
+
   return (
     <div className="home">
       <PostCreate />
