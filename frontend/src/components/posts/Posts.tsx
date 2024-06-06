@@ -19,6 +19,7 @@ const Posts: React.FC<PostsProps> = ( {posts} ) => {
 
 
     const baseurl = "http://localhost:3001" 
+
     //const [posts, setPosts] = useState<PostType[] | null>(null);
 
     /* useEffect(() => {
