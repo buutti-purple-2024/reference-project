@@ -91,7 +91,7 @@ function App() {
 	const Layout = ({ children }: { children?: ReactNode }) => {
 		return (
 			<div className="theme-light">
-				{currentUser && <NavBar currentUser={currentUser} />} {/* Render NavBar only if currentUser is defined */}
+				{currentUser && <NavBar currentUser={currentUser} onUserSelect={handleUserClick}/>} {/* Render NavBar only if currentUser is defined */}
 				<div style={{ display: "flex" }}>
 					<LeftBar />
 					<div style={{ flex: 6 }}>
@@ -106,7 +106,7 @@ function App() {
 	const ChatLayout = ({ children }: { children?: ReactNode }) => {
 		return (
 			<div className="theme-light">
-				{currentUser && <NavBar currentUser={currentUser} />} 
+				{currentUser && <NavBar currentUser={currentUser} onUserSelect={handleUserClick} />} 
 				<div style={{ display: "flex" }}>
 					{currentUser && (<ChatLeftBar  
 						currentUser={currentUser} 
