@@ -195,7 +195,7 @@ router.post("/", upload.single("image"), authenticationMiddleware, async (req, r
 			data: {
 			  title: req.body.title,
 			  content: req.body.content,
-			  user: { connect: { id: Number(req.body.user_id) } },
+			  user: { connect: { id: Number(req.id) } },
 			  topic: { connect: { topic_id: Number (req.body.topic_id) } }, // Add this line to connect the post to a topic
 			  image: req.file?.filename
 			}
@@ -298,12 +298,19 @@ router.put("/:id", upload.single("image"), async (req: Request<{ id: string }>, 
  *       404:
  *         description: Post not found
  */
-router.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
+router.delete("/:id", authenticationMiddleware, async (req: Request<{ id: string }>, res: Response) => {
+	console.log(req.params.id)
+	const test = true;
+	// 					//...(test && {post_id: Number(req.params.id)}),
+
 	try {
 		const deletedPost = await prisma.post.delete({
-			where: {
-				post_id: Number(req.params.id)
-			}
+			where: 
+				{
+					post_id: Number(req.params.id),
+					...(req.role == "admin" ? {} : {user_id : req.id})
+
+				}
 		});
 		res.send(deletedPost);
 	} catch (error) {
