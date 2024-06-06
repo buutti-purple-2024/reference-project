@@ -1,12 +1,28 @@
-import express from "express";
-export const router = express.Router();
-import { Request, Response } from "express";
+import express, { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import multer from "multer";
+import path from "path";
 import { validationResult } from "express-validator";
 import { authenticationMiddleware } from "../middleware/authenticationMiddleware";
-const prisma = new PrismaClient();
 
+const prisma = new PrismaClient();
+export const router = express.Router();
 router.use(express.json());
+
+const storage = multer.diskStorage({
+	destination: function (req, file, cb) {
+		cb(null, "uploads/");
+	},
+	filename: function (req, file, cb) {
+		cb(null, "upload_at_" + Date.now() + path.extname(file.originalname));
+	}
+});
+
+const upload = multer({ storage: storage });
+
+interface PostParams {
+	id: string;
+}
 
 /**
  * @swagger
@@ -20,22 +36,24 @@ router.use(express.json());
  *         - user_id
  *         - topic_id
  *       properties:
- *          post_id:
- *            type: number
- *          title:
- *            type: string
- *          content:
- *            type: string
- *          user_id:
- *            type: number
- *          topic_id:
- *            type: number
- *          created_at:
- *            type: string
- *          upvotes:
- *            type: number
- *          downvotes:
- *            type: number
+ *         post_id:
+ *           type: number
+ *         title:
+ *           type: string
+ *         content:
+ *           type: string
+ *         user_id:
+ *           type: number
+ *         topic_id:
+ *           type: number
+ *         created_at:
+ *           type: string
+ *         upvotes:
+ *           type: number
+ *         downvotes:
+ *           type: number
+ *         image:
+ *           type: string
  *       example:
  *         post_id: 1
  *         title: My First Post
@@ -45,6 +63,7 @@ router.use(express.json());
  *         created_at: 2024-04-10T12:00:00Z
  *         upvotes: 0
  *         downvotes: 0
+ *         image: upload_at_1615484162439.png
  */
 
 /**
@@ -74,7 +93,8 @@ router.get("/", async (req: Request, res: Response) => {
 	try {
 		const posts = await prisma.post.findMany({
 			include: {
-				user: true
+				user: true,
+				comments: true
 			}
 		});
 		res.send(posts);
@@ -107,7 +127,7 @@ router.get("/", async (req: Request, res: Response) => {
  *       404:
  *         description: Post not found
  */
-router.get("/:id", async (req: Request, res: Response) => {
+router.get("/:id", async (req: Request<{ id: string }>, res: Response) => {
 	try {
 		const post = await prisma.post.findUnique({
 			where: {
@@ -134,9 +154,26 @@ router.get("/:id", async (req: Request, res: Response) => {
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/Post'
+ *             type: object
+ *             required:
+ *               - title
+ *               - content
+ *               - user_id
+ *               - topic_id
+ *             properties:
+ *               title:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               user_id:
+ *                 type: number
+ *               topic_id:
+ *                 type: number
+ *               image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
  *         description: The created post
@@ -147,29 +184,29 @@ router.get("/:id", async (req: Request, res: Response) => {
  *       500:
  *         description: Internal server error
  */
-router.post("/", authenticationMiddleware, async (req, res) => {
-	// Use validationResult middleware here to check for validation errors
+router.post("/", upload.single("image"), authenticationMiddleware, async (req, res) => {
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.status(400).json({ errors: errors.array() });
 	}
-  
+
 	try {
 		const newPost = await prisma.post.create({
 			data: {
-				title: req.body.title,
-				content: req.body.content,
-				user_id: req.id,
-				topic_id: req.body.topic_id
+			  title: req.body.title,
+			  content: req.body.content,
+			  user: { connect: { id: Number(req.body.user_id) } },
+			  topic: { connect: { topic_id: Number (req.body.topic_id) } }, // Add this line to connect the post to a topic
+			  image: req.file?.filename
 			}
-		});
+		  });
+		  
 		res.json(newPost);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send("Internal server error");
 	}
 });
-  
 
 /**
  * @swagger
@@ -187,9 +224,23 @@ router.post("/", authenticationMiddleware, async (req, res) => {
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/Post'
+ *             type: object
+ *             required:
+ *               - title
+ *               - content
+ *               - topic_id
+ *             properties:
+ *               title:
+ *                 type: string
+ *               content:
+ *                 type: string
+ *               topic_id:
+ *                 type: number
+ *               image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
  *         description: The updated post
@@ -200,14 +251,19 @@ router.post("/", authenticationMiddleware, async (req, res) => {
  *       404:
  *         description: Post not found
  */
-router.put("/:id", async (req: Request, res: Response) => {
+router.put("/:id", upload.single("image"), async (req: Request<{ id: string }>, res: Response) => {
 	if (validationResult(req)) {
 		try {
 			const updatedPost = await prisma.post.update({
 				where: {
 					post_id: Number(req.params.id)
 				},
-				data: req.body
+				data: {
+					title: req.body.title,
+					content: req.body.content,
+					topic_id: req.body.topic_id,
+					image: req.file?.filename
+				}
 			});
 			res.json(updatedPost);
 		} catch (error) {
@@ -242,7 +298,7 @@ router.put("/:id", async (req: Request, res: Response) => {
  *       404:
  *         description: Post not found
  */
-router.delete("/:id", async (req: Request, res: Response) => {
+router.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
 	try {
 		const deletedPost = await prisma.post.delete({
 			where: {
@@ -257,3 +313,4 @@ router.delete("/:id", async (req: Request, res: Response) => {
 });
 
 module.exports = { router };
+
