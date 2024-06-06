@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import "./profileContent.scss";
-//import Posts from "../posts/Posts";
-import SortedPosts from "../sortedPosts/SortedPosts";
+import Posts from "../posts/Posts";
 import ProfileBanner from "../profileBanner/profileBanner";
 import UserType from "../../types/UserType";
 import PostType from "../../types/PostType";
@@ -23,7 +22,6 @@ interface PostWithUser extends PostType {
 const ProfileContent: React.FC<ProfileContentProps> = ({ user }) => {
   const [myposts, setMyPosts] = useState<PostWithUser[]>([]);
   const baseurl = "http://localhost:3001";
-  console.log("passed user:", user)
 
 
   useEffect(() => {
@@ -35,19 +33,9 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ user }) => {
     try {
       const response = await axios.get(`${baseurl}/posts`);
       const posts = response.data as PostWithUser[];
-
-      console.log("Fetched posts:", posts);
-      console.log("Current user id:", user.id);
-
-
-      const filteredPosts = posts.filter(post => {
-        //console.log("Comparing post.user_id:", post.user_id, "with user.id:", user.id);
-        return post.user_id === user.id;
-      });
-
+        const filteredPosts = posts.filter(post => post.user_id === user.id);
 
       setMyPosts(filteredPosts);
-      console.log("filtered P:", filteredPosts)
         } catch (error) {
         console.error("error fetching posts:", error);
       }
@@ -60,7 +48,7 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ user }) => {
     <div className="profile">
       <ProfileBanner user={user} />
       {myposts.length > 0 
-        ? <SortedPosts posts={myposts} /> 
+        ? <Posts posts={myposts} /> 
         : <p className="noPosts">This user hasn't posted anything yet</p>}
     </div>
   

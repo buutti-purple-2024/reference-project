@@ -11,7 +11,7 @@ interface UserProfileProps {
 
 const UserProfile: React.FC<UserProfileProps> = ({user}) => {
     if (!user) {
-        return <div className="noSuchUser">There is no such user</div>;
+        return <div>There is no such user</div>;
   }
     return (
         
