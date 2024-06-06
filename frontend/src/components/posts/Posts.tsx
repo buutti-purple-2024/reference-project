@@ -18,7 +18,8 @@ interface PostsProps {
 const Posts: React.FC<PostsProps> = ( {posts} ) => {
 
 
-    //const baseurl = "http://localhost:3001" 
+    const baseurl = "http://localhost:3001" 
+
     //const [posts, setPosts] = useState<PostType[] | null>(null);
 
     /* useEffect(() => {
@@ -37,6 +38,15 @@ const Posts: React.FC<PostsProps> = ( {posts} ) => {
           console.error("error fetching posts:", error);
       }
     }; */
+
+    const getImageUrl = (image: string | undefined) => {
+      if (!image) {
+        return '';
+      }
+      const isExternalUrl = image.startsWith('http://') || image.startsWith('https://');
+      return isExternalUrl ? image : `${baseurl}/${image}`;
+    };
+  
 
   const mapPosts = () => {
     return posts!.map(post => (
