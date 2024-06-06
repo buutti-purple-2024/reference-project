@@ -8,9 +8,10 @@ import { mdiForumOutline } from '@mdi/js';
 //import { mdiBellBadgeOutline } from '@mdi/js';
 import UserType from "../../types/UserType";
 import DropdownMenu from "../dropdownMenu/DropdownMenu";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import UserProfile from "../../pages/userProfile/UserProfile";
+import { userContext } from "../../App";
 
 interface NavBarProps {
     currentUser: UserType;
@@ -23,7 +24,7 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect }) => {
     const [users, setUsers] = useState<UserType[]>([]);
     const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
     //const navigate = useNavigate();
-
+    const {contextUsername, setContextUsername, contextRole, setContextRole } = useContext(userContext)
     const baseurl = "http://localhost:3001";
 
     useEffect(() => {
@@ -42,6 +43,16 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect }) => {
     const filteredUsers = users.filter(user =>
         user.username.toLowerCase().includes(searchQuery.toLowerCase())
     );
+
+    const handleLogout = () => {
+        setContextRole(null)
+        setContextUsername(null)
+        document.cookie = `username=${null}; max-age=0`
+        document.cookie = `role=${null}; max-age=0`
+        document.cookie = `accesstoken=${null}; max-age=0`
+        document.cookie = `refreshtoken=${null}; max-age=0`
+
+    }
 
     /* const handleUserClick = (user: UserType) => {
         console.log("selected U:", user)
@@ -99,8 +110,8 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect }) => {
                 {/* <Icon path={mdiBellBadgeOutline} size={1} color="white"/> */}
                 <div className="p-user">
                     <img src={currentUser.profileImage} alt="" height={30} width={30} />
-                    <span>{currentUser.username}</span>
-                <button className="button">Log out</button>
+                    <span>{contextUsername}</span>
+                <button onClick={() => handleLogout()} className="button">Log out</button>
             </div>
             </div>
             {selectedUser ? (
