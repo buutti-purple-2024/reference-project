@@ -191,22 +191,40 @@ router.post("/", upload.single("image"), authenticationMiddleware, async (req, r
 	}
 
 	try {
+		let generalDiscussionTopic = await prisma.topic.findUnique({
+			where: {
+				title: "General Discussion"
+			}
+		});
+
+		if (!generalDiscussionTopic) {
+			generalDiscussionTopic = await prisma.topic.create({
+				data: {
+					title: "General Discussion",
+					users: {
+						connect: { id: Number(req.body.user_id) }
+					}
+				}
+			});
+		}
+
 		const newPost = await prisma.post.create({
 			data: {
-			  title: req.body.title,
-			  content: req.body.content,
-			  user: { connect: { id: Number(req.body.user_id) } },
-			  topic: { connect: { topic_id: Number (req.body.topic_id) } }, // Add this line to connect the post to a topic
-			  image: req.file?.filename
+				title: req.body.title,
+				content: req.body.content,
+				user: { connect: { id: Number(req.body.user_id) } },
+				topic: { connect: { topic_id: generalDiscussionTopic.topic_id } },
+				image: req.file?.filename
 			}
-		  });
-		  
+		});
+
 		res.json(newPost);
 	} catch (error) {
 		console.log(error);
 		res.status(500).send("Internal server error");
 	}
 });
+
 
 /**
  * @swagger
@@ -300,17 +318,26 @@ router.put("/:id", upload.single("image"), async (req: Request<{ id: string }>, 
  */
 router.delete("/:id", async (req: Request<{ id: string }>, res: Response) => {
 	try {
+		await prisma.comment.deleteMany({
+			where: {
+				post_id: Number(req.params.id)
+			}
+		});
+
 		const deletedPost = await prisma.post.delete({
 			where: {
 				post_id: Number(req.params.id)
 			}
 		});
+
 		res.send(deletedPost);
 	} catch (error) {
 		console.log(error);
 		res.status(404).send("Post not found");
 	}
 });
+
+
 
 module.exports = { router };
 
