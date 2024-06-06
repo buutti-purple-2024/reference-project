@@ -19,7 +19,7 @@ export default function PostCreate() {
         created_at: "",
         upvotes: 0,
         downvotes: 0,
-        topic: "",
+        topic: "General Discussion",
         topic_id: 0
     });
 
@@ -35,6 +35,24 @@ export default function PostCreate() {
 
         fetchTopics();
     }, []);
+
+    useEffect(() => {
+        const generalDiscussionExists = topics.some(topic => topic.title === "General Discussion");
+        if (!generalDiscussionExists) {
+            createGeneralDiscussionTopic();
+        }
+    }, [topics]);
+
+    const createGeneralDiscussionTopic = async () => {
+        try {
+            const response = await axios.post("http://localhost:3001/topics", {
+                title: "General Discussion"
+            });
+            setTopics([...topics, response.data]);
+        } catch (error) {
+            console.error("Error creating General Discussion topic:", error);
+        }
+    };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target;
@@ -111,7 +129,7 @@ export default function PostCreate() {
                     name="topic"
                     id="topic"
                 >
-                    <option value="">Choose a topic</option>
+                    <option value="General Discussion">General Discussion</option>
                     {topics.map((topic) => (
                         <option key={topic.topic_id} value={topic.title}>
                             {topic.title}
