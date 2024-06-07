@@ -244,7 +244,10 @@ router.put("/:id", async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
 	try {
 		const deletedTopic = await prisma.topic.delete({
-			where: { topic_id: Number(req.params.id) },
+			where: { 
+				topic_id: Number(req.params.id),
+				...(req.role == "admin" ? {} : {user_id : req.id})
+			},
 		});
 		res.send(deletedTopic);
 	} catch (error) {

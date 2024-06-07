@@ -24,7 +24,8 @@ export const authenticationMiddleware = async (req:Request,res:Response,next:Nex
 			console.log(decoded)
 			req.id = decoded.id
 			req.user = decoded.name
-			console.log(req.id, req.user)
+			req.role = decoded.role
+			console.log(req.id, req.user, req.role)
 			next();
 		} catch (error) {
 			if (req.cookies.refreshtoken) {
@@ -42,6 +43,7 @@ export const authenticationMiddleware = async (req:Request,res:Response,next:Nex
 						//console.log("new access token generated");
 						req.user = user.username;
 						req.id = user.id
+						req.role = decoded.role
 						next();
 					}
 				}	
