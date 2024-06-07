@@ -2,6 +2,7 @@ import "./chatLeftBar.scss";
 import { mdiForumOutline } from '@mdi/js';
 import Icon from '@mdi/react';
 import UserType from "../../types/UserType";
+import ChatType from "../../types/ChatType";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
@@ -15,6 +16,8 @@ interface ChatLeftBarProps {
 const ChatLeftBar: React.FC<ChatLeftBarProps> = ({ currentUser, onUserSelect }) => {
     const baseurl = "http://localhost:3001";
     const [users, setUsers] = useState<UserType[]>([]);
+    const [chats, setChats] = useState<ChatType[]>([]);
+
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -26,9 +29,23 @@ const ChatLeftBar: React.FC<ChatLeftBarProps> = ({ currentUser, onUserSelect }) 
                 console.error("Error fetching users:", error);
             }
         };
+        const fetchChats = async () => {
+            try {
+                const response = await axios.get(`${baseurl}/chats`);
+                setChats(response.data);
+            } catch (error) {
+                console.error("Error fetching chats:", error);
+            }
+        };
 
         fetchUsers();
-    }, []);
+        fetchChats();
+    }, [currentUser.id]);
+
+    const filteredChats = chats.filter(chat => chat.user1_id === currentUser.id || chat.user2_id === currentUser.id)
+    console.log("FilteredChats:", filteredChats)
+    const chatUsers = users.filter(user => filteredChats.some(chat => chat.user1_id === user.id || chat.user2_id === user.id));
+    console.log("ChatUsers:", chatUsers)
 
     return (
         <div className="chatLeftBar">
@@ -36,7 +53,7 @@ const ChatLeftBar: React.FC<ChatLeftBarProps> = ({ currentUser, onUserSelect }) 
             <span>Direct messages</span>
             <hr />
             <ul>
-                {users.filter(user => user.id !== currentUser.id).map(user => (
+                {chatUsers.filter(user => user.id !== currentUser.id).map(user => (
                     <li key={user.id} className="chat-user" onClick={() => onUserSelect(user)}>
                         <Link to={`/chat/${user.id}`} className="user-link">
                             <div className="user-info">
