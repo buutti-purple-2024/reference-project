@@ -189,4 +189,47 @@ router.get("/post/:postId", async (req, res) => {
 	}
 });
 
+
+/**
+ * @swagger
+ * /comments/{id}:
+ *   delete:
+ *     summary: Get comments by comment ID
+ *     tags: [Comment]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: ID of the post
+ *     responses:
+ *       200:
+ *         description: A list of comments
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Comment'
+ *       500:
+ *         description: Internal server error
+ */
+
+router.delete("/:id", authenticationMiddleware, async (req, res) => {
+	console.log("req params", req.params.id)
+	try {
+		const postComments = await prisma.comment.delete({
+			where: {
+				comment_id: Number(req.params.id),
+				...(req.role == "admin" ? {} : {user_id : req.id})
+			},
+		});
+		res.status(200).json(postComments);
+	} catch (error) {
+		console.error("Error fetching post comments:", error);
+		res.status(500).json({ error: "Unable to fetch post comments" });
+	}
+});
+
 module.exports = { router };
