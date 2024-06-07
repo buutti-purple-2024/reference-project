@@ -8,6 +8,7 @@ const generateAccessToken = (user : {name : string} ) => {
 };
 
 export const authenticationMiddleware = async (req:Request,res:Response,next:NextFunction) => {
+	console.log("auth middleware")
 	const accessToken = req.cookies.accesstoken;
 	//console.log("auth middleware", accessToken)
 	//if (accessToken == null) return res.status(401).send();

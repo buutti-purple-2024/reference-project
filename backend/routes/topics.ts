@@ -54,7 +54,7 @@ router.use(express.json());
  *                 $ref: '#/components/schemas/Topic'
  */
 router.get("/", async (req: Request, res: Response) => {
-
+	console.log(req.query.title)
 	if (!req.query.title) {
 		try {
 			const topics = await prisma.topic.findMany({
@@ -76,9 +76,14 @@ router.get("/", async (req: Request, res: Response) => {
 					title : req.query.title as string},
 				include: {
 					users: true,
-					posts: true,
+					posts: {
+						include: {
+							user: true
+						}
+					}
 				},
 			});
+			console.log(topics)
 			res.send(topics);
 		} catch (error) {
 			console.log(error);
