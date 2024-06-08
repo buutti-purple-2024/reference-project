@@ -8,6 +8,7 @@ const generateAccessToken = (user : {name : string} ) => {
 };
 
 export const authenticationMiddleware = async (req:Request,res:Response,next:NextFunction) => {
+	console.log("auth middleware")
 	const accessToken = req.cookies.accesstoken;
 	//console.log("auth middleware", accessToken)
 	//if (accessToken == null) return res.status(401).send();
@@ -24,7 +25,8 @@ export const authenticationMiddleware = async (req:Request,res:Response,next:Nex
 			console.log(decoded)
 			req.id = decoded.id
 			req.user = decoded.name
-			console.log(req.id, req.user)
+			req.role = decoded.role
+			console.log(req.id, req.user, req.role)
 			next();
 		} catch (error) {
 			if (req.cookies.refreshtoken) {
@@ -42,6 +44,7 @@ export const authenticationMiddleware = async (req:Request,res:Response,next:Nex
 						//console.log("new access token generated");
 						req.user = user.username;
 						req.id = user.id
+						req.role = decoded.role
 						next();
 					}
 				}	

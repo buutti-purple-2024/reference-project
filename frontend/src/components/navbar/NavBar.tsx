@@ -10,6 +10,10 @@ import UserType from "../../types/UserType";
 import DropdownMenu from "../dropdownMenu/DropdownMenu";
 import UserProfile from "../../pages/userProfile/UserProfile";
 import UserSearch from "../userSearch/UserSearch";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import UserProfile from "../../pages/userProfile/UserProfile";
+import { userContext } from "../../App";
 
 interface NavBarProps {
     currentUser: UserType;
@@ -18,7 +22,47 @@ interface NavBarProps {
 }
 
 
-const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect, selectedUser }) => {
+const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect }) => {
+    const [searchQuery, setSearchQuery] = useState('');
+    const [users, setUsers] = useState<UserType[]>([]);
+    const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
+    //const navigate = useNavigate();
+    const {contextUsername, setContextUsername, contextRole, setContextRole } = useContext(userContext)
+    const baseurl = "http://localhost:3001";
+
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await axios.get(`${baseurl}/users`);
+                setUsers(response.data);
+            } catch (error) {
+                console.error("Error fetching users:", error);
+            }
+        };
+
+        fetchUsers();
+    }, []);
+
+    const filteredUsers = users.filter(user =>
+        user.username.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const handleLogout = () => {
+        setContextRole(null)
+        setContextUsername(null)
+        document.cookie = `username=${null}; max-age=0`
+        document.cookie = `role=${null}; max-age=0`
+        document.cookie = `accesstoken=${null}; max-age=0`
+        document.cookie = `refreshtoken=${null}; max-age=0`
+
+    }
+
+    /* const handleUserClick = (user: UserType) => {
+        console.log("selected U:", user)
+        setSelectedUser(user);
+        navigate(`/profile/${user.id}`);
+    }; */
+
 
     return (
         <div className="navBar">
@@ -41,8 +85,8 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect, selectedUser
                 {/* <Icon path={mdiBellBadgeOutline} size={1} color="white"/> */}
                 <div className="p-user">
                     <img src={currentUser.profileImage} alt="" height={30} width={30} />
-                    <span className="spanTitle">{currentUser.username}</span>
-                <button className="button">Log out</button>
+                    <span>{contextUsername}</span>
+                <button onClick={() => handleLogout()} className="button">Log out</button>
             </div>
             </div>
             {selectedUser ? (

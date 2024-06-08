@@ -140,7 +140,7 @@ router.post("/login", async (req, res) => {
 	try {
 		if (await bcrypt.compare(req.body.password, prismaUser.password)) {
 			console.log("prismauser", prismaUser)
-			const user = {name: req.body.username, id: prismaUser.id};
+			const user = {name: prismaUser.username, id: prismaUser.id, role: prismaUser.role};
 			if (process.env.ACCESS_TOKEN_SECRET) {
 				//const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
 				const accessToken = generateAccessToken(user);
@@ -148,7 +148,8 @@ router.post("/login", async (req, res) => {
 				res.cookie("accesstoken", accessToken, { maxAge: 24 * 60 * 60 * 1000,  httpOnly: false});
 				res.cookie("refreshtoken", refreshToken, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
 				res.cookie("username", req.body.username, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
-				res.json({accessToken: accessToken, refreshToken: refreshToken});
+				res.cookie("role", prismaUser.role, {maxAge: 24 * 60 * 60 * 1000, httpOnly: false});
+				res.json({accessToken: accessToken, refreshToken: refreshToken, username: prismaUser.username, role: prismaUser.role});
 			}
 			else {
 				console.log("Access token is not defined");
@@ -161,11 +162,11 @@ router.post("/login", async (req, res) => {
 	}
 });
 
-const generateAccessToken = (user : {name : string, id: number} ) => {
+const generateAccessToken = (user : {name : string, id: number, role: string | null} ) => {
 	if(process.env.ACCESS_TOKEN_SECRET) return jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, {expiresIn: "15m"});
 };
 
-const generateRefreshToken = async (user : {name: string, id: number}) => {
+const generateRefreshToken = async (user : {name: string, id: number, role: string | null}) => {
 	if (!process.env.REFRESH_TOKEN_SECRET) {console.log("missing REFRESH_TOKEN_SECRET"); return;}
 	const refreshToken = jwt.sign(user, process.env.REFRESH_TOKEN_SECRET);
 	//const prismaUser = await prisma.users.findUnique({where: {username: user}});

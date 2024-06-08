@@ -4,14 +4,42 @@
   margin: 10px;
   border-radius: 5px;
   border: 2px solid black;
+  
 }
 
 .div-topic-component > a {
   width: 100%;
-
 }
 
-.div-topic-component > *:hover {
-  background-color: rgb(92, 59, 126);
+
+
+
+
+.div-topic-component > a {
+  text-decoration: none;
+}
+
+.div-topic-component > a:hover {
+  text-decoration:none; 
+  cursor:pointer;  
+}
+
+.div-topic-title-desc {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1%;
+}
+.div-topic-title-desc:hover {
+  background-color: rgb(128, 94, 161);
+  cursor: pointer;
+}
+
+.div-topic-title-desc button {
+  background-color: red;
+  border-radius: 5px;
+  padding: 2px;
+  margin: 2px;
+  height: 30px;
   cursor: pointer;
 }

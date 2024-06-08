@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode, createContext, useEffect, useState } from "react";
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -25,14 +25,24 @@ import ChatType from "./types/ChatType";
 import Topic from "./pages/topic/Topic";
 import Community from "./pages/community/Community";
 
+export const userContext = createContext();
+
+
+
 
 function App() {
+	const usernameFromCookie = document.cookie.split("; ").find((row) => row.startsWith("username="))?.split("=")[1];
+	const roleFromCookie = document.cookie.split("; ").find((row) => row.startsWith("role="))?.split("=")[1];
+
 	const [currentUser, setCurrentUser] = useState<UserType | null>(null); 
 	const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 	const [chatId, setChatId] = useState<string | null>(null);
 	const [users, setUsers] = useState<UserType[]>([]);
 	const [chats, setChats] = useState<ChatType[]>([]);
 	const [clickedUser, setClickedUser] = useState<UserType | null>(null);
+	const [contextUsername, setContextUsername] = useState(usernameFromCookie)
+	const [contextRole, setContextRole] = useState(roleFromCookie)
+
 
 	const handleUserSelect = (user: UserType) => {
         setSelectedUser(user);
@@ -142,6 +152,7 @@ function App() {
 	};
 
 	return (
+		<userContext.Provider value={{contextUsername, setContextUsername, contextRole, setContextRole }}>
 		<Router>
 			<Routes>
 				<Route path="/" element={<Layout />}>
@@ -170,6 +181,7 @@ function App() {
 				
 			</Routes>
 		</Router>
+		</userContext.Provider>
 	);
 }
 
