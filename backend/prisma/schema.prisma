@@ -51,7 +51,7 @@ model Post {
   downvotes  Int      @default(0)
 
   user     User      @relation(fields: [user_id], references: [id], name: "user_posts")
-  topic    Topic     @relation(fields: [topic_id], references: [topic_id], name: "topic_posts")
+  topic    Topic     @relation(fields: [topic_id], references: [topic_id], name: "topic_posts", onDelete: Cascade)
   comments Comment[] @relation("post_comments")
 }
 
@@ -63,7 +63,7 @@ model Comment {
   created_at DateTime @default(now())
 
   user User @relation(fields: [user_id], references: [id], name: "user_comments")
-  post Post @relation(fields: [post_id], references: [post_id], name: "post_comments")
+  post Post @relation(fields: [post_id], references: [post_id], name: "post_comments", onDelete: Cascade)
 }
 
 model Chat {

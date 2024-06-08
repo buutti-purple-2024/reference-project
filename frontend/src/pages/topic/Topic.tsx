@@ -23,7 +23,7 @@ const Topic = () => {
     return (
     topics.map(topic => {
       return (
-        <TopicComponent title={topic.title} created_at={topic.created_at} description={topic.description} image={topic.image} post_id={topic.post_id} user_id={topic.user_id} />
+        <TopicComponent id={topic.topic_id} title={topic.title} created_at={topic.created_at} description={topic.description} image={topic.image} post_id={topic.post_id} user_id={topic.user_id} username={topic.users.username} />
 
       )
     })

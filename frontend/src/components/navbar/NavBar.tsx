@@ -8,7 +8,10 @@ import { mdiForumOutline } from '@mdi/js';
 //import { mdiBellBadgeOutline } from '@mdi/js';
 import UserType from "../../types/UserType";
 import DropdownMenu from "../dropdownMenu/DropdownMenu";
+//import { useState, useEffect, useContext } from "react";
+//import axios from "axios";
 import UserProfile from "../../pages/userProfile/UserProfile";
+//import { userContext } from "../../App";
 import UserSearch from "../userSearch/UserSearch";
 
 interface NavBarProps {
@@ -41,7 +44,7 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect, selectedUser
                 {/* <Icon path={mdiBellBadgeOutline} size={1} color="white"/> */}
                 <div className="p-user">
                     <img src={currentUser.profileImage} alt="" height={30} width={30} />
-                    <span className="spanTitle">{currentUser.username}</span>
+                    <span>{currentUser.username}</span>
                 <button className="button">Log out</button>
             </div>
             </div>

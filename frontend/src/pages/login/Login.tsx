@@ -6,8 +6,10 @@ import { useState } from "react";
 import { json } from "stream/consumers";
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import { userContext } from "../../App";
 const Login = () => {
-
+    const {contextUsername, setContextUsername, contextRole, setContextRole } = useContext(userContext)
     const baseurl = "http://localhost:3001"
     const navigate = useNavigate()
     const [username, setUsername] = useState<null | string>(null)
@@ -42,6 +44,8 @@ const Login = () => {
             })
             const data = await response.json();
             console.log(data);
+            setContextUsername(data.username);
+            setContextRole(data.role)
             navigate("/")
         } catch (error) {
             console.log(error);
