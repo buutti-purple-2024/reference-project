@@ -58,7 +58,7 @@ function App() {
 	useEffect(() => {
 		const fetchCurrentUser = async () => {
 			try {
-				const response = await axios.get(`${baseurl}/users/2`);
+				const response = await axios.get(`${baseurl}/users/1`);
 				setCurrentUser(response.data);
 			} catch (error) {
 				console.error("Error fetching current user:", error);
