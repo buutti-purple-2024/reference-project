@@ -1,4 +1,4 @@
-import UserType from "../../types/UserType";
+import UserType from "../../../types/UserType";
 import "./profileBanner.scss";
 
 interface ProfileBannerProps {

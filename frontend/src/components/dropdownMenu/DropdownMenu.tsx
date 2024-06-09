@@ -34,16 +34,16 @@ const DropdownMenu = () => {
                 
                 <li className="dropdown-item" onClick={() => handleNavigation(('/profileUpdate'))}>
                     <Icon path={mdiAccountOutline} size={1}/>
-                    Get/
-                    Update profiles|test
+                   <p>Get/
+                    Update profiles|test</p> 
                 </li>
                 <li className="dropdown-item" onClick={() => handleNavigation(('/login'))}>
                     <Icon path={mdiLogin} size={1} />
-                    Login | test
+                    <p>Login | test</p>
                 </li>
                 <li className="dropdown-item" onClick={() => handleNavigation(('/users'))}>
                 <Icon path={mdiAccountSearch} size={1} />
-                    Users Search
+                    <p>Users Search</p>
                 </li>
                 
             </ul>

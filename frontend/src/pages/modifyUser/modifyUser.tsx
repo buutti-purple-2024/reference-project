@@ -1,4 +1,4 @@
-import ProfileUpdate from "../../components/profileUpdate/ProfileUpdate"
+import ProfileUpdate from "../../components/profile/profileUpdate/ProfileUpdate"
 
 const modifyUser = () => {
   return (

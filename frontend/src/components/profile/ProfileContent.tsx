@@ -1,32 +1,71 @@
-import "./profile.scss";
-import Posts from "../posts/Posts";
-import ProfileBanner from "../profileBanner/profileBanner";
-import allUsersPosts from "../../tempData/allUsersPosts";
-import fakeUsers from "../../tempData/fakeUsers";
 
-const ProfileContent: React.FC = () => {
-    
-    const profileId = 3; //choose the user id which will be rendered in "profile page"
-    const user = fakeUsers.find(user => user.id === profileId); 
-    const myposts = allUsersPosts.filter(post => post.user_id === profileId);
-    
 
-    if (!user) return null;
+import { useEffect, useState } from "react";
+import "./profileContent.scss";
+//import Posts from "../posts/Posts";
+import SortedPosts from "../sortedPosts/SortedPosts";
+import ProfileBanner from "./profileBanner/profileBanner";
+import UserType from "../../types/UserType";
+import PostType from "../../types/PostType";
+import axios from "axios";
 
-    return (
-        <div className="profile">
-            <ProfileBanner
-                //username={user.username}
-                username={"aaa"}
-                profileText={user.profileText || ""}
-                profileBanner={user.profileBanner || ""}
-                profileImage={user.profileImage || ""}
-            />
-            {myposts.length > 0 
-            ? <Posts posts={myposts} users={fakeUsers}/> 
-            : <p className="noPosts">This user hasn't posted anything yet</p>}
-        </div>
-    );
+interface ProfileContentProps {
+  user: UserType;
+}
+
+interface PostWithUser extends PostType {
+  user: {
+    username: string;
+    profileImage?: string;
+  }
+}
+
+const ProfileContent: React.FC<ProfileContentProps> = ({ user }) => {
+  const [myposts, setMyPosts] = useState<PostWithUser[]>([]);
+  const baseurl = "http://localhost:3001";
+  console.log("passed user:", user)
+
+
+  useEffect(() => {
+  const getPosts = async () => {
+    if (!user || !user.id) {
+      console.error("User object is undefined or missing id:", user);
+      return;
+    }
+    try {
+      const response = await axios.get(`${baseurl}/posts`);
+      const posts = response.data as PostWithUser[];
+
+      console.log("Fetched posts:", posts);
+      console.log("Current user id:", user.id);
+
+
+      const filteredPosts = posts.filter(post => {
+        //console.log("Comparing post.user_id:", post.user_id, "with user.id:", user.id);
+        return post.user_id === user.id;
+      });
+
+
+      setMyPosts(filteredPosts);
+      console.log("filtered P:", filteredPosts)
+        } catch (error) {
+        console.error("error fetching posts:", error);
+      }
+    };
+
+  getPosts();
+  }, [user]);
+
+  return (
+    <div className="profile">
+      <ProfileBanner user={user} />
+      {myposts.length > 0 
+        ? <SortedPosts posts={myposts} /> 
+        : <p className="noPosts">This user hasn't posted anything yet</p>}
+    </div>
+  
+  );
+
 };
 
 export default ProfileContent;

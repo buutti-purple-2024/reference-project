@@ -1,5 +1,5 @@
 
-import "./userProfile.scss"
+import "./profilePage.scss"
 import UserType from "../../types/UserType";
 import ProfileComponent from "../../components/profile/ProfileComponent";
 
