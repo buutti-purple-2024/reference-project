@@ -54,7 +54,7 @@ router.use(express.json());
  *                 $ref: '#/components/schemas/Topic'
  */
 router.get("/", async (req: Request, res: Response) => {
-
+	console.log(req.query.title)
 	if (!req.query.title) {
 		try {
 			const topics = await prisma.topic.findMany({
@@ -76,9 +76,14 @@ router.get("/", async (req: Request, res: Response) => {
 					title : req.query.title as string},
 				include: {
 					users: true,
-					posts: true,
+					posts: {
+						include: {
+							user: true
+						}
+					}
 				},
 			});
+			console.log(topics)
 			res.send(topics);
 		} catch (error) {
 			console.log(error);
@@ -244,7 +249,10 @@ router.put("/:id", async (req: Request, res: Response) => {
 router.delete("/:id", async (req: Request, res: Response) => {
 	try {
 		const deletedTopic = await prisma.topic.delete({
-			where: { topic_id: Number(req.params.id) },
+			where: { 
+				topic_id: Number(req.params.id),
+				...(req.role == "admin" ? {} : {user_id : req.id})
+			},
 		});
 		res.send(deletedTopic);
 	} catch (error) {

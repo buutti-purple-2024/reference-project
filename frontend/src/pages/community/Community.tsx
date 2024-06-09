@@ -30,7 +30,7 @@ const Community = () => {
       <Post 
           key={post.post_id} 
           post={post} // prop includes e.g. image, title & content
-          username={''}
+          username={post.user.username}
           profileImage={post.image || ''}
           upvotes={post.upvotes}
           downvotes={post.downvotes}

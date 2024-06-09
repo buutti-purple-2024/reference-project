@@ -11,6 +11,7 @@ import UsersContext from "../../contexts/UsersContext";
 import { CommentsProvider } from "../../contexts/CommentsContext";
 import WriteComment from "../comments/WriteComment";
 import axios from "axios";
+import { userContext } from "../../App";
 
 interface PostProps {
   post: PostType;
@@ -22,7 +23,7 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes }) => {
-  
+    const {contextUsername, contextRole} = useContext(userContext)
     const [ commentOpen, setCommentOpen ] = useState(false);
     const [ comments, setComments] = useState<CommentType[]>([]);
     const users = useContext(UsersContext);
@@ -59,8 +60,19 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
     const filterComments = comments.filter(comment => comment.post_id === post.post_id);
     const countPostComments = filterComments.length;
 
+    const deletePost = async () => {
+      console.log(post.post_id)
+      try {
+        const deletedPost = await axios.delete(`http://localhost:3001/posts/${post.post_id}`, {withCredentials: true})
+        console.log(deletedPost)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
     return (
       <div className="post">
+        {console.log(post, username)}
         <div className="postContainer">
           <div className="postInfo">
             <div className="userInfo">
@@ -90,6 +102,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
                       style={{ cursor: countPostComments > 0 ? "pointer" : "default" }}>
                   <Icon path={mdiMessageOutline} size={1} /> 
                   {countPostComments > 0 ? (commentOpen ? "Hide" : "Show") + ` comments (${countPostComments})` : "No comments"}
+                  { (username == contextUsername || contextRole == "admin") && <button onClick={() => deletePost()}>Delete Post</button>}
               </div>
             </div> 
 
