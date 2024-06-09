@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import "./profileContent.scss";
+import "../post/post.scss"
 //import Posts from "../posts/Posts";
 import SortedPosts from "../sortedPosts/SortedPosts";
 import ProfileBanner from "./profileBanner/profileBanner";
@@ -57,13 +58,17 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ user }) => {
   }, [user]);
 
   return (
+    <div>
     <div className="profile">
       <ProfileBanner user={user} />
-      {myposts.length > 0 
-        ? <SortedPosts posts={myposts} /> 
-        : <p className="noPosts">This user hasn't posted anything yet</p>}
     </div>
-  
+      <div className="post">
+        {myposts.length > 0 
+          ? <SortedPosts posts={myposts} /> 
+          : <p className="noPosts">This user hasn't posted anything yet</p>}
+      </div>
+    
+  </div>
   );
 
 };

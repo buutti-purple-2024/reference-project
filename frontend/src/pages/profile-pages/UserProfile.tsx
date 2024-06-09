@@ -15,7 +15,7 @@ const UserProfile: React.FC<UserProfileProps> = ({user}) => {
   }
     return (
         
-        <div className="userProfilePage">
+        <div className="profilePage">
             <h1>{user.username}'s Profile</h1>
             <ProfileComponent user={user}/>
         </div>

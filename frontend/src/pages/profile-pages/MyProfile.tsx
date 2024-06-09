@@ -1,4 +1,3 @@
-
 import "./profilePage.scss"
 import ChangePassword from "../../components/changePassword/ChangePassword";
 import CreateTopic from "../../components/createTopic/CreateTopic";

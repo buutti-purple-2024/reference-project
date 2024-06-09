@@ -13,17 +13,17 @@ const ProfileBanner: React.FC<ProfileBannerProps> = ({user}) => {
       }
     return (
         <div className="banner">
-            {user.profileBanner && (
-        <img src={user.profileBanner} alt="Banner" className="banner-image" />
-      )}
-      {user.profileImage && (
-        <img src={user.profileImage} alt="Profile" className="profile-image" />
-      )}
-      <div className="nameAndProfile">
-        <div className="username">{user.username}</div>
-        <div className="profiletext">{user.profileText}</div>
-      </div>
-    </div>
+                {user.profileBanner && (
+            <img src={user.profileBanner} alt="Banner" className="banner-image" />
+          )}
+          {user.profileImage && (
+            <img src={user.profileImage} alt="Profile" className="profile-image" />
+          )}
+          <div className="nameAndProfile">
+            <div className="username">{user.username}</div>
+            <div className="profiletext">{user.profileText}</div>
+          </div>
+        </div>
   );
 };
 
