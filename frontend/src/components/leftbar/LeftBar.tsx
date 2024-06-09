@@ -77,9 +77,10 @@ const LeftBar = () => {
                     <Link to="/topic">
                     <Icon path={mdiAccountSearch} size={1} />
                         <span>TOPICS</span>
-                    </Link>                    <div className="item">Gaming</div>
+                    </Link>                    
+                    {/*<div className="item">Gaming</div>
                     <div className="item">Nature</div>
-                    <div className="item">TV</div>
+                    <div className="item">TV</div>*/}
 
                 </div>
                 <hr />
