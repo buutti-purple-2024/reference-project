@@ -5,6 +5,7 @@ import axios from "axios";
 
 interface WriteCommentProps {
     postId: number;
+    addComment: (newComment: CommentType) => void;
 }
 
 export default function WriteComment({postId}: WriteCommentProps) {

@@ -1,14 +1,14 @@
+
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import UserType from '../../types/UserType';
-import "./userSearch.scss";
-import { Link } from "react-router-dom";
+import "./chatUserSearch.scss";
 
-interface UserSearchProps {
-    onUserSelect: (user: UserType) => void;
+interface ChatUserSearchProps {
+    onUserForChatSelect: (user: UserType) => void;
 }
 
-const UserSearch: React.FC<UserSearchProps> = ({ onUserSelect }) => {
+const ChatUserSearch: React.FC<ChatUserSearchProps> = ({ onUserForChatSelect }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [users, setUsers] = useState<UserType[]>([]);
     const baseurl = 'http://localhost:3001';
@@ -30,6 +30,12 @@ const UserSearch: React.FC<UserSearchProps> = ({ onUserSelect }) => {
         user.username.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
+    const handleUserClick = (user: UserType) => {
+        setSearchQuery(user.username);
+        onUserForChatSelect(user);
+        console.log("Passed USER:", user)
+    };
+
     return (
         <div className="search">
             <input
@@ -44,19 +50,19 @@ const UserSearch: React.FC<UserSearchProps> = ({ onUserSelect }) => {
                         <li
                             key={user.id}
                             className="chat-user"
-                            onClick={() => onUserSelect(user)}
+                            /* onClick={() => onUserForChatSelect(user)} */
+                            onClick={() => handleUserClick(user)}
+
                         >
-                            <Link to={`/profile/${user.id}`} className="user-link">
-                                        <div className="user-info">
-                                            <img 
-                                            src={user.profileImage} 
-                                            alt={user.username} 
-                                            width={40} 
-                                            height={40} 
-                                            />
-                                            <span>{user.username}</span>
-                                        </div>
-                                    </Link>
+                            <div className="user-info">
+                                <img 
+                                    src={user.profileImage} 
+                                    alt={user.username} 
+                                    width={40} 
+                                    height={40} 
+                                />
+                                <span>{user.username}</span>
+                            </div>
                         </li>
                     ))}
                 </ul>
@@ -65,4 +71,4 @@ const UserSearch: React.FC<UserSearchProps> = ({ onUserSelect }) => {
     );
 };
 
-export default UserSearch;
+export default ChatUserSearch;

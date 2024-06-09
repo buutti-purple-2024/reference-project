@@ -43,9 +43,9 @@ const ChatLeftBar: React.FC<ChatLeftBarProps> = ({ currentUser, onUserSelect }) 
     }, [currentUser.id]);
 
     const filteredChats = chats.filter(chat => chat.user1_id === currentUser.id || chat.user2_id === currentUser.id)
-    console.log("FilteredChats:", filteredChats)
+    //console.log("FilteredChats:", filteredChats)
     const chatUsers = users.filter(user => filteredChats.some(chat => chat.user1_id === user.id || chat.user2_id === user.id));
-    console.log("ChatUsers:", chatUsers)
+    //console.log("ChatUsers:", chatUsers)
 
     return (
         <div className="chatLeftBar">
