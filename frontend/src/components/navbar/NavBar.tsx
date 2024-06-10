@@ -12,7 +12,6 @@ import UserProfile from "../../pages/userProfile/UserProfile";
 import UserSearch from "../userSearch/UserSearch";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import UserProfile from "../../pages/userProfile/UserProfile";
 import { userContext } from "../../App";
 
 interface NavBarProps {
