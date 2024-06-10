@@ -8,8 +8,6 @@ import "./leftBar.scss";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-
-
 const LeftBar = () => {
 
     const baseurl = "http://localhost:3001"
@@ -34,22 +32,22 @@ const LeftBar = () => {
             <div className="container">
                 <div className="menu">
                     <div className="item">
-                    <Link to="/">
-                        <Icon path={mdiHomeOutline} size={1} />
-                        <span>Home</span>
-                    </Link>
+                        <Link to="/">
+                            <Icon path={mdiHomeOutline} size={1} />
+                            <span>Home</span>
+                        </Link>
                     </div>
                     <div className="item">
-                    <Link to="/profile/my">
-                        <Icon path={mdiAccountOutline} size={1}/>
-                        <span>My Profile</span>
-                    </Link>
+                        <Link to="/profile/my">
+                            <Icon path={mdiAccountOutline} size={1}/>
+                            <span>My Profile</span>
+                        </Link>
                     </div>
                     <div className="item">
-                    <Link to="/friends">
-                        <Icon path={mdiAccountMultipleOutline} size={1} />
-                        <span>Friends</span>
-                    </Link>
+                        <Link to="/friends">
+                            <Icon path={mdiAccountMultipleOutline} size={1} />
+                            <span>Friends</span>
+                        </Link>
                     </div>
                     {/* <div className="item">
                     <Link to="/users">
@@ -72,27 +70,37 @@ const LeftBar = () => {
                     
                     </div> */}
                 </div>
-                <hr/>
-                <div className="menu">
-                    <Link to="/topic">
-                    <Icon path={mdiAccountSearch} size={1} />
-                        <span>TOPICS</span>
-                    </Link>                    
-                    {/*<div className="item">Gaming</div>
-                    <div className="item">Nature</div>
-                    <div className="item">TV</div>*/}
 
+                <hr/>
+
+                <div className='menu'>
+                    <div className="item">
+                        <Link to="/topic">
+                        <Icon path={mdiAccountSearch} size={1} />
+                            <span>TOPICS</span>
+                        </Link>                    
+                        {/*<div className="item">Gaming</div>
+                        <div className="item">Nature</div>
+                        <div className="item">TV</div>*/}
+
+                    </div>
                 </div>
+
                 <hr />
-                <div className="menu">
-                <Link to="/login">
-                    <Icon path={mdiAccountOutline} size={1} />
-                        <span>Login</span>
-                </Link>  
-                <Link to="/register">
-                    <Icon path={mdiAccountOutline} size={1} />
-                        <span>Register</span>
-                </Link>                        
+
+                <div className='menu'>
+                    <div className="item">
+                        <Link to="/login">
+                            <Icon path={mdiAccountOutline} size={1} />
+                                <span>Login</span>
+                        </Link>
+                    </div>   
+                    <div className='item'>
+                        <Link to="/register">
+                            <Icon path={mdiAccountOutline} size={1} />
+                                <span>Register</span>  
+                        </Link>                        
+                    </div>
                 </div>
             </div>
         </div>

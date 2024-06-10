@@ -8,7 +8,7 @@ import { mdiForumOutline } from '@mdi/js';
 //import { mdiBellBadgeOutline } from '@mdi/js';
 import UserType from "../../types/UserType";
 import DropdownMenu from "../dropdownMenu/DropdownMenu";
-import UserProfile from "../../pages/userProfile/UserProfile";
+import UserProfile from "../../pages/profile-pages/UserProfile";
 import UserSearch from "../userSearch/UserSearch";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
@@ -71,7 +71,11 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect }) => {
                 <Link to="/" style={{textDecoration: "none"}}>
                     <span className="spanTitle">Purple</span>
                 </Link>
-                <div className="search">
+               
+            </div>
+
+            <div className="middle">
+                 <div className="search">
                     <UserSearch onUserSelect={onUserSelect}/>
                     {<Icon path={mdiMagnify} size={1} color="white"/>}                              
                 </div>              

@@ -3,7 +3,7 @@ import UserType from "../../types/UserType";
 //import PostType from "../../types/PostType";
 //import { useState, useEffect } from "react";
 //import axios from "axios";
-import ProfileContent from "../profileContent/ProfileContent";
+import ProfileContent from "./ProfileContent";
 
 interface ProfileContentProps {
     user: UserType | null;
