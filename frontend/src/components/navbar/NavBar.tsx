@@ -8,14 +8,16 @@ import { mdiForumOutline } from '@mdi/js';
 //import { mdiBellBadgeOutline } from '@mdi/js';
 import UserType from "../../types/UserType";
 import DropdownMenu from "../dropdownMenu/DropdownMenu";
+import UserProfile from "../../pages/userProfile/UserProfile";
+import UserSearch from "../userSearch/UserSearch";
 import { useState, useEffect, useContext } from "react";
 import axios from "axios";
-import UserProfile from "../../pages/userProfile/UserProfile";
 import { userContext } from "../../App";
 
 interface NavBarProps {
     currentUser: UserType;
     onUserSelect: (user: UserType) => void;
+    selectedUser: UserType | null;
 }
 
 
@@ -60,46 +62,18 @@ const NavBar: React.FC<NavBarProps> = ({ currentUser, onUserSelect }) => {
         navigate(`/profile/${user.id}`);
     }; */
 
+
     return (
         <div className="navBar">
             <div className="left">
                 <DropdownMenu/>
                 <Icon path={mdiCircle} size={1} color="purple" />
                 <Link to="/" style={{textDecoration: "none"}}>
-                    <span>Purple</span>
+                    <span className="spanTitle">Purple</span>
                 </Link>
                 <div className="search">
-                    {<Icon path={mdiMagnify} size={1} color="white"/>}
-                    <input type="text" 
-                           placeholder="search..." 
-                           value={searchQuery}
-                           onChange={(e) => setSearchQuery(e.target.value)}
-                       />
-                       {searchQuery && (
-                        <ul className="search-results">
-                            {filteredUsers.map((user) => (
-                                <li key={user.id} 
-                                    className="chat-user" 
-                                    onClick={() => onUserSelect(user)}
-                                    >
-                                    <Link to={`/profile/${user.id}`} className="user-link">
-                                        <div className="user-info">
-                                            <img 
-                                            src={user.profileImage} 
-                                            alt={user.username} 
-                                            width={40} 
-                                            height={40} 
-                                            />
-                                            <span>{user.username}</span>
-                                        </div>
-                                    </Link>
-                                </li>
-                            ))}
-                            {/* {filteredUsers.map(user => (
-                                <li key={user.id} onClick={() => handleUserClick(user)}> {user.username}</li>
-                            ))} */}
-                        </ul>
-                    )}
+                    <UserSearch onUserSelect={onUserSelect}/>
+                    {<Icon path={mdiMagnify} size={1} color="white"/>}                              
                 </div>              
             </div>
 

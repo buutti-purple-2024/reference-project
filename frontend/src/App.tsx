@@ -58,7 +58,7 @@ function App() {
 	useEffect(() => {
 		const fetchCurrentUser = async () => {
 			try {
-				const response = await axios.get(`${baseurl}/users/1`);
+				const response = await axios.get(`${baseurl}/users/2`);
 				setCurrentUser(response.data);
 			} catch (error) {
 				console.error("Error fetching current user:", error);
@@ -101,7 +101,7 @@ function App() {
 	const Layout = ({ children }: { children?: ReactNode }) => {
 		return (
 			<div className="theme-light">
-				{currentUser && <NavBar currentUser={currentUser} onUserSelect={handleUserClick}/>} {/* Render NavBar only if currentUser is defined */}
+				{currentUser && <NavBar currentUser={currentUser}  onUserSelect={handleUserClick}/>} {/* Render NavBar only if currentUser is defined */}
 				<div style={{ display: "flex" }}>
 					<LeftBar />
 					<div style={{ flex: 6 }}>

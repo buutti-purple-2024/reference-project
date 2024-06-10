@@ -1,7 +1,7 @@
 import "./createTopic.scss";
 import { useState, ChangeEvent, FormEvent } from "react";
 //import { useRef } from "react";
-import PostType from "../../types/PostType";
+//import PostType from "../../types/PostType";
 import axios from "axios";
 
 

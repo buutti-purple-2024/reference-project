@@ -49,7 +49,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
     const addComment = (newComment: CommentType) => {
       setComments(prevComments => [newComment, ...prevComments]);
     };
-    
+
     const getImageUrl = (image: string | null) => {
       if (!image) {
         return '';
@@ -112,7 +112,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
               {commentOpen && (
                 <div className="comments-container">
                   <CommentsProvider postId={post.post_id}>
-                    <Comments postId={post.post_id} users={users} comments={comments} />
+                    <Comments postId={post.post_id} users={users} /* comments={comments} */ />
                   </CommentsProvider>
                 </div>
               )}
