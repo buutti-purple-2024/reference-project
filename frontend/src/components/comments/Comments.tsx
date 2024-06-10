@@ -1,23 +1,21 @@
 import "./comments.scss";
 import CommentsContext from "../../contexts/CommentsContext";
-//import UsersContext from "../../contexts/UsersContext";
-//import CommentType from "../../types/CommentType";
 import UserType from "../../types/UserType";
 import { useContext } from 'react';
+import CommentType from "../../types/CommentType";
 
 interface CommentsProps {
   postId: number;
   users: UserType[];
+  comments: CommentType[];
 }
 
-const Comments: React.FC<CommentsProps> = ({ postId, users }) => {
+const Comments: React.FC<CommentsProps> = ({ postId, users, comments }) => {
   const commentsContext = useContext(CommentsContext);
   
   if (!commentsContext) {
     return <div>Loading...</div>;
   }
-
-  const { comments } = commentsContext;
 
   // Filter comments based on the postId
   const postComments = comments.filter(comment => comment.post_id === postId);

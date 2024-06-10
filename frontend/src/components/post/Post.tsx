@@ -20,9 +20,10 @@ interface PostProps {
   upvotes: number;
   downvotes: number;
   post_id: number;
+  refreshPosts: () => void;  // Add this prop
 }
 
-const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes }) => {
+const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes, refreshPosts }) => {
     const {contextUsername, contextRole} = useContext(userContext)
     const [ commentOpen, setCommentOpen ] = useState(false);
     const [ comments, setComments] = useState<CommentType[]>([]);
@@ -32,16 +33,16 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
       setCommentOpen(!commentOpen);
     };
 
+    const fetchComments = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/comments?postId=${post.post_id}`, { withCredentials: true });
+        setComments(response.data);
+      } catch (error) {
+        console.error("Error fetching comments:", error);
+      }
+    };
+
     useEffect(() => {
-      // Fetch initial comments when the component mounts
-      const fetchComments = async () => {
-        try {
-          const response = await axios.get(`http://localhost:3001/comments?postId=${post.post_id}`, { withCredentials: true });
-          setComments(response.data);
-        } catch (error) {
-          console.error("Error fetching comments:", error);
-        }
-      };
       fetchComments();
     }, [post.post_id]);
 
@@ -65,6 +66,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
       try {
         const deletedPost = await axios.delete(`http://localhost:3001/posts/${post.post_id}`, {withCredentials: true})
         console.log(deletedPost)
+        refreshPosts();
       } catch (error) {
         console.log(error)
       }
@@ -117,7 +119,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
             </div>
             
             <div>
-                <WriteComment postId={post.post_id} addComment={addComment}/>
+                <WriteComment postId={post.post_id} addComment={addComment} refreshComments={fetchComments}/>
             </div>
 
           </div>

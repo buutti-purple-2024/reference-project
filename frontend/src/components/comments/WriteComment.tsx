@@ -5,9 +5,11 @@ import axios from "axios";
 
 interface WriteCommentProps {
     postId: number;
+    addComment: (newComment: CommentType) => void;
+    refreshComments: () => void;  
 }
 
-export default function WriteComment({postId}: WriteCommentProps) {
+export default function WriteComment({ postId, addComment, refreshComments }: WriteCommentProps) {
     
     const initialState: CommentType = { 
         comment_id: 1,
@@ -20,7 +22,6 @@ export default function WriteComment({postId}: WriteCommentProps) {
     const baseurl = "http://localhost:3001";
     
     const [comment, setComment] = useState<CommentType>(initialState);
-    //const [submit, setSubmit] = useState<CommentType>(initialState);
 
     function handleComment(e: ChangeEvent<HTMLTextAreaElement>) {
         e.preventDefault();
@@ -31,20 +32,16 @@ export default function WriteComment({postId}: WriteCommentProps) {
         e.preventDefault();
         
         try {
-            await axios.post(`${baseurl}/comments`, comment, {withCredentials: true});
-            setComment(initialState)
-            /*if (fileInputRef.current) {
-                fileInputRef.current.value = ""; // Clear the file input
-            }*/
-            console.log(comment)
+            const response = await axios.post(`${baseurl}/comments`, comment, {withCredentials: true});
+            const newComment = response.data;
+            setComment(initialState);
+            addComment(newComment); 
+            refreshComments(); 
         } catch (error) {
             console.error("error submitting comment:", error)
         }
-        
-        //setSubmit(comment);
-        //setComment(initialState);
-        //console.log(submit.content)
     }
+    
     return(
         <div className="commentForm">
             <form onSubmit={(e) => handleSubmit(e)}>
@@ -58,6 +55,5 @@ export default function WriteComment({postId}: WriteCommentProps) {
                 <button type="submit">Send</button>
             </form>
         </div>
-
     )
 }
