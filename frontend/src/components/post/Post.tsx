@@ -21,9 +21,10 @@ interface PostProps {
   upvotes: number;
   downvotes: number;
   post_id: number;
+  refreshPosts: () => void;
 }
 
-const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes }) => {
+const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes, refreshPosts }) => {
     const {contextUsername, contextRole} = useContext(userContext)
     const [ commentOpen, setCommentOpen ] = useState(false);
     const [ comments, setComments] = useState<CommentType[]>([]);
@@ -66,6 +67,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
       try {
         const deletedPost = await axios.delete(`http://localhost:3001/posts/${post.post_id}`, {withCredentials: true})
         console.log(deletedPost)
+        refreshPosts();
       } catch (error) {
         console.log(error)
       }
