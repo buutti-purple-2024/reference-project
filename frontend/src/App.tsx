@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import {
 	BrowserRouter as Router,
 	Routes,
@@ -24,24 +24,20 @@ import Users from "./pages/users/Users";
 import ChatType from "./types/ChatType";
 import Topic from "./pages/topic/Topic";
 import Community from "./pages/community/Community";
-
-export const userContext = createContext();
-
+import { UserProvider } from "./contexts/UserContext";
+import { useUserContext } from "./contexts/UserContext";
+import { AuthProvider } from './contexts/AuthContext';
 
 
 
 function App() {
-	const usernameFromCookie = document.cookie.split("; ").find((row) => row.startsWith("username="))?.split("=")[1];
-	const roleFromCookie = document.cookie.split("; ").find((row) => row.startsWith("role="))?.split("=")[1];
-
-	const [currentUser, setCurrentUser] = useState<UserType | null>(null); 
+	const { currentUser } = useUserContext();
 	const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
 	const [chatId, setChatId] = useState<string | null>(null);
 	const [users, setUsers] = useState<UserType[]>([]);
 	const [chats, setChats] = useState<ChatType[]>([]);
 	const [clickedUser, setClickedUser] = useState<UserType | null>(null);
-	const [contextUsername, setContextUsername] = useState(usernameFromCookie)
-	const [contextRole, setContextRole] = useState(roleFromCookie)
+	const baseurl = "http://localhost:3001";
 
 
 	const handleUserSelect = (user: UserType) => {
@@ -52,34 +48,6 @@ function App() {
 		setClickedUser(user);
 	};
 
-
-	const baseurl = "http://localhost:3001";
-
-	useEffect(() => {
-		const fetchCurrentUser = async () => {
-			try {
-				const response = await axios.get(`${baseurl}/users/2`);
-				setCurrentUser(response.data);
-			} catch (error) {
-				console.error("Error fetching current user:", error);
-			}
-		};
-
-		fetchCurrentUser();
-	}, []);
-
-	/* useEffect(() => {
-		const fetchClickedUser = async () => {
-			try {
-				const response = await axios.get(`${baseurl}/users/4`);
-				setClickedUser(response.data);
-			} catch (error) {
-				console.error("Error fetching current user:", error);
-			}
-		};
-
-		fetchClickedUser();
-	}, []); */
 
 	useEffect(() => {
 		const fetchChat = async () => {
@@ -101,7 +69,7 @@ function App() {
 	const Layout = ({ children }: { children?: ReactNode }) => {
 		return (
 			<div className="theme-light">
-				{currentUser && <NavBar currentUser={currentUser}  onUserSelect={handleUserClick}/>} {/* Render NavBar only if currentUser is defined */}
+				<NavBar  currentUser={currentUser}  onUserSelect={handleUserClick}/> 
 				<div style={{ display: "flex" }}>
 					<LeftBar />
 					<div style={{ flex: 6 }}>
@@ -116,21 +84,16 @@ function App() {
 	const ChatLayout = ({ children }: { children?: ReactNode }) => {
 		return (
 			<div className="theme-light">
-				{currentUser && <NavBar currentUser={currentUser} onUserSelect={handleUserClick} />} 
+				<NavBar  currentUser={currentUser} onUserSelect={handleUserClick} /> 
 				<div style={{ display: "flex" }}>
-					{currentUser && (<ChatLeftBar  
-						currentUser={currentUser} 
-						onUserSelect={handleUserSelect} 
-						/>
+					{currentUser && (
+						<ChatLeftBar  onUserSelect={handleUserSelect} />
 					)}
 					<div style={{ flex: 6 }}>
 						<Outlet />
 						{currentUser && (
 						<Chat 
-							currentUser={currentUser} 
 							selectedUser={selectedUser}
-							chats={chats}
-							users={users} 
 						/> 
 						)}
 						{children}
@@ -141,18 +104,20 @@ function App() {
 	};
 
 	const ProtectedRoute = ({ children }: { children: ReactNode }) => {
+		
 		const navigate = useNavigate();
 		useEffect(() => {
 			if (!currentUser) {
-				navigate("/login");
+				navigate("/");
 			}
-		}, [/* currentUser, */ navigate]);
+		}, [currentUser, /* navigate */]);
 	
 		return currentUser ? children : null;
 	};
 
 	return (
-		<userContext.Provider value={{contextUsername, setContextUsername, contextRole, setContextRole }}>
+		<AuthProvider>
+            <UserProvider>
 		<Router>
 			<Routes>
 				<Route path="/" element={<Layout />}>
@@ -162,7 +127,7 @@ function App() {
 					<Route path="profile/:id" 
 						element={<UserProfile user={clickedUser} />} />
 					<Route path="friends" element={<Friends user={clickedUser}/>} />
-					<Route path="users" element={<Users onUserSelect={handleUserClick} /* user={currentUser} *//>} />
+					<Route path="users" element={<Users onUserSelect={handleUserClick} />} />
 					<Route path="profileUpdate" element={<ProfileUpdate />} />
 					<Route path="*" element={<div>Not Found</div>} />
 					<Route path="topic" element={< Topic />} />
@@ -181,7 +146,8 @@ function App() {
 				
 			</Routes>
 		</Router>
-		</userContext.Provider>
+		</UserProvider>
+        </AuthProvider>
 	);
 }
 

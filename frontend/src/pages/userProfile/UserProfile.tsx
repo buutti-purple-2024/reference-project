@@ -2,7 +2,7 @@
 import "./userProfile.scss"
 import UserType from "../../types/UserType";
 import ProfileComponent from "../../components/profile/ProfileComponent";
-
+import PostCreate from "../../components/postCreate/PostCreate";
 
 
 interface UserProfileProps {
@@ -18,8 +18,8 @@ const UserProfile: React.FC<UserProfileProps> = ({user}) => {
         <div className="userProfilePage">
             <h1>{user.username}'s Profile</h1>
             <ProfileComponent user={user}/>
+            <PostCreate />
         </div>
-        
     )
 }
 

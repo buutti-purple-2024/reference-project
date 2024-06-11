@@ -1,6 +1,6 @@
 import axios from 'axios'
-import React, { useEffect, useState } from 'react'
-import TopicComponent from '../../components/topicComponent/topicComponent'
+import { useEffect, useState } from 'react'
+import TopicComponent from '../../components/topicComponent/TopicComponent'
 import "./topic.scss"
 
 

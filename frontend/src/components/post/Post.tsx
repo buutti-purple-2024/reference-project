@@ -4,14 +4,15 @@ import Icon from '@mdi/react';
 import Comments from "../comments/Comments";
 import VotingButtons from "../votingButtons/votingButtons";
 import { Link } from "react-router-dom";
-import { useState, useContext, useEffect } from "react";
+import { useState, useEffect } from "react";
 import PostType from "../../types/PostType";
+import UserType from "../../types/UserType";
 import CommentType from "../../types/CommentType";
-import UsersContext from "../../contexts/UsersContext";
 import { CommentsProvider } from "../../contexts/CommentsContext";
 import WriteComment from "../comments/WriteComment";
 import axios from "axios";
-import { userContext } from "../../App";
+import { useUserContext } from "../../contexts/UserContext";
+import { useAuthContext } from "../../contexts/AuthContext";
 
 interface PostProps {
   post: PostType;
@@ -23,14 +24,33 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes }) => {
-    const {contextUsername, contextRole} = useContext(userContext)
+    const { login } = useAuthContext();
+    const { currentUser, contextUsername, contextRole} = useUserContext();
     const [ commentOpen, setCommentOpen ] = useState(false);
     const [ comments, setComments] = useState<CommentType[]>([]);
-    const users = useContext(UsersContext);
+    const [users, setUsers] = useState<UserType[]>([]);
+
+    const baseurl = "http://localhost:3001";
+
+
 
     const toggleCommentSection = () => {
       setCommentOpen(!commentOpen);
     };
+
+    useEffect(() => {
+      const fetchUsers = async () => {
+        try {
+          const response = await axios.get(`${baseurl}/users`); 
+          console.log("Fetched users:", response.data);
+          setUsers(response.data); 
+        } catch (error) {
+          console.error("Error fetching users:", error);
+        }
+      };
+
+      fetchUsers();
+}, []);
 
     useEffect(() => {
       // Fetch initial comments when the component mounts
@@ -72,7 +92,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
 
     return (
       <div className="post">
-        {console.log(post, username)}
+        {/* {console.log(post, username)} */}
         <div className="postContainer">
           <div className="postInfo">
             <div className="userInfo">

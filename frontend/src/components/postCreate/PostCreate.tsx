@@ -1,6 +1,7 @@
 import "./postCreate.scss";
 import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import PostType from "../../types/PostType";
+import { useAuthContext } from "../../contexts/AuthContext"; // Use the auth context
 import axios from "axios";
 
 interface TopicType {
@@ -9,10 +10,11 @@ interface TopicType {
 }
 
 export default function PostCreate() {
+    const { auth } = useAuthContext();  
     const [topics, setTopics] = useState<TopicType[]>([]);
     const [post, setPost] = useState<PostType>({
         post_id: 0,
-        user_id: 1,
+        user_id: auth.userId || 0, // Initialize user_id with auth.userId
         title: "",
         content: "",
         image: null,
@@ -26,7 +28,7 @@ export default function PostCreate() {
     useEffect(() => {
         async function fetchTopics() {
             try {
-                const response = await axios.get("http://localhost:3001/topics");
+                const response = await axios.get("http://localhost:3001/topics",);
                 setTopics(response.data);
             } catch (error) {
                 console.error("Error fetching topics:", error);
@@ -43,10 +45,18 @@ export default function PostCreate() {
         }
     }, [topics]);
 
+    // Removed getCookie function
+
     const createGeneralDiscussionTopic = async () => {
         try {
+            if (!auth.token) throw new Error("No access token found");  // Check for auth.token
+            console.log("Submitting post with token:", auth.token);
             const response = await axios.post("http://localhost:3001/topics", {
                 title: "General Discussion"
+            }, {
+                headers: {
+                    Authorization: `Bearer ${auth.token}`  // Use auth.token for authorization
+                }
             });
             setTopics([...topics, response.data]);
         } catch (error) {
@@ -79,10 +89,13 @@ export default function PostCreate() {
         }
 
         try {
+            if (!auth.token) throw new Error("No access token found");  // Check for auth.token
+            console.log("Submitting post with token:", auth.token);
             const response = await axios.post("http://localhost:3001/posts", formData, {
                 withCredentials: true,
                 headers: {
-                    "Content-Type": "multipart/form-data"
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${auth.token}`  // Use auth.token for authorization
                 }
             });
             setPost({

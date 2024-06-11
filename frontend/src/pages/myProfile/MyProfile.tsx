@@ -5,6 +5,8 @@ import CreateTopic from "../../components/createTopic/CreateTopic";
 import DeleteAccount from "../../components/deleteAccount/DeleteAccount";
 import ProfileContent from "../../components/profileContent/ProfileContent";
 import UserType from "../../types/UserType";
+import { useUserContext } from "../../contexts/UserContext";
+import PostCreate from "../../components/postCreate/PostCreate";
 //import CurrentUserProfile from "../../components/profile/CurrentUserProfile";
 
 
@@ -12,7 +14,9 @@ interface ProfileProps {
     currentUser: UserType | null;
 }
 
-const Profile: React.FC<ProfileProps> = ({currentUser}) => {
+const Profile: React.FC<ProfileProps> = (/* {currentUser} */) => {
+    const { currentUser, /* setUserId, setContextUsername, userId  */} = useUserContext(); // Add userId here
+
     const userIsLoggedIn = document.cookie.split("; ").find((row) => row.startsWith("refreshtoken"))?.split("=")[1]
     
     if (!currentUser) {
@@ -21,7 +25,7 @@ const Profile: React.FC<ProfileProps> = ({currentUser}) => {
     return (
         <div className="profilePage">
             <ProfileContent user={currentUser} />
-            {/* <CurrentUserProfile currentUser={currentUser}/> */}
+            <PostCreate />
             <CreateTopic/>
             { userIsLoggedIn && <ChangePassword/>}
             { userIsLoggedIn && <DeleteAccount/>} 

@@ -4,9 +4,9 @@ import ChatType from "../../types/ChatType";
 import { useState } from 'react';
 import ChatUserSearch from "../chatUserSearch/ChatUserSearch";
 import UserType from "../../types/UserType";
+import { useUserContext } from "../../contexts/UserContext";
 
 interface ChatCreateProps {
-    currentUser: UserType;
     onChatCreated: (newChat: ChatType) => void;
 }
 
@@ -17,7 +17,8 @@ interface CreateChatResponse {
     created_at: string;
 }
 
-const ChatCreate: React.FC<ChatCreateProps> = ({ currentUser, onChatCreated }) => {
+const ChatCreate: React.FC<ChatCreateProps> = ({ onChatCreated }) => {
+    const { currentUser } = useUserContext();
     const [receiver, setReceiver] = useState<UserType | null>(null);
     const [error, setError] = useState<string | null>(null);
     //console.log("CurrentUSER:", currentUser)
@@ -43,6 +44,11 @@ const ChatCreate: React.FC<ChatCreateProps> = ({ currentUser, onChatCreated }) =
     const handleCreateChat = async () => {
         if (!receiver) {
             setError('No receiver selected');
+            return;
+        }
+
+        if (!currentUser) {
+            setError('No current user');
             return;
         }
         try {

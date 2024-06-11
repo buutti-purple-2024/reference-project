@@ -4,14 +4,15 @@ import UserType from "../../types/UserType";
 import ChatType from "../../types/ChatType";
 import Messages from "../../components/messages/Messages";
 import ChatBanner from "../chatBanner/ChatBanner";
+import { useUserContext } from "../../contexts/UserContext";
 
 interface ChatComponentProps {
-    currentUser: UserType;
     selectedUser: UserType | null;
     chats: ChatType[];
 }
 
-const ChatComponent: React.FC<ChatComponentProps> = ({ selectedUser, currentUser, chats }) => {
+const ChatComponent: React.FC<ChatComponentProps> = ({ selectedUser,  chats }) => {
+    const { currentUser } = useUserContext();
     const [selectedChat, setSelectedChat] = useState<ChatType | null>(null);
     const [users, setUsers] = useState<UserType[]>([]);
 	const baseurl = "http://localhost:3001"; 
@@ -20,8 +21,8 @@ const ChatComponent: React.FC<ChatComponentProps> = ({ selectedUser, currentUser
     useEffect(() => {
         if (selectedUser) {
             const chatWithSelectedUser = chats.find(chat => 
-                (chat.user1_id === selectedUser.id && chat.user2_id === currentUser.id) ||
-                (chat.user1_id === currentUser.id && chat.user2_id === selectedUser.id)
+                (chat.user1_id === selectedUser.id && chat.user2_id === currentUser?.id) ||
+                (chat.user1_id === currentUser?.id && chat.user2_id === selectedUser.id)
             );
             setSelectedChat(chatWithSelectedUser || null);
         }
