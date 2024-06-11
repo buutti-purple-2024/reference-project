@@ -14,9 +14,10 @@ interface PostWithUser extends PostType {
 
 interface PostsProps {
   posts: PostWithUser[];
+  refreshPosts: () => void;
 }
 
-const Posts: React.FC<PostsProps> = ( {posts} ) => {
+const Posts: React.FC<PostsProps> = ( {posts, refreshPosts} ) => {
 
 
     const baseurl = "http://localhost:3001" 
@@ -60,6 +61,7 @@ const Posts: React.FC<PostsProps> = ( {posts} ) => {
         upvotes={post.upvotes}
         downvotes={post.downvotes}
         post_id={post.post_id}
+        refreshPosts={refreshPosts}
       />
     ));
   };
