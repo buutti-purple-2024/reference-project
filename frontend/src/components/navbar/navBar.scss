@@ -13,17 +13,29 @@
 
     .left{
         display: flex;
+        flex-direction: row;
         align-items: center;
-        gap: 30px;
+        justify-content: center;
+        //gap: 30px;
+
+        
 
         .spanTitle{
             font-weight: bold;
             font-size: 20px;
-            color: rgb(229, 213, 213)
+            color: rgb(229, 213, 213);
         }
 
         
 
+    }
+
+    .middle{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        //search bar styling can be found at userSearch.scss
     }
 
 
@@ -32,6 +44,10 @@
         align-items: center;
         gap: 20px;
         padding-right: 20px;
+
+        svg{ //chat-icon
+            display: flex;
+        }
 
         .p-user{
             display: flex;

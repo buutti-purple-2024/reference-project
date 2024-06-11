@@ -1,6 +1,6 @@
 import "./userProfile.scss";
 import UserType from "../../types/UserType";
-import ProfileContent from "../profileContent/ProfileContent";
+import ProfileContent from "./ProfileContent";
 
 interface CurrentUserProfileProps {
     currentUser: UserType |null;

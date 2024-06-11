@@ -8,11 +8,12 @@ import { useState, useEffect } from "react";
 import PostType from "../../types/PostType";
 import UserType from "../../types/UserType";
 import CommentType from "../../types/CommentType";
+import UsersContext, { UsersProvider } from "../../contexts/UsersContext";
 import { CommentsProvider } from "../../contexts/CommentsContext";
 import WriteComment from "../comments/WriteComment";
 import axios from "axios";
-import { useUserContext } from "../../contexts/UserContext";
-import { useAuthContext } from "../../contexts/AuthContext";
+import { userContext } from "../../App";
+//import { UsersProvider } from "../../contexts/UsersContext";
 
 interface PostProps {
   post: PostType;
@@ -21,6 +22,7 @@ interface PostProps {
   upvotes: number;
   downvotes: number;
   post_id: number;
+  refreshPosts: () => void;
 }
 
 const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, downvotes }) => {
@@ -85,11 +87,12 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
       try {
         const deletedPost = await axios.delete(`http://localhost:3001/posts/${post.post_id}`, {withCredentials: true})
         console.log(deletedPost)
+        refreshPosts();
       } catch (error) {
         console.log(error)
       }
     }
-
+    
     return (
       <div className="post">
         {/* {console.log(post, username)} */}
@@ -130,7 +133,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
               {commentOpen && (
                 <div className="comments-container">
                   <CommentsProvider postId={post.post_id}>
-                    <Comments postId={post.post_id} users={users} /* comments={comments} */ />
+                    <Comments postId={post.post_id} users={users} comments={comments} />
                   </CommentsProvider>
                 </div>
               )}

@@ -9,8 +9,11 @@ interface TopicType {
     title: string;
 }
 
-export default function PostCreate() {
-    const { auth } = useAuthContext();  
+interface PostCreateProps {
+    refreshPosts: () => void;
+}
+
+export default function PostCreate({ refreshPosts }: PostCreateProps) {
     const [topics, setTopics] = useState<TopicType[]>([]);
     const [post, setPost] = useState<PostType>({
         post_id: 0,
@@ -105,6 +108,7 @@ export default function PostCreate() {
                 image: null
             });
             console.log(response.data);
+            refreshPosts();
         } catch (error) {
             console.error("Error creating post:", error);
         }

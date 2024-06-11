@@ -1,5 +1,5 @@
 
-import "./userProfile.scss"
+import "./profilePage.scss"
 import UserType from "../../types/UserType";
 import ProfileComponent from "../../components/profile/ProfileComponent";
 import PostCreate from "../../components/postCreate/PostCreate";
@@ -15,7 +15,7 @@ const UserProfile: React.FC<UserProfileProps> = ({user}) => {
   }
     return (
         
-        <div className="userProfilePage">
+        <div className="profilePage">
             <h1>{user.username}'s Profile</h1>
             <ProfileComponent user={user}/>
             <PostCreate />

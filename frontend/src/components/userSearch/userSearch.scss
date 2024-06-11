@@ -1,7 +1,7 @@
 .spanSearch{
     font-weight: bold;
     font-size: 20px;
-    color: rgb(15, 3, 3)
+    color: rgb(15, 3, 3);        
 }
 
 .search{
@@ -11,11 +11,10 @@
     border: 1px solid grey;
     border-radius: 5px;
     padding: 5px;
+    //margin-left: 20px;
 
     input{
         border: none;
-       /*  width: 100%; */
-
     }
 
     .search-results {

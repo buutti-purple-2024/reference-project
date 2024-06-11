@@ -1,22 +1,24 @@
 .leftBar{
     flex: 2;
     position: sticky;
+    margin-top: 10px;
     top: 70px;
     height: calc(100vh - 70px);
     overflow: scroll;
     background-color: rgb(239, 235, 232);
-    max-width: 200px;
-    min-width: 150px;
-    
+    max-width: 180px;
+    min-width: 120px;
+
     &::-webkit-scrollbar{
         display: none;
     }
 
     .container{
         padding: 20px;
+        
 
         hr{
-            margin: 20px 0px;
+            margin: 10px 0px;
             border: 1;
             height: 0.5px;
             color: grey;
@@ -24,37 +26,62 @@
 
         .menu{
             display: flex;
-            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center; /* Align items horizontally center */
+            flex-direction:column;
             gap: 10px;
 
-            span{
-                font-size: 15px;
-                font-style: 40px;
-            }
+                .item{
+                    display: flex;
+                    align-items: center;
+                    justify-content: center; /* Center the link content */
+                    gap: 10px;
+                    width: 100%;
+                    cursor: pointer;
+                    
+                    a{  display: flex;
+                        align-items: center;
+                        justify-content: flex-start;
+                        text-decoration: none;
+                        width: 100%;
+                        //color: inherit;
 
-            .user{
-                display: flex;
-                flex-direction: column;
-                gap: 10px;
+                        img{
+                            width: 30px;
+                            height: 30px;
+                            border-radius: 50%;
+                            object-fit: cover;
+                        }
+    
+                        span{
+                            font-size: 14px;
+                            padding-left: 5px;
+                            font-weight: 500;
+                        }
+                    }
 
-                img{
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-                    object-fit: cover;
+                    a:hover {
+                        display: flex;
+                        background-color: #ffffff79;
+                        width: 100%;
+                      }
+    
+                /*.user{
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                  */  
+    
+                    
+    
+                }
+               
+                    
                 }
 
-                span{
-                    font-size: 12px;
-                }
-
             }
 
-            .item{
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
-        }
-    }
+           
+
+
 }

@@ -1,6 +1,7 @@
 import "./posts.scss";
 import Post from "../post/Post";
 import PostType from "../../types/PostType";
+import { UsersProvider } from "../../contexts/UsersContext";
 //import { useEffect, useState } from "react";
 //import axios from "axios";
 
@@ -13,9 +14,10 @@ interface PostWithUser extends PostType {
 
 interface PostsProps {
   posts: PostWithUser[];
+  refreshPosts: () => void;
 }
 
-const Posts: React.FC<PostsProps> = ( {posts} ) => {
+const Posts: React.FC<PostsProps> = ( {posts, refreshPosts} ) => {
 
 
     const baseurl = "http://localhost:3001" 
@@ -50,6 +52,7 @@ const Posts: React.FC<PostsProps> = ( {posts} ) => {
 
   const mapPosts = () => {
     return posts!.map(post => (
+    
       <Post
         key={post.post_id}
         post={post}
@@ -58,14 +61,17 @@ const Posts: React.FC<PostsProps> = ( {posts} ) => {
         upvotes={post.upvotes}
         downvotes={post.downvotes}
         post_id={post.post_id}
+        refreshPosts={refreshPosts}
       />
     ));
   };
 
   return (
-    <div className="posts">
+    <UsersProvider>
+      <div className="posts">
       {posts && posts.length > 0 ? mapPosts() : <p>No posts available</p>}
-    </div>
+      </div>
+    </UsersProvider>
   );
 };
 

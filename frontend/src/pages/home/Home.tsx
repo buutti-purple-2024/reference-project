@@ -84,9 +84,9 @@ const Home = () => {
 
   return (
     <div className="home">
-      <PostCreate />
+      <PostCreate refreshPosts={getPosts}/>
       <h2>Feed</h2>
-      <Posts posts={posts}/>
+      <Posts posts={posts} refreshPosts={getPosts}/>
       <CreateTopic/>
     </div>
   );

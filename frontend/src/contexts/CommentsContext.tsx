@@ -16,6 +16,7 @@ export const CommentsProvider: React.FC<{ children: ReactNode; postId: number }>
     const fetchComments = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/comments/post/${postId}`);
+        console.log("Fetched Comments:", response.data); 
         setComments(response.data);
       } catch (error) {
         console.error("Error fetching comments:", error);

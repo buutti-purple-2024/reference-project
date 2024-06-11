@@ -1,18 +1,24 @@
 .dropdown {
     position: relative;
-    display: inline-block;
-  }
+    display: flex;
+  
   
   .dropdown-toggle {
+    display: flex;
     background-color: rgb(54, 54, 54);
     color: white;
-    padding: 13px 45px;
+    //padding: 13px 0px;
+    //padding-right: 20px;
     border: none;
     cursor: pointer;
     font-size: 16px;
   }
   
   .dropdown-menu {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center; /* Align items horizontally center */
+    flex-direction: column;
     position: absolute;
     top: 100%;
     left: 0;
@@ -23,15 +29,35 @@
     list-style: none;
     padding: 0;
     margin: 0;
-    width: 100%;
+    width: max-content;
+
+      svg{
+        padding-left: 10px;
+        padding-right: 5px;
+      }
+
+      p{
+        font-size: 14px;
+        padding-right: 10px;
+        font-weight: 500; 
+      }
+  
+    
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        cursor: pointer;
+      }
+    
+      .dropdown-item:hover {
+        display: flex;
+        background-color: #f1f1f1;
+        width: 100%;
+      }
   }
   
-  .dropdown-item {
-    padding: 10px 20px;
-    cursor: pointer;
-  }
+ 
   
-  .dropdown-item:hover {
-    background-color: #f1f1f1;
-  }
   
+}  
