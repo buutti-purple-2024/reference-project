@@ -58,8 +58,8 @@ const ProfileContent: React.FC<ProfileContentProps> = ({ user }) => {
   }, [user]);
 
   return (
-    <div>
-    <div className="profile">
+    <div className="profileContent">
+    <div >
       <ProfileBanner user={user} />
     </div>
       <div className="post">

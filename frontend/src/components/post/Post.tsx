@@ -7,11 +7,12 @@ import { Link } from "react-router-dom";
 import { useState, useContext, useEffect } from "react";
 import PostType from "../../types/PostType";
 import CommentType from "../../types/CommentType";
-import UsersContext from "../../contexts/UsersContext";
+import UsersContext, { UsersProvider } from "../../contexts/UsersContext";
 import { CommentsProvider } from "../../contexts/CommentsContext";
 import WriteComment from "../comments/WriteComment";
 import axios from "axios";
 import { userContext } from "../../App";
+//import { UsersProvider } from "../../contexts/UsersContext";
 
 interface PostProps {
   post: PostType;
@@ -26,7 +27,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
     const {contextUsername, contextRole} = useContext(userContext)
     const [ commentOpen, setCommentOpen ] = useState(false);
     const [ comments, setComments] = useState<CommentType[]>([]);
-    const users = useContext(UsersContext);
+    const { users } = useContext(UsersContext) || { users: [] };
 
     const toggleCommentSection = () => {
       setCommentOpen(!commentOpen);
@@ -69,7 +70,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
         console.log(error)
       }
     }
-
+    
     return (
       <div className="post">
         {console.log(post, username)}
@@ -110,7 +111,7 @@ const Post: React.FC<PostProps> = ({ post, username, profileImage, upvotes, down
               {commentOpen && (
                 <div className="comments-container">
                   <CommentsProvider postId={post.post_id}>
-                    <Comments postId={post.post_id} users={users} /* comments={comments} */ />
+                    <Comments postId={post.post_id} users={users} comments={comments} />
                   </CommentsProvider>
                 </div>
               )}

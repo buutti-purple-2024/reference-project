@@ -1,6 +1,7 @@
 import "./posts.scss";
 import Post from "../post/Post";
 import PostType from "../../types/PostType";
+import { UsersProvider } from "../../contexts/UsersContext";
 //import { useEffect, useState } from "react";
 //import axios from "axios";
 
@@ -50,6 +51,7 @@ const Posts: React.FC<PostsProps> = ( {posts} ) => {
 
   const mapPosts = () => {
     return posts!.map(post => (
+    
       <Post
         key={post.post_id}
         post={post}
@@ -63,9 +65,11 @@ const Posts: React.FC<PostsProps> = ( {posts} ) => {
   };
 
   return (
-    <div className="posts">
+    <UsersProvider>
+      <div className="posts">
       {posts && posts.length > 0 ? mapPosts() : <p>No posts available</p>}
-    </div>
+      </div>
+    </UsersProvider>
   );
 };
 
